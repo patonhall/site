@@ -53,23 +53,12 @@
 
     <hr class="rule">
 
-    <table class="courses">
+    <table class="courses" id="courses-table">
       <thead>
-        <tr><th>Course</th><th>Standard</th><th>Duration</th><th>Levels</th></tr>
+        <tr><th>Course</th><th>Dates</th><th>Cost</th><th></th></tr>
       </thead>
-      <tbody>
-        <tr><td><a href="course-ipc-a-610.html">IPC-A-610</a></td><td>IPC-A-610</td><td>4 days</td><td>CIS, CIT, CSE, recert</td></tr>
-        <tr><td>IPC Designer (CID)</td><td>IPC-2221 / IPC-2222</td><td>4 days (3 lecture, 1 review and test)</td><td>CID</td></tr>
-        <tr><td>IPC Advanced Designer (CID+)</td><td>IPC-2221 / IPC-2222</td><td>4 days</td><td>CID+</td></tr>
-        <tr><td>Interactive Inspection Lab</td><td>IPC-A-610</td><td>1 day</td><td>Knowledge-based</td></tr>
-        <tr><td>IPC-A-600</td><td>IPC-A-600</td><td>not published</td><td>CIS, CIT, CSE, recert</td></tr>
-        <tr><td>J-STD-001</td><td>J-STD-001</td><td>Instructor 5 days; Specialist not published</td><td>CIS, CIT, CSE, recert</td></tr>
-        <tr><td>J-STD-001 Aerospace</td><td>J-STD-001 Aerospace</td><td>1 day</td><td>CIS, CIT, recert</td></tr>
-        <tr><td>Hand Soldering Certification</td><td>J-STD-001</td><td>Variable, modular</td><td>CIS</td></tr>
-        <tr><td>Advanced Micro SMT Hand Soldering</td><td>J-STD-001</td><td>2 days</td><td>Skill-based</td></tr>
-        <tr><td>IPC-7711/7721</td><td>IPC-7711/7721</td><td>5 days</td><td>CIS, CIT, CSE, recert</td></tr>
-        <tr><td>IPC-A-620</td><td>IPC-A-620</td><td>4 days</td><td>CIS, CIT, CSE, recert</td></tr>
-        <tr><td>Hands-On Cable Wire Harness Lab</td><td>IPC-A-620</td><td>1 day</td><td>Skill-based</td></tr>
+      <tbody id="courses-tbody">
+        <tr><td colspan="4">Loading&hellip;</td></tr>
       </tbody>
     </table>
 
@@ -78,12 +67,12 @@
   </main>
 
   <aside class="aside aside--flush">
-    <ul class="topic-list">
-      <li>EPTAC (Electronics Specialists)</li>
-      <li>Linux Servers &amp; Systems</li>
-      <li>Microcontrollers</li>
+    <ul class="subnav" id="course-filters">
+      <li><a href="#" class="is-current" data-category="">ALL</a></li>
     </ul>
   </aside>
+
+  <script src="assets/js/courses.js" defer></script>
 
 
 </div>
