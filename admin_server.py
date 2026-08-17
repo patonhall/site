@@ -166,28 +166,41 @@ def save_items(path, items):
         raise
 
 
-EVENTS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                            'assets', 'data', 'events.json')
+DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'data')
+EVENTS_PATH = os.path.join(DATA_DIR, 'events.json')
+COURSES_PATH = os.path.join(DATA_DIR, 'courses.json')
+CATEGORIES_PATH = os.path.join(DATA_DIR, 'course-categories.json')
 
 
 class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
     """Static file serving (inherited) plus POST /api/events."""
 
     def do_POST(self):
-        if self.path != '/api/events':
+        if self.path == '/api/events':
+            self._handle_create_event()
+        elif self.path == '/api/courses':
+            self._handle_create_course()
+        else:
             self._send_json(404, {'error': 'not found'})
-            return
 
+    def _read_json_body(self):
+        """Reads and parses the request body. Returns (payload, None) on
+        success, or (None, (status, body)) if the body isn't valid JSON or
+        isn't a JSON object."""
         length = int(self.headers.get('Content-Length', 0))
         raw = self.rfile.read(length) if length else b''
         try:
             payload = json.loads(raw.decode('utf-8'))
         except (ValueError, UnicodeDecodeError):
-            self._send_json(400, {'error': 'request body must be valid JSON'})
-            return
-
+            return None, (400, {'error': 'request body must be valid JSON'})
         if not isinstance(payload, dict):
-            self._send_json(400, {'error': 'request body must be a JSON object'})
+            return None, (400, {'error': 'request body must be a JSON object'})
+        return payload, None
+
+    def _handle_create_event(self):
+        payload, error = self._read_json_body()
+        if error:
+            self._send_json(*error)
             return
 
         errors = validate_event(payload)
@@ -210,6 +223,47 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
         events.append(event)
         save_items(EVENTS_PATH, events)
         self._send_json(201, event)
+
+    def _handle_create_course(self):
+        payload, error = self._read_json_body()
+        if error:
+            self._send_json(*error)
+            return
+
+        errors = validate_course(payload)
+        if errors:
+            self._send_json(400, {'error': '; '.join(errors)})
+            return
+
+        new_category = payload.get('newCategory', '')
+        if isinstance(new_category, str) and new_category.strip():
+            category = new_category.strip()
+            categories = load_items(CATEGORIES_PATH)
+            if category not in categories:
+                categories.append(category)
+                save_items(CATEGORIES_PATH, categories)
+        else:
+            category = payload['category'].strip()
+
+        courses = load_items(COURSES_PATH)
+        uid = generate_uid({c['uid'] for c in courses})
+        course = {
+            'uid': uid,
+            'title': payload['title'].strip(),
+            'category': category,
+            'startDate': payload['startDate'],
+            'endDate': payload['endDate'],
+            'cost': payload['cost'].strip(),
+            'registrationMode': payload['registrationMode'],
+            'created': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S'),
+        }
+        if payload['registrationMode'] == 'capacity':
+            course['seatsTotal'] = payload['seatsTotal']
+            course['seatsFilled'] = payload['seatsFilled']
+
+        courses.append(course)
+        save_items(COURSES_PATH, courses)
+        self._send_json(201, course)
 
     def _send_json(self, status, body):
         data = json.dumps(body).encode('utf-8')
