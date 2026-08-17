@@ -105,7 +105,10 @@
         item.textContent = timeRange(event) + ' — ' + event.title;
         item.addEventListener('click', function () { renderDetail(detailEl, event); });
         item.addEventListener('keydown', function (evt) {
-          if (evt.key === 'Enter' || evt.key === ' ') renderDetail(detailEl, event);
+          if (evt.key === 'Enter' || evt.key === ' ') {
+            evt.preventDefault();
+            renderDetail(detailEl, event);
+          }
         });
         list.appendChild(item);
       });
@@ -133,11 +136,22 @@
       days.push(byDay[key]);
     }
 
+    var lastWindowDay = days[days.length - 1].date;
+
     events.forEach(function (event) {
-      var start = new Date(event.start);
-      if (start < today || start >= windowEnd) return;
-      var bucket = byDay[dayKey(startOfDay(start))];
-      if (bucket) bucket.events.push(event);
+      var dayStart = startOfDay(new Date(event.start));
+      var dayEnd = startOfDay(new Date(event.end));
+      // Skip events that don't overlap the window at all: ended before
+      // today, or don't start until after the window's last day.
+      if (dayEnd < today || dayStart >= windowEnd) return;
+
+      var rangeStart = dayStart < today ? today : dayStart;
+      var rangeEnd = dayEnd > lastWindowDay ? lastWindowDay : dayEnd;
+
+      for (var d = new Date(rangeStart); d <= rangeEnd; d.setDate(d.getDate() + 1)) {
+        var bucket = byDay[dayKey(d)];
+        if (bucket) bucket.events.push(event);
+      }
     });
 
     days.forEach(function (day) {
