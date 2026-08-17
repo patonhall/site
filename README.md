@@ -59,6 +59,15 @@ is a later edit rather than a restructure.
   Calendar is built.
 - **Phone number** — not yet supplied.
 - **Mobile** — not implemented, see Scope above.
+- **Site aerial** — `assets/img/site-aerial.webp` (187KB) and `.jpg` (412KB)
+  are web-sized renditions of the floor-plan-on-aerial overlay, ready for the
+  Maps page. Serve the WebP with the JPEG as `<picture>` fallback. The 26MB
+  7482×5809 original stays on disk at
+  `assets/paton-with-google-earth-two.png`, git-ignored; regenerate from it
+  with:
+
+      magick assets/paton-with-google-earth-two.png -resize 2400x -strip \
+        -quality 80 assets/img/site-aerial.webp
 
 The subscribe panel is a reskin of the signup module from the existing site:
 same markup, same field names, and the same Kit form endpoint
