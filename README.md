@@ -79,9 +79,8 @@ Desktop-only by decision; empty responsive stubs sit at the bottom of
   Calendar is built.
 - **Phone number** — not yet supplied.
 - **Mobile** — not implemented, see Scope above.
-- **Site aerial** — `assets/img/site-aerial.webp` (187KB) and `.jpg` (412KB)
-  are web-sized renditions of the floor-plan-on-aerial overlay, ready for the
-  Maps page. Serve the WebP with the JPEG as `<picture>` fallback. The 26MB
+- **Site aerial** — `assets/img/site-aerial.webp` (187KB) with `.jpg` (412KB)
+  as `<picture>` fallback is in use on the Maps page. The 26MB
   7482×5809 original stays on disk at
   `assets/paton-with-google-earth-two.png`, git-ignored; regenerate from it
   with:
