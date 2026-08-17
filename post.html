@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=1722">
-<title>Updates — Paton Hall</title>
-<meta name="description" content="Posts about member activities, special events, bookings and general operations at Paton Hall.">
+<title>Post — Updates — Paton Hall</title>
+<meta name="description" content="A post from Paton Hall's Updates.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
@@ -44,27 +44,24 @@
   <a class="garage" href="inc.html" data-sketch="garage" data-sketch-fill="--garage-fill" aria-label="About Paton Hall Inc."></a>
 
 <main class="main">
-    <h1 class="page-title">Updates</h1>
+    <div class="post-header">
+      <h1 class="page-title">Updates</h1>
+      <a class="back" href="updates.html" aria-label="Back to Updates">&#8592;</a>
+    </div>
 
-    <p>Posts about member activities, special events, bookings and general operations.</p>
+    <h2 class="post-title" id="post-title">Loading&hellip;</h2>
 
     <hr class="rule">
 
-    <!-- TODO: these filters need the posts index before they can do anything. -->
-    <p class="filters">by
-      <a href="#" aria-disabled="true">Members</a>
-      <a href="#" aria-disabled="true">Operators</a>
+    <p class="post-meta">
+      <span class="post-date" id="post-date"></span>
+      <span class="post-author" id="post-author"></span>
     </p>
 
-    <div id="posts-list">
-      <p class="cal__empty">Loading&hellip;</p>
-    </div>
-
-    <p class="colophon">Paton Hall Inc. is a Canadian corporation run by and for its local
-    membership.</p>
+    <article class="post-body" id="post-body"></article>
   </main>
 
-  <script src="assets/js/posts.js" defer></script>
+  <script src="assets/js/post.js" defer></script>
 
 
 </div>

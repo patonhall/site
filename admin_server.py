@@ -129,6 +129,33 @@ def validate_course(payload):
     return errors
 
 
+def validate_post(payload):
+    """Validate a raw Updates post payload from the admin form. Returns a
+    list of error strings; an empty list means the payload is valid."""
+    errors = []
+
+    title = payload.get('title', '')
+    if not isinstance(title, str) or not title.strip():
+        errors.append('title is required')
+
+    author = payload.get('author', '')
+    if not isinstance(author, str) or not author.strip():
+        errors.append('author is required')
+
+    body = payload.get('body', '')
+    if not isinstance(body, str) or not body.strip():
+        errors.append('body is required')
+
+    if parse_date(payload.get('date', '')) is None:
+        errors.append('date must be a valid date (YYYY-MM-DD)')
+
+    topics = payload.get('topics', [])
+    if not isinstance(topics, list) or not all(isinstance(t, str) and t.strip() for t in topics):
+        errors.append('topics must be a list of non-empty strings')
+
+    return errors
+
+
 def generate_uid(existing_uids, now=None):
     """A timestamp plus 4 random hex chars. Retries on collision against
     existing_uids, which in practice never happens — this is a cheap
@@ -186,6 +213,7 @@ DATA_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'assets', 'd
 EVENTS_PATH = os.path.join(DATA_DIR, 'events.json')
 COURSES_PATH = os.path.join(DATA_DIR, 'courses.json')
 CATEGORIES_PATH = os.path.join(DATA_DIR, 'course-categories.json')
+POSTS_PATH = os.path.join(DATA_DIR, 'posts.json')
 
 
 class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -196,6 +224,8 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
             self._handle_create_event()
         elif self.path == '/api/courses':
             self._handle_create_course()
+        elif self.path == '/api/posts':
+            self._handle_create_post()
         else:
             self._send_json(404, {'error': 'not found'})
 
@@ -272,6 +302,33 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
         courses.append(course)
         save_items(COURSES_PATH, courses)
         self._send_json(201, course)
+
+    def _handle_create_post(self):
+        payload, error = self._read_json_body()
+        if error:
+            self._send_json(*error)
+            return
+
+        errors = validate_post(payload)
+        if errors:
+            self._send_json(400, {'error': '; '.join(errors)})
+            return
+
+        posts = load_items(POSTS_PATH)
+        uid = generate_uid({p['uid'] for p in posts})
+        topics = [t.strip() for t in payload.get('topics', []) if isinstance(t, str) and t.strip()]
+        post = {
+            'uid': uid,
+            'title': payload['title'].strip(),
+            'date': payload['date'],
+            'author': payload['author'].strip(),
+            'topics': topics,
+            'body': payload['body'].strip(),
+            'created': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S'),
+        }
+        posts.append(post)
+        save_items(POSTS_PATH, posts)
+        self._send_json(201, post)
 
     def _send_json(self, status, body):
         data = json.dumps(body).encode('utf-8')

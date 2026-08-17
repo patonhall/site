@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=1722">
-<title>Updates — Paton Hall</title>
-<meta name="description" content="Posts about member activities, special events, bookings and general operations at Paton Hall.">
+<title>Add Post — Paton Hall (admin)</title>
+<meta name="description" content="Internal tool for adding Updates posts. Requires admin_server.py running locally.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
@@ -19,7 +19,7 @@
       <li><a class="nav-btn" href="calendar.html"    data-nav="calendar"   data-sketch="box">Calendar</a></li>
       <li><a class="nav-btn" href="training.html"    data-nav="training"   data-sketch="box">Training</a></li>
       <li><a class="nav-btn" href="services.html"    data-nav="services"   data-sketch="box">Services</a></li>
-      <li><a class="nav-btn is-active" href="updates.html"     data-nav="updates"    data-sketch="box" aria-current="page" data-sketch-fill="--nav-active-fill">Updates</a></li>
+      <li><a class="nav-btn" href="updates.html"     data-nav="updates"    data-sketch="box">Updates</a></li>
       <li><a class="nav-btn nav-btn--short" href="maps.html" data-nav="maps" data-sketch="box">Maps</a></li>
     </ul>
 
@@ -44,27 +44,48 @@
   <a class="garage" href="inc.html" data-sketch="garage" data-sketch-fill="--garage-fill" aria-label="About Paton Hall Inc."></a>
 
 <main class="main">
-    <h1 class="page-title">Updates</h1>
+    <h1 class="page-title">Add Post</h1>
 
-    <p>Posts about member activities, special events, bookings and general operations.</p>
+    <p>Internal tool, not linked from the site. Only works when
+    <code>admin_server.py</code> is running on this machine — submitting from the
+    live site fails, on purpose, rather than pretend to save anything.</p>
 
     <hr class="rule">
 
-    <!-- TODO: these filters need the posts index before they can do anything. -->
-    <p class="filters">by
-      <a href="#" aria-disabled="true">Members</a>
-      <a href="#" aria-disabled="true">Operators</a>
-    </p>
+    <form id="post-form" class="signup-form">
+      <div class="full">
+        <label for="post-title">Title</label>
+        <input id="post-title" type="text" name="title" required>
+      </div>
 
-    <div id="posts-list">
-      <p class="cal__empty">Loading&hellip;</p>
-    </div>
+      <div>
+        <label for="post-date">Date</label>
+        <input id="post-date" type="date" name="date" required>
+      </div>
+      <div>
+        <label for="post-author">Author</label>
+        <input id="post-author" type="text" name="author" required>
+      </div>
 
-    <p class="colophon">Paton Hall Inc. is a Canadian corporation run by and for its local
-    membership.</p>
+      <div class="full">
+        <label for="post-topics">Topics (comma separated)</label>
+        <input id="post-topics" type="text" name="topics" placeholder="Members, Build Night">
+      </div>
+
+      <div class="full">
+        <label for="post-body">Body</label>
+        <textarea id="post-body" name="body" rows="10" required></textarea>
+      </div>
+
+      <div class="full">
+        <button type="submit">Save post</button>
+      </div>
+    </form>
+
+    <p id="post-status" class="form-status" role="status"></p>
   </main>
 
-  <script src="assets/js/posts.js" defer></script>
+  <script src="assets/js/admin-posts.js" defer></script>
 
 
 </div>

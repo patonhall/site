@@ -585,6 +585,21 @@ body {
 
 .footnote { font-size: 16px; }
 
+/* Topic pills on Updates posts. */
+.tags { margin-left: 10px; }
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: var(--yellow-3);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 3px 10px;
+  margin-right: 6px;
+}
+
 /* --- Right-rail variants -------------------------------------------------- */
 
 /* Most inner pages have no photo, so the rail starts level with the body copy
