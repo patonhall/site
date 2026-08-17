@@ -139,14 +139,23 @@ body {
   padding: 12px 12px 50px;     /* bottom clears the fixed status bar */
 }
 
+/* Column widths and gaps are measured from the mockup: the rail's buttons run
+   x28–168, the main column x228–1118, the photo x1178–1648. */
 .frame {
   display: grid;
-  grid-template-columns: 200px minmax(0, 890px) minmax(0, 470px);
+  grid-template-columns: 140px minmax(0, 890px) minmax(0, 470px);
   column-gap: 60px;
   align-items: start;
-  padding: 20px 26px 30px;
+  padding: 22px 16px 30px;
   min-height: calc(100vh - 74px);
   border-radius: 14px;
+
+  /* The mockup is a fixed 1722px canvas whose content nearly fills the frame.
+     Without a cap the frame stretches on wider screens and the right border
+     drifts far away from the content. 1698px is exactly the frame width at the
+     mockup's own viewport, so this matches there and stays put beyond it. */
+  max-width: 1698px;
+  margin: 0 auto;
 }
 
 /* --- Left rail ------------------------------------------------------------ */
@@ -192,7 +201,7 @@ body {
 
 .social {
   list-style: none;
-  margin: 0;
+  margin: 0 0 0 8px;   /* the glyph column is indented slightly from the buttons */
   padding: 0;
   display: flex;
   flex-direction: column;
@@ -261,7 +270,14 @@ body {
 
 /* --- Aside ---------------------------------------------------------------- */
 
-.aside { display: flex; flex-direction: column; align-items: flex-start; }
+/* The photo sits level with the body copy, not with the heading — in the
+   mockup its top edge is at y133, just below where the lede begins. */
+.aside {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-top: 100px;
+}
 
 .building { width: 100%; height: auto; margin-bottom: 20px; }
 
@@ -294,7 +310,16 @@ body {
   font-family: var(--font-mono);
   font-size: 15px;
   min-width: 1700px;
+
+  /* The bar is the entry point to the Calendar, so the whole strip is the
+     hit area. No transition — this site has no animation; the hover state
+     just swaps instantly. */
+  text-decoration: none;
+  cursor: pointer;
 }
+
+.statusbar:hover { background: #dff5e3; }
+.statusbar:focus-visible { outline: 2px solid var(--ink); outline-offset: -4px; }
 
 .statusbar__event { display: flex; align-items: center; gap: 9px; }
 

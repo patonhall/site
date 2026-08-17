@@ -39,7 +39,7 @@
       </a></li>
     </ul>
 
-    <a class="garage" href="#" data-sketch="garage" aria-label="About Paton Hall Inc."><!-- TODO: link to the Inc. sub-site --></a>
+    <a class="garage" href="#" data-sketch="garage" data-sketch-fill="--yellow-3" aria-label="About Paton Hall Inc."><!-- TODO: link to the Inc. sub-site --></a>
   </nav>
 
   <main class="main">
@@ -136,14 +136,16 @@
 
 </div>
 
-<footer class="statusbar">
-  <!-- TODO: becomes data-driven when the Calendar is built -->
+<!-- The bar shows what is on at the hub right now, and opens the Calendar when
+     clicked. The event text is static for this pass; it becomes data-driven
+     once the Calendar exists. TODO: point href at the Calendar. -->
+<a class="statusbar" href="#" aria-label="Today at Paton Hall — open the calendar">
   <span class="statusbar__event">
     <span class="statusbar__dot" aria-hidden="true"></span>
     11:30-5pm - EPTAC Course (IPC-A-610 Specialist) @ABCD | Pool Table Closed
   </span>
   <span class="statusbar__date">TUESDAY OCTOBER 20th 2026 <span aria-hidden="true">☀</span></span>
-</footer>
+</a>
 
 <script src="vendor/rough.min.js" defer></script>
 <script src="assets/js/sketch.js" defer></script>
