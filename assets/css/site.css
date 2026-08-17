@@ -51,9 +51,16 @@
   --green-0:     #ebfbee;
   --green-7:     #2f9e44;
   --cyan-9:      #0b7285;
-  --panel:       #1f2933;
-  --panel-field: #f2efe6;
-  --panel-btn:   #f5ecd7;
+  /* Subscribe panel. These are not eyedropped from the mockup — they are the
+     real values from the existing Paton Hall site (patonhall-1stsite), whose
+     signup module this panel reskins. Names kept from that stylesheet so the
+     two stay recognisably the same component. */
+  --enamel:       #16212c;  /* the sign plate */
+  --tube:         #f8efd6;  /* fluorescent warm white */
+  --panel-label:  #9db2c4;
+  --panel-field:  #f4f2ec;
+  --panel-border: #5a6d7e;
+  --panel-fine:   #8fa3b4;
 
   /* Page background is a token, not a literal: the Calendar mockup is mint and
      the Paton Hall Inc. mockups are yellow, so later pages retint by
@@ -68,7 +75,7 @@
   --font-display: 'Lilita One', 'Arial Black', sans-serif;
   --font-body:    'Nunito', system-ui, -apple-system, sans-serif;
   --font-mono:    'Comic Shanns Mono', ui-monospace, 'Cascadia Mono', monospace;
-  --font-serif:   Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+  --font-serif:   Charter, 'Bitstream Charter', 'Sitka Text', 'Iowan Old Style', Cambria, Georgia, serif;
 
   /* Stroke geometry, shared between the CSS fallback borders and sketch.js so
      the two stay visually interchangeable. */
@@ -97,3 +104,331 @@ body {
 img { max-width: 100%; display: block; }
 
 a { color: inherit; }
+
+/* --- Sketchable elements --------------------------------------------------
+   Every [data-sketch] element carries a plain border by default. sketch.js
+   adds .sketched to <html> only after it has successfully drawn, and that is
+   what suppresses these. So a JS failure degrades to plain, never to
+   borderless. The class sits on <html> rather than each element so the swap
+   is one style recalculation instead of N.
+   -------------------------------------------------------------------------- */
+
+[data-sketch] {
+  position: relative;          /* positioning context for the injected SVG */
+  z-index: 0;                  /* stacking context, so the SVG's z-index:-1
+                                  stays inside this element */
+  border: var(--stroke-w) solid var(--ink);
+  border-radius: var(--radius);
+}
+
+.sketched [data-sketch] { border-color: transparent; }
+
+.sketch-svg {
+  position: absolute;
+  z-index: -1;                 /* behind this element's text, above its bg */
+  pointer-events: none;
+  overflow: visible;
+}
+
+/* --- Page frame ----------------------------------------------------------- */
+
+body {
+  min-width: 1700px;           /* desktop-only, by decision; below this the
+                                  page scrolls horizontally rather than
+                                  reflowing */
+  padding: 12px 12px 50px;     /* bottom clears the fixed status bar */
+}
+
+.frame {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 890px) minmax(0, 470px);
+  column-gap: 60px;
+  align-items: start;
+  padding: 20px 26px 30px;
+  min-height: calc(100vh - 74px);
+  border-radius: 14px;
+}
+
+/* --- Left rail ------------------------------------------------------------ */
+
+.rail {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+}
+
+.nav {
+  list-style: none;
+  margin: 0 0 30px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 100%;
+}
+
+.nav-btn {
+  display: block;
+  padding: 9px 13px 10px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Maps is visibly narrower than its siblings in the mockup. */
+.nav-btn--short { display: inline-block; }
+
+/* The active fill is painted by sketch.js. This background is the fallback
+   for the pre-script / no-JS state, so the active item reads as active
+   either way. */
+.nav-btn.is-active { background: var(--nav-active-fill); }
+.sketched .nav-btn.is-active { background: transparent; }
+
+/* Placeholder links should not present as interactive. */
+[aria-disabled="true"] { cursor: default; }
+
+.social {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.social a {
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.social .at {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  line-height: 1;
+}
+
+/* --- Garage glyph --------------------------------------------------------- */
+
+.garage {
+  display: block;
+  width: 60px;
+  height: 60px;
+  margin-top: auto;   /* pins to the bottom of the rail */
+  border-radius: 50%;
+  color: var(--ink);
+}
+
+/* The CSS fallback: a plain filled circle, so the glyph still reads as a
+   button before the script runs or if it never does. */
+.garage[data-sketch] { background: var(--yellow-3); }
+.sketched .garage[data-sketch] { background: transparent; }
+
+/* --- Main ----------------------------------------------------------------- */
+
+.main  { display: flex; flex-direction: column; align-items: flex-start; }
+
+.page-title {
+  font-family: var(--font-display);
+  font-size: 70px;
+  line-height: 1;
+  letter-spacing: 0.005em;
+  margin: 0 0 24px;
+  text-transform: uppercase;
+}
+
+.main p { margin: 0 0 17px; max-width: 890px; }
+
+.rule {
+  width: 100%;
+  max-width: 886px;
+  height: 0;
+  margin: 10px 0 22px;
+  border: 0;
+  border-top: 3px solid var(--cyan-9);
+}
+
+.note { color: var(--cyan-9); }
+
+.colophon { font-size: 15px; margin-top: 24px !important; }
+
+/* --- Aside ---------------------------------------------------------------- */
+
+.aside { display: flex; flex-direction: column; align-items: flex-start; }
+
+.building { width: 100%; height: auto; margin-bottom: 20px; }
+
+.address { font-size: 19px; margin: 0 0 10px; }
+
+.directions { margin: 0 0 32px; font-size: 19px; }
+
+.facilities {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: 17px;
+}
+
+.facilities li { margin-bottom: 29px; }
+
+/* --- Status bar ----------------------------------------------------------- */
+
+.statusbar {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  background: var(--green-0);
+  border-top: var(--stroke-w) solid var(--ink);
+  font-family: var(--font-mono);
+  font-size: 15px;
+  min-width: 1700px;
+}
+
+.statusbar__event { display: flex; align-items: center; gap: 9px; }
+
+.statusbar__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--green-7);
+}
+
+/* --- Subscribe panel ------------------------------------------------------
+   A reskin of the signup module from the existing Paton Hall site. The
+   structure and field names are kept identical so it posts to the same Kit
+   form; only the surrounding type and spacing follow this site's tokens.
+   -------------------------------------------------------------------------- */
+
+.signup {
+  width: 100%;
+  max-width: 862px;
+  margin: 14px 0 4px;
+  padding: 26px 28px 24px;
+  background: var(--enamel);
+  color: var(--tube);
+}
+
+.signup .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--panel-label);
+  margin: 0 0 10px;
+}
+
+.signup > p {
+  font-family: var(--font-serif);
+  font-size: 19px;
+  margin: 0 0 10px;
+  max-width: 560px;
+}
+
+.signup .signup-sub {
+  font-family: var(--font-body);
+  font-size: 17px;
+  margin-bottom: 22px;
+  max-width: 620px;
+}
+
+.signup-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 22px;
+  max-width: 800px;
+}
+
+.signup-form .full { grid-column: 1 / -1; }
+
+.signup-form label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--panel-label);
+  margin-bottom: 6px;
+}
+
+.signup-form input,
+.signup-form select {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 17px;
+  color: #14171a;
+  caret-color: #14171a;
+  background: var(--panel-field);
+  border: 1px solid var(--panel-border);
+  border-radius: 0;
+  padding: 11px 12px;
+  appearance: none;
+}
+
+.signup-form select {
+  /* The mockup shows a dropdown caret; appearance:none removed the native one. */
+  background-image: linear-gradient(45deg, transparent 50%, #14171a 50%),
+                    linear-gradient(135deg, #14171a 50%, transparent 50%);
+  background-position: calc(100% - 20px) 55%, calc(100% - 14px) 55%;
+  background-size: 6px 6px, 6px 6px;
+  background-repeat: no-repeat;
+}
+
+.signup-form select option { color: #14171a; background: var(--panel-field); }
+
+/* Browsers repaint autofilled fields with their own colours, which breaks the
+   pairing above. Pin both back. */
+.signup-form input:-webkit-autofill,
+.signup-form input:-webkit-autofill:hover,
+.signup-form input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #14171a;
+  -webkit-box-shadow: 0 0 0 100px var(--panel-field) inset;
+}
+
+.signup-form button {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--enamel);
+  background: var(--tube);
+  border: 1px solid var(--tube);
+  border-radius: 0;
+  padding: 12px 24px;
+  cursor: pointer;
+  justify-self: start;
+}
+
+.signup-form button:hover { background: #fff; border-color: #fff; }
+.signup-form button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+
+.signup .fineprint {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  line-height: 1.55;
+  letter-spacing: 0.02em;
+  color: var(--panel-fine);
+  margin: 16px 0 0;
+  max-width: 700px;
+}
+
+.signup .fineprint a { color: #cfe0ee; }
+
+/* --- Responsive stubs -----------------------------------------------------
+   Deliberately empty. Desktop-only was an explicit decision; these exist so
+   adding mobile later is an edit rather than a restructure.
+
+   @media (max-width: 1100px) { ... }
+   @media (max-width: 700px)  { ... }
+   -------------------------------------------------------------------------- */
