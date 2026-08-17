@@ -68,6 +68,67 @@ def validate_event(payload):
     return errors
 
 
+VALID_REGISTRATION_MODES = {'capacity', 'door'}
+
+
+def parse_date(value):
+    """Parse a YYYY-MM-DD date string. Returns None, not an exception, on
+    anything that doesn't parse."""
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        return datetime.strptime(value, '%Y-%m-%d')
+    except ValueError:
+        return None
+
+
+def validate_course(payload):
+    """Validate a raw course payload from the admin form. Returns a list of
+    error strings; an empty list means the payload is valid."""
+    errors = []
+
+    title = payload.get('title', '')
+    if not isinstance(title, str) or not title.strip():
+        errors.append('title is required')
+
+    category = payload.get('category', '')
+    new_category = payload.get('newCategory', '')
+    has_category = isinstance(category, str) and bool(category.strip())
+    has_new_category = isinstance(new_category, str) and bool(new_category.strip())
+    if not has_category and not has_new_category:
+        errors.append('category is required')
+
+    cost = payload.get('cost', '')
+    if not isinstance(cost, str) or not cost.strip():
+        errors.append('cost is required')
+
+    start_dt = parse_date(payload.get('startDate', ''))
+    end_dt = parse_date(payload.get('endDate', ''))
+    if start_dt is None:
+        errors.append('startDate must be a valid date (YYYY-MM-DD)')
+    if end_dt is None:
+        errors.append('endDate must be a valid date (YYYY-MM-DD)')
+    if start_dt is not None and end_dt is not None and end_dt < start_dt:
+        errors.append('endDate must not be before startDate')
+
+    mode = payload.get('registrationMode', '')
+    if mode not in VALID_REGISTRATION_MODES:
+        errors.append('registrationMode must be "capacity" or "door"')
+    elif mode == 'capacity':
+        seats_total = payload.get('seatsTotal')
+        seats_filled = payload.get('seatsFilled')
+        total_ok = isinstance(seats_total, int) and not isinstance(seats_total, bool) and seats_total > 0
+        filled_ok = isinstance(seats_filled, int) and not isinstance(seats_filled, bool) and seats_filled >= 0
+        if not total_ok:
+            errors.append('seatsTotal must be a positive integer')
+        if not filled_ok:
+            errors.append('seatsFilled must be a non-negative integer')
+        if total_ok and filled_ok and seats_filled > seats_total:
+            errors.append('seatsFilled must not exceed seatsTotal')
+
+    return errors
+
+
 def generate_uid(existing_uids, now=None):
     """A timestamp plus 4 random hex chars. Retries on collision against
     existing_uids, which in practice never happens — this is a cheap
@@ -81,22 +142,22 @@ def generate_uid(existing_uids, now=None):
     raise RuntimeError('could not generate a unique event id')
 
 
-def load_events(path):
+def load_items(path):
     if not os.path.exists(path):
         return []
     with open(path, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 
-def save_events(path, events):
-    """Write the whole events list back atomically: write to a temp file in
-    the same directory, then os.replace() over the real path. A crash or
-    Ctrl-C mid-write can then never leave events.json truncated."""
+def save_items(path, items):
+    """Write the whole list back atomically: write to a temp file in the
+    same directory, then os.replace() over the real path. A crash or
+    Ctrl-C mid-write can then never leave the file truncated."""
     directory = os.path.dirname(path) or '.'
-    fd, tmp_path = tempfile.mkstemp(dir=directory, prefix='.events-', suffix='.tmp')
+    fd, tmp_path = tempfile.mkstemp(dir=directory, prefix='.items-', suffix='.tmp')
     try:
         with os.fdopen(fd, 'w', encoding='utf-8') as f:
-            json.dump(events, f, indent=2)
+            json.dump(items, f, indent=2)
             f.write('\n')
         os.replace(tmp_path, path)
     except Exception:
@@ -134,7 +195,7 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
             self._send_json(400, {'error': '; '.join(errors)})
             return
 
-        events = load_events(EVENTS_PATH)
+        events = load_items(EVENTS_PATH)
         uid = generate_uid({e['uid'] for e in events})
         event = {
             'uid': uid,
@@ -147,7 +208,7 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
             'created': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S'),
         }
         events.append(event)
-        save_events(EVENTS_PATH, events)
+        save_items(EVENTS_PATH, events)
         self._send_json(201, event)
 
     def _send_json(self, status, body):
