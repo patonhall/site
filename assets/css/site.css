@@ -405,7 +405,8 @@ body {
 }
 
 .signup-form input,
-.signup-form select {
+.signup-form select,
+.signup-form textarea {
   width: 100%;
   font-family: var(--font-body);
   font-size: 17px;
@@ -425,6 +426,18 @@ body {
   background-position: calc(100% - 20px) 55%, calc(100% - 14px) 55%;
   background-size: 6px 6px, 6px 6px;
   background-repeat: no-repeat;
+}
+
+/* The input/select/textarea rule above assumed text-shaped fields; the admin
+   add-event form's all-day field is a checkbox, which needs its native box
+   back rather than a full-width blank rectangle. */
+.signup-form input[type="checkbox"] {
+  width: auto;
+  height: auto;
+  padding: 0;
+  appearance: auto;
+  background: none;
+  border: none;
 }
 
 .signup-form select option { color: #14171a; background: var(--panel-field); }
@@ -467,6 +480,17 @@ body {
 
 .signup .fineprint a { color: #cfe0ee; }
 
+/* --- Inline form result messages (admin add-event form) ------------------ */
+
+.form-status {
+  margin: 14px 0 0;
+  font-family: var(--font-mono);
+  font-size: 15px;
+}
+
+.form-status.is-error   { color: #c92a2a; }
+.form-status.is-success { color: var(--green-7); }
+
 /* --- Responsive stubs -----------------------------------------------------
    Deliberately empty. Desktop-only was an explicit decision; these exist so
    adding mobile later is an edit rather than a restructure.
@@ -484,7 +508,31 @@ body {
 
 /* Home is the only page with a blue active-nav fill; the rest are yellow. */
 .page-home   { --nav-active-fill: var(--blue-3); --garage-fill: var(--yellow-3); }
-.page-inner  { --nav-active-fill: var(--yellow-3); --garage-fill: var(--yellow-3); }
+
+/* Inner pages (incl. the admin add-event form) sit on the white --paper
+   background, not the dark .signup panel .signup-form was designed for.
+   --panel-label defaults to a pale blue-grey meant for the dark panel; on
+   white it is close to unreadable, so retint it here rather than fork the
+   rules, per this section's convention. */
+.page-inner  {
+  --nav-active-fill: var(--yellow-3);
+  --garage-fill: var(--yellow-3);
+  --panel-label: #55524d;
+}
+
+/* .signup-form's button hover/focus states go to white, which was meant to
+   brighten the button against the dark .signup panel. On this page's white
+   background that makes the button vanish on hover and drops the focus
+   ring entirely, so give it dark states instead. */
+.page-inner .signup-form button:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+.page-inner .signup-form button:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
 
 /* Calendar: mint page, matching the status bar it is the destination for. */
 .page-calendar {
@@ -724,9 +772,22 @@ body {
   border-bottom: 1px solid #6f7f70;
   font-family: var(--font-mono);
   font-size: 16px;
+  cursor: pointer;
 }
 
-.cal__events li.is-empty { color: transparent; }
+.cal__events li:hover { background: #f1f3f1; }
+
+.cal__events li:focus-visible {
+  background: #f1f3f1;
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.cal__empty {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: #55524d;
+}
 
 .cal__detail { border-left: 1px solid #b9c7ba; padding-left: 34px; }
 

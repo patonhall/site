@@ -1,0 +1,63 @@
+<!--
+title: Add Event — Paton Hall (admin)
+class: page-inner
+desc: Internal tool for adding Calendar events. Requires admin_server.py running locally.
+-->
+  <main class="main">
+    <h1 class="page-title">Add Event</h1>
+
+    <p>Internal tool, not linked from the site. Only works when
+    <code>admin_server.py</code> is running on this machine — submitting from the
+    live site fails, on purpose, rather than pretend to save anything.</p>
+
+    <hr class="rule">
+
+    <form id="admin-form" class="signup-form">
+      <div class="full">
+        <label for="admin-title">Title</label>
+        <input id="admin-title" type="text" name="title" required>
+      </div>
+
+      <div>
+        <label for="admin-start-date">Start date</label>
+        <input id="admin-start-date" type="date" name="startDate" required>
+      </div>
+      <div id="admin-start-time-row">
+        <label for="admin-start-time">Start time</label>
+        <input id="admin-start-time" type="time" name="startTime" required>
+      </div>
+
+      <div>
+        <label for="admin-end-date">End date</label>
+        <input id="admin-end-date" type="date" name="endDate" required>
+      </div>
+      <div id="admin-end-time-row">
+        <label for="admin-end-time">End time</label>
+        <input id="admin-end-time" type="time" name="endTime" required>
+      </div>
+
+      <div class="full">
+        <label for="admin-allday">All day</label>
+        <input id="admin-allday" type="checkbox" name="allDay">
+      </div>
+
+      <div class="full">
+        <label for="admin-location">Location</label>
+        <select id="admin-location" name="location" required></select>
+      </div>
+
+      <div class="full">
+        <label for="admin-description">Description</label>
+        <textarea id="admin-description" name="description" rows="4"></textarea>
+      </div>
+
+      <div class="full">
+        <button type="submit">Save event</button>
+      </div>
+    </form>
+
+    <p id="admin-status" class="form-status" role="status"></p>
+  </main>
+
+  <script src="assets/js/spaces.js" defer></script>
+  <script src="assets/js/admin-events.js" defer></script>

@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=1722">
-<title>Calendar — Paton Hall</title>
-<meta name="description" content="What is on at Paton Hall — courses, build nights, talks and bookings.">
+<title>Add Event — Paton Hall (admin)</title>
+<meta name="description" content="Internal tool for adding Calendar events. Requires admin_server.py running locally.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body class="page-calendar">
+<body class="page-inner">
 
 <div class="frame" data-sketch="frame">
 
@@ -16,7 +16,7 @@
     <ul class="nav">
       <li><a class="nav-btn" href="index.html"       data-nav="home"       data-sketch="box">Paton Hall</a></li>
       <li><a class="nav-btn" href="membership.html"  data-nav="membership" data-sketch="box">Membership</a></li>
-      <li><a class="nav-btn is-active" href="calendar.html"    data-nav="calendar"   data-sketch="box" aria-current="page" data-sketch-fill="--nav-active-fill">Calendar</a></li>
+      <li><a class="nav-btn" href="calendar.html"    data-nav="calendar"   data-sketch="box">Calendar</a></li>
       <li><a class="nav-btn" href="training.html"    data-nav="training"   data-sketch="box">Training</a></li>
       <li><a class="nav-btn" href="services.html"    data-nav="services"   data-sketch="box">Services</a></li>
       <li><a class="nav-btn" href="updates.html"     data-nav="updates"    data-sketch="box">Updates</a></li>
@@ -43,39 +43,64 @@
 
   <a class="garage" href="inc.html" data-sketch="garage" data-sketch-fill="--garage-fill" aria-label="About Paton Hall Inc."></a>
 
-<!-- Agenda view, rendered from assets/data/events.json by calendar.js. View
-       switching, space booking and sign-in are a separate piece of work; those
-       controls stay inert placeholders. -->
-  <div class="cal">
+<main class="main">
+    <h1 class="page-title">Add Event</h1>
 
-    <header class="cal__bar">
-      <div class="cal__actions">
-        <a href="#" aria-disabled="true">Book Space</a><!-- TODO: Calendar app -->
-        <a href="#" aria-disabled="true">Logout</a><!-- TODO: Calendar app -->
+    <p>Internal tool, not linked from the site. Only works when
+    <code>admin_server.py</code> is running on this machine — submitting from the
+    live site fails, on purpose, rather than pretend to save anything.</p>
+
+    <hr class="rule">
+
+    <form id="admin-form" class="signup-form">
+      <div class="full">
+        <label for="admin-title">Title</label>
+        <input id="admin-title" type="text" name="title" required>
       </div>
-      <div class="cal__views">
-        <a href="#" class="is-current" aria-current="page">Agenda</a>
-        <a href="#" aria-disabled="true">3-Day</a>
-        <a href="#" aria-disabled="true">Week</a>
-        <a href="#" aria-disabled="true">Month</a>
+
+      <div>
+        <label for="admin-start-date">Start date</label>
+        <input id="admin-start-date" type="date" name="startDate" required>
       </div>
-      <div class="cal__today" id="cal-today"><span aria-hidden="true">☀</span></div>
-    </header>
+      <div id="admin-start-time-row">
+        <label for="admin-start-time">Start time</label>
+        <input id="admin-start-time" type="time" name="startTime" required>
+      </div>
 
-    <div class="cal__body">
-      <section class="cal__agenda" id="cal-agenda">
-        <p class="cal__empty">Loading&hellip;</p>
-      </section>
+      <div>
+        <label for="admin-end-date">End date</label>
+        <input id="admin-end-date" type="date" name="endDate" required>
+      </div>
+      <div id="admin-end-time-row">
+        <label for="admin-end-time">End time</label>
+        <input id="admin-end-time" type="time" name="endTime" required>
+      </div>
 
-      <section class="cal__detail" id="cal-detail">
-        <p class="cal__empty">Select an event to see its details.</p>
-      </section>
-    </div>
+      <div class="full">
+        <label for="admin-allday">All day</label>
+        <input id="admin-allday" type="checkbox" name="allDay">
+      </div>
 
-  </div>
+      <div class="full">
+        <label for="admin-location">Location</label>
+        <select id="admin-location" name="location" required></select>
+      </div>
+
+      <div class="full">
+        <label for="admin-description">Description</label>
+        <textarea id="admin-description" name="description" rows="4"></textarea>
+      </div>
+
+      <div class="full">
+        <button type="submit">Save event</button>
+      </div>
+    </form>
+
+    <p id="admin-status" class="form-status" role="status"></p>
+  </main>
 
   <script src="assets/js/spaces.js" defer></script>
-  <script src="assets/js/calendar.js" defer></script>
+  <script src="assets/js/admin-events.js" defer></script>
 
 
 </div>
