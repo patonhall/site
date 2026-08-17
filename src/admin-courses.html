@@ -1,0 +1,68 @@
+<!--
+title: Add Course — Paton Hall (admin)
+class: page-inner
+desc: Internal tool for adding Training courses. Requires admin_server.py running locally.
+-->
+  <main class="main">
+    <h1 class="page-title">Add Course</h1>
+
+    <p>Internal tool, not linked from the site. Only works when
+    <code>admin_server.py</code> is running on this machine — submitting from the
+    live site fails, on purpose, rather than pretend to save anything.</p>
+
+    <hr class="rule">
+
+    <form id="course-form" class="signup-form">
+      <div class="full">
+        <label for="course-title">Title</label>
+        <input id="course-title" type="text" name="title" required>
+      </div>
+
+      <div>
+        <label for="course-category">Category</label>
+        <select id="course-category" name="category"></select>
+      </div>
+      <div>
+        <label for="course-new-category">Or add a new category</label>
+        <input id="course-new-category" type="text" name="newCategory">
+      </div>
+
+      <div>
+        <label for="course-start-date">Start date</label>
+        <input id="course-start-date" type="date" name="startDate" required>
+      </div>
+      <div>
+        <label for="course-end-date">End date</label>
+        <input id="course-end-date" type="date" name="endDate" required>
+      </div>
+
+      <div>
+        <label for="course-cost">Cost</label>
+        <input id="course-cost" type="text" name="cost" placeholder="$500" required>
+      </div>
+      <div>
+        <label for="course-registration-mode">Registration</label>
+        <select id="course-registration-mode" name="registrationMode">
+          <option value="capacity">Capacity-tracked</option>
+          <option value="door">Register at door</option>
+        </select>
+      </div>
+
+      <div id="course-seats-total-row">
+        <label for="course-seats-total">Total seats</label>
+        <input id="course-seats-total" type="number" name="seatsTotal" min="1" step="1">
+      </div>
+      <div id="course-seats-filled-row">
+        <label for="course-seats-filled">Filled seats</label>
+        <input id="course-seats-filled" type="number" name="seatsFilled" min="0" step="1">
+      </div>
+
+      <div class="full">
+        <button type="submit">Save course</button>
+      </div>
+    </form>
+
+    <p id="course-status" class="form-status" role="status"></p>
+  </main>
+
+  <script src="assets/js/admin-courses.js" defer></script>
