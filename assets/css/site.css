@@ -405,7 +405,8 @@ body {
 }
 
 .signup-form input,
-.signup-form select {
+.signup-form select,
+.signup-form textarea {
   width: 100%;
   font-family: var(--font-body);
   font-size: 17px;
@@ -466,6 +467,17 @@ body {
 }
 
 .signup .fineprint a { color: #cfe0ee; }
+
+/* --- Inline form result messages (admin add-event form) ------------------ */
+
+.form-status {
+  margin: 14px 0 0;
+  font-family: var(--font-mono);
+  font-size: 15px;
+}
+
+.form-status.is-error   { color: #c92a2a; }
+.form-status.is-success { color: var(--green-7); }
 
 /* --- Responsive stubs -----------------------------------------------------
    Deliberately empty. Desktop-only was an explicit decision; these exist so
