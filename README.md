@@ -39,6 +39,10 @@ output is stale.
 | `assets/js/calendar.js` | Renders the Calendar's agenda and detail pane from `events.json` |
 | `assets/js/admin-events.js` | Handles `admin-events.html`'s form and its `POST /api/events` submission |
 | `tests/test_admin_server.py` | Unit tests for `admin_server.py`'s validation, uid generation, and file I/O |
+| `assets/data/course-categories.json` | Training category names; admin-writable via `admin-courses.html`, read by both the admin form and `training.html` |
+| `assets/data/courses.json` | Scheduled Training courses; written by `admin_server.py`, read at runtime by `training.html` |
+| `assets/js/courses.js` | Renders Training's live course list and category filter from `courses.json` |
+| `assets/js/admin-courses.js` | Handles `admin-courses.html`'s form and its `POST /api/courses` submission |
 | `vendor/rough.min.js` | Rough.js 4.6.6, vendored |
 | `assets/fonts/` | Self-hosted fonts + licence notes |
 | `docs/superpowers/` | Design spec and implementation plan |
@@ -76,7 +80,12 @@ Two of these are **static views of applications that do not exist yet**:
   locally (see Running locally); there is no public booking flow yet. View
   switching (3-Day/Week/Month), space booking and sign-in are still inert
   placeholders.
-- **Training** lists the courses. Enrolment and sign-up are not built.
+- **Training** renders a live course list from `assets/data/courses.json`,
+  filterable by category via the sidebar (ALL by default, matching
+  `assets/data/course-categories.json`). Adding courses requires running
+  `admin_server.py` locally (see Running locally) via `admin-courses.html`;
+  there is no public self-service registration — seat counts are updated by
+  hand as people register through other channels.
 
 Desktop-only by decision; empty responsive stubs sit at the bottom of
 `site.css` so mobile is a later edit rather than a restructure.
@@ -86,7 +95,10 @@ Desktop-only by decision; empty responsive stubs sit at the bottom of
 - **Calendar application** — view switching, booking and sign-in. Adding events
   and viewing the live agenda are built; see
   `docs/superpowers/specs/2026-08-17-patonhall-calendar-design.md`.
-- **Training sign-up** — enrolment for the listed courses.
+- **Training sign-up** — no public self-service registration; an admin
+  updates `seatsFilled` in `assets/data/courses.json` by hand as people
+  register elsewhere. Adding and listing courses is built; see
+  `docs/superpowers/specs/2026-08-17-patonhall-training-design.md`.
 - **Inc. sub-site: Reports, Papers, Links** — in the section rail, no content
   or mockup yet.
 - **Placeholder links** — Discord, Instagram, phone, the Updates filters, and
