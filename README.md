@@ -67,6 +67,25 @@ output is stale.
   other mockups retint them — Calendar is mint, the Paton Hall Inc. sub-site
   is yellow.
 
+## Booking request triage (GitHub Action)
+
+`.github/workflows/booking-requests.yml` polls Kit every 30 minutes for new
+Book Space submissions, checks each one against `assets/data/events.json` for
+a scheduling conflict, and opens a GitHub Issue with the result — closed
+immediately if clear, left open if it conflicts. It never writes to the repo;
+a real event is still only ever added by a human, via `admin-events.html`.
+
+Requires the `KIT_API_KEY` secret on this repo (`gh secret set KIT_API_KEY`)
+and, in Kit itself, set up once by hand:
+
+- A booking-request form whose custom fields are keyed exactly `space`
+  (one of A–I), `start_date`, `end_date` (both `YYYY-MM-DDTHH:MM`), and
+  `purpose` (optional), applying the `booking-request` tag on submit.
+- Three tags: `booking-request`, `booking-approved`, `booking-conflict`.
+
+See `scripts/check_booking_requests.py`'s module docstring for the full
+mechanics.
+
 ## Scope
 
 All fourteen pages are built: home, Membership, Calendar, Training, Services,
