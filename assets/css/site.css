@@ -136,18 +136,26 @@ a { color: inherit; }
 /* --- Page frame ----------------------------------------------------------- */
 
 body {
-  min-width: 1700px;           /* desktop-only, by decision; below this the
-                                  page scrolls horizontally rather than
-                                  reflowing */
+  /* Desktop-only still: the layout keeps its three columns and simply sizes
+     to the window. 960px is the floor at which the rail, body copy and right
+     column are all still usable; below it the page scrolls rather than
+     collapsing into a phone layout, which is separate work. */
+  min-width: 960px;
   padding: 12px 12px 50px;     /* bottom clears the fixed status bar */
 }
 
 /* Column widths and gaps are measured from the mockup: the rail's buttons run
-   x28–168, the main column x228–1118, the photo x1178–1648. */
+   x28–168, the main column x228–1118, the photo x1178–1648.
+
+   The two content tracks are minmax(0, …) rather than fixed, so they hold the
+   mockup's widths when there is room and shrink with the window when there is
+   not. The rail stays fixed — nav buttons sized to their text should not move.
+   The gap's vw term is tuned to reach exactly 60px at the mockup's own 1722px
+   viewport, so fidelity there is unchanged. */
 .frame {
   display: grid;
   grid-template-columns: 140px minmax(0, 890px) minmax(0, 470px);
-  column-gap: 60px;
+  column-gap: clamp(26px, 3.5vw, 60px);
   align-items: start;
   padding: 22px 16px 30px;
   min-height: calc(100vh - 74px);
@@ -229,11 +237,17 @@ body {
 
 /* --- Garage glyph --------------------------------------------------------- */
 
+/* Pinned to the top-right corner inside the frame's drawn border. Absolute
+   rather than a grid item, so it sits in the corner regardless of how tall
+   the page's content is. .frame is already positioned (every [data-sketch]
+   element is), so this anchors to it. */
 .garage {
+  position: absolute;
+  top: 14px;
+  right: 18px;
   display: block;
   width: 60px;
   height: 60px;
-  margin-top: auto;   /* pins to the bottom of the rail */
   border-radius: 50%;
   color: var(--ink);
 }
@@ -249,7 +263,7 @@ body {
 
 .page-title {
   font-family: var(--font-display);
-  font-size: 70px;
+  font-size: clamp(42px, 4.1vw, 70px);
   line-height: 1;
   letter-spacing: 0.005em;
   margin: 0 0 24px;
@@ -279,7 +293,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  padding-top: 100px;
+  padding-top: clamp(64px, 5.8vw, 100px);
 }
 
 .building { width: 100%; height: auto; margin-bottom: 20px; }
@@ -312,7 +326,7 @@ body {
   border-top: var(--stroke-w) solid var(--ink);
   font-family: var(--font-mono);
   font-size: 15px;
-  min-width: 1700px;
+  min-width: 960px;
 
   /* The bar is the entry point to the Calendar, so the whole strip is the
      hit area. No transition — this site has no animation; the hover state
@@ -526,8 +540,10 @@ body {
 /* --- Right-rail variants -------------------------------------------------- */
 
 /* Most inner pages have no photo, so the rail starts level with the body copy
-   instead of being pushed down to clear one. */
-.aside--flush { padding-top: 8px; }
+   rather than being pushed down to clear one. It still clears the garage glyph
+   in the top-right corner, which also matches the mockups — the Inc. section
+   rail and the Training topic list both begin well below the top edge. */
+.aside--flush { padding-top: 92px; }
 
 .rail-head {
   font-family: var(--font-display);
@@ -660,6 +676,10 @@ body {
   align-items: baseline;
   gap: 60px;
   margin-bottom: 30px;
+  /* The Calendar is the one page whose content reaches the frame's top-right
+     corner, where the garage glyph now sits. Reserve that space so the date
+     does not run underneath it. */
+  padding-right: 88px;
 }
 
 .cal__actions, .cal__views { display: flex; gap: 44px; }
@@ -679,7 +699,7 @@ body {
   font-size: 27px;
 }
 
-.cal__body { display: grid; grid-template-columns: minmax(0, 1fr) 470px; gap: 40px; }
+.cal__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: clamp(20px, 2.3vw, 40px); }
 
 .cal__agenda { border-top: 1px solid #b9c7ba; padding-top: 6px; }
 
