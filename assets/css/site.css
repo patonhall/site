@@ -71,6 +71,9 @@
      on the other pages. */
   --nav-active-fill: var(--blue-3);
 
+  /* The garage glyph inverts to white on the yellow Inc. sub-site. */
+  --garage-fill: var(--yellow-3);
+
   /* Type */
   --font-display: 'Lilita One', 'Arial Black', sans-serif;
   --font-body:    'Nunito', system-ui, -apple-system, sans-serif;
@@ -237,7 +240,7 @@ body {
 
 /* The CSS fallback: a plain filled circle, so the glyph still reads as a
    button before the script runs or if it never does. */
-.garage[data-sketch] { background: var(--yellow-3); }
+.garage[data-sketch] { background: var(--garage-fill); }
 .sketched .garage[data-sketch] { background: transparent; }
 
 /* --- Main ----------------------------------------------------------------- */
@@ -457,3 +460,263 @@ body {
    @media (max-width: 1100px) { ... }
    @media (max-width: 700px)  { ... }
    -------------------------------------------------------------------------- */
+
+/* ==========================================================================
+   Page variants
+
+   Each mockup retints the page rather than restyling it, so a variant is a
+   handful of token overrides on <body> — never a parallel set of rules.
+   ========================================================================== */
+
+/* Home is the only page with a blue active-nav fill; the rest are yellow. */
+.page-home   { --nav-active-fill: var(--blue-3); --garage-fill: var(--yellow-3); }
+.page-inner  { --nav-active-fill: var(--yellow-3); --garage-fill: var(--yellow-3); }
+
+/* Calendar: mint page, matching the status bar it is the destination for. */
+.page-calendar {
+  --page-bg: var(--green-0);
+  --nav-active-fill: var(--yellow-3);
+  --garage-fill: var(--yellow-3);
+}
+
+/* Paton Hall Inc.: the yellow sub-site. The garage glyph inverts to white so
+   it stays visible against the yellow ground. */
+.page-inc {
+  --page-bg: var(--yellow-3);
+  --nav-active-fill: var(--blue-3);
+  --garage-fill: var(--paper);
+}
+
+/* --- Shared content components ------------------------------------------- */
+
+.section-head {
+  font-family: var(--font-display);
+  font-size: 23px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 30px 0 16px;
+}
+
+.main > .section-head:first-of-type { margin-top: 8px; }
+
+.plain-list, .link-list, .dash-list, .post-list, .topic-list,
+.section-list, .subnav {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.plain-list li { margin-bottom: 26px; }
+.plain-list--indent { padding-left: 6px; }
+
+.dash-list li { margin-bottom: 4px; }
+.dash-list li::before { content: "- "; }
+
+.link-list li { margin-bottom: 20px; }
+
+/* Definition lists carry the membership tiers: term is the name and price,
+   description is what it gets you. */
+.tiers { margin: 0 0 10px; }
+.tiers dt { margin-bottom: 2px; }
+.tiers dd { margin: 0 0 30px; }
+
+.footnote { font-size: 16px; }
+
+/* --- Right-rail variants -------------------------------------------------- */
+
+/* Most inner pages have no photo, so the rail starts level with the body copy
+   instead of being pushed down to clear one. */
+.aside--flush { padding-top: 8px; }
+
+.rail-head {
+  font-family: var(--font-display);
+  font-size: 25px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 0 0 18px;
+}
+
+.topic-list li, .subnav li { margin-bottom: 28px; }
+
+.topic-list li, .subnav a {
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 400;
+}
+
+.subnav a { text-decoration: none; }
+.subnav a:hover { text-decoration: underline; }
+.subnav a.is-current { text-decoration: underline; }
+
+.section-list li { margin-bottom: 22px; }
+.section-list a { text-decoration: none; }
+
+/* --- Training table ------------------------------------------------------- */
+
+.courses {
+  width: 100%;
+  max-width: 840px;
+  border-collapse: collapse;
+  background: #e9e7e2;
+  font-size: 15px;
+}
+
+.courses th {
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  font-weight: 400;
+  color: #55524d;
+  padding: 12px 14px;
+}
+
+.courses td { padding: 11px 14px; vertical-align: top; border-top: 1px solid #d5d2cb; }
+.courses tbody tr:nth-child(even) { background: #e2e0da; }
+
+/* --- Updates -------------------------------------------------------------- */
+
+.filters { font-size: 17px; }
+.filters a { margin-left: 26px; text-decoration: none; }
+
+.date-head {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 30px 0 8px;
+}
+
+.post-list li { border-bottom: 1px solid var(--ink); }
+
+.post-list a {
+  display: block;
+  padding: 12px 2px;
+  font-family: var(--font-mono);
+  font-size: 17px;
+  text-decoration: none;
+}
+
+.post-header { display: flex; align-items: center; gap: 28px; width: 100%; }
+.back { font-size: 34px; line-height: 1; text-decoration: none; }
+
+.post-title {
+  font-family: var(--font-mono);
+  font-size: 27px;
+  font-weight: 400;
+  margin: 6px 0 0;
+}
+
+.post-meta {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 886px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  margin: 0 0 26px !important;
+}
+
+.post-date { text-transform: uppercase; }
+.post-author a { color: var(--cyan-9); text-decoration: none; }
+
+/* The mockup rules the post body with a dotted box — a draft frame, kept. */
+.post-body {
+  border: 1px dotted var(--ink);
+  padding: 16px 18px;
+  max-width: 886px;
+  font-family: var(--font-mono);
+  font-size: 15.5px;
+  line-height: 1.62;
+}
+
+.post-body p { margin: 0 0 17px; }
+.post-body p:last-child { margin-bottom: 0; }
+
+/* --- Maps ----------------------------------------------------------------- */
+
+.main--wide { grid-column: 2 / 3; }
+
+.sitemap { margin: 0 0 22px; max-width: 886px; }
+.sitemap img { width: 100%; height: auto; border: var(--stroke-w) solid var(--ink); }
+
+.sitemap figcaption {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  margin-top: 10px;
+  color: #55524d;
+}
+
+/* --- Calendar ------------------------------------------------------------- */
+
+/* The Calendar replaces the main/aside pair with its own two-pane layout, so
+   it spans both content columns. */
+.cal { grid-column: 2 / 4; display: flex; flex-direction: column; }
+
+.cal__bar {
+  display: flex;
+  align-items: baseline;
+  gap: 60px;
+  margin-bottom: 30px;
+}
+
+.cal__actions, .cal__views { display: flex; gap: 44px; }
+
+.cal__actions a, .cal__views a {
+  font-family: var(--font-mono);
+  font-size: 17px;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.cal__views a.is-current { text-decoration: underline; }
+
+.cal__today {
+  margin-left: auto;
+  font-size: 27px;
+}
+
+.cal__body { display: grid; grid-template-columns: minmax(0, 1fr) 470px; gap: 40px; }
+
+.cal__agenda { border-top: 1px solid #b9c7ba; padding-top: 6px; }
+
+.cal__day {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  font-weight: 400;
+  text-transform: uppercase;
+  margin: 18px 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #6f7f70;
+}
+
+.cal__events { list-style: none; margin: 0; padding: 0; }
+
+.cal__events li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 6px 2px;
+  border-bottom: 1px solid #6f7f70;
+  font-family: var(--font-mono);
+  font-size: 16px;
+}
+
+.cal__events li.is-empty { color: transparent; }
+
+.cal__detail { border-left: 1px solid #b9c7ba; padding-left: 34px; }
+
+.cal__detail-title {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.22;
+  margin: 0 0 18px;
+}
+
+.cal__detail p { margin: 0 0 17px; max-width: 460px; }
+.cal__label { text-transform: uppercase; }

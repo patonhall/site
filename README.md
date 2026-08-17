@@ -6,15 +6,25 @@ The visual style reproduces the Excalidraw mockups in `mockups_AUG17/`.
 
 ## Running locally
 
+    python3 build.py
     python3 -m http.server 8017
 
-Then open <http://localhost:8017>. There is no build step.
+Then open <http://localhost:8017>.
+
+Pages are assembled from `src/` by `build.py` and the output is committed, so
+GitHub Pages serves plain static files — the build is a development
+convenience, never a runtime dependency. **Edit `src/`, not the root `.html`
+files; they are overwritten.** `python3 build.py --check` exits non-zero if the
+output is stale.
 
 ## Structure
 
 | Path | Purpose |
 |---|---|
-| `index.html` | The home page |
+| `src/_shell.html` | The frame, left rail and status bar — shared by every page |
+| `src/*.html` | One content file per page, with front matter for title and nav |
+| `build.py` | Assembles `src/` into the page files at the repo root |
+| `*.html` | Generated output, committed; this is what Pages serves |
 | `assets/css/site.css` | All styling; design tokens live at the top |
 | `assets/js/sketch.js` | Draws every hand-drawn border via Rough.js |
 | `vendor/rough.min.js` | Rough.js 4.6.6, vendored |
@@ -43,16 +53,27 @@ Then open <http://localhost:8017>. There is no build step.
 
 ## Scope
 
-This repository currently implements **the home page only**, as the reference
-implementation the remaining twelve screens will be cloned from. Desktop-only
-by decision; empty responsive stubs sit at the bottom of `site.css` so mobile
-is a later edit rather than a restructure.
+All fourteen pages are built: home, Membership, Calendar, Training, Services,
+Updates, a course detail, a post detail, Maps, and the five Paton Hall Inc.
+sub-site pages.
+
+Two of these are **static views of applications that do not exist yet**:
+
+- **Calendar** renders the agenda view. View switching (3-Day/Week/Month),
+  space booking and sign-in are inert placeholders.
+- **Training** lists the courses. Enrolment and sign-up are not built.
+
+Desktop-only by decision; empty responsive stubs sit at the bottom of
+`site.css` so mobile is a later edit rather than a restructure.
 
 ## Open items
 
-- **Placeholder links** — Membership, Calendar, Training, Services, Updates,
-  Maps, Discord, Instagram, phone, the garage glyph, and the status bar all
-  point at `#`. Search `TODO`.
+- **Calendar application** — view switching, booking and sign-in.
+- **Training sign-up** — enrolment for the listed courses.
+- **Inc. sub-site: Reports, Papers, Links** — in the section rail, no content
+  or mockup yet.
+- **Placeholder links** — Discord, Instagram, phone, the Updates filters, and
+  the IPC-A-610 data sheet. Search `TODO`.
 - **Status bar** — shows what is on at the hub and opens the Calendar when
   clicked. The event text is static for now; it becomes data-driven when the
   Calendar is built.
