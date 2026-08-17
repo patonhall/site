@@ -4,3 +4,7 @@ node_modules/
 /specimen.png
 /shot-*.png
 /patonhall-1stsite/
+
+# Source asset for the future Maps page: 27MB, 7482x5809.
+# Kept on disk, out of git until it is downscaled for web use.
+assets/paton-with-google-earth-two.png
