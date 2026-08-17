@@ -11,3 +11,6 @@ assets/paton-with-google-earth-two.png
 
 # Subagent-driven-development scratch workspace (per-plan, not part of the site)
 .superpowers/
+
+# Python bytecode cache
+__pycache__/
