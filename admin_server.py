@@ -114,7 +114,7 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
 
     def do_POST(self):
         if self.path != '/api/events':
-            self.send_error(404, 'Not found')
+            self._send_json(404, {'error': 'not found'})
             return
 
         length = int(self.headers.get('Content-Length', 0))
@@ -123,6 +123,10 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
             payload = json.loads(raw.decode('utf-8'))
         except (ValueError, UnicodeDecodeError):
             self._send_json(400, {'error': 'request body must be valid JSON'})
+            return
+
+        if not isinstance(payload, dict):
+            self._send_json(400, {'error': 'request body must be a JSON object'})
             return
 
         errors = validate_event(payload)
@@ -159,7 +163,7 @@ def main():
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 8017
     root = os.path.dirname(os.path.abspath(__file__))
     os.chdir(root)
-    server = http.server.HTTPServer(('', port), AdminRequestHandler)
+    server = http.server.HTTPServer(('127.0.0.1', port), AdminRequestHandler)
     print('Serving %s with write access at http://localhost:%d/  (Ctrl+C to stop)'
           % (root, port))
     try:
