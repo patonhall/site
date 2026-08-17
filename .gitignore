@@ -8,3 +8,6 @@ node_modules/
 # Source asset for the future Maps page: 27MB, 7482x5809.
 # Kept on disk, out of git until it is downscaled for web use.
 assets/paton-with-google-earth-two.png
+
+# Subagent-driven-development scratch workspace (per-plan, not part of the site)
+.superpowers/
