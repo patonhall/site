@@ -4,9 +4,9 @@ nav: calendar
 class: page-calendar
 desc: What is on at Paton Hall — courses, build nights, talks and bookings.
 -->
-  <!-- Static agenda view. The Calendar application — view switching, space
-       booking and sign-in — is a separate piece of work; these controls are
-       inert placeholders so the page reads correctly in the meantime. -->
+  <!-- Agenda view, rendered from assets/data/events.json by calendar.js. View
+       switching, space booking and sign-in are a separate piece of work; those
+       controls stay inert placeholders. -->
   <div class="cal">
 
     <header class="cal__bar">
@@ -20,56 +20,20 @@ desc: What is on at Paton Hall — courses, build nights, talks and bookings.
         <a href="#" aria-disabled="true">Week</a>
         <a href="#" aria-disabled="true">Month</a>
       </div>
-      <div class="cal__today">Tuesday October 20th 2026 <span aria-hidden="true">☀</span></div>
+      <div class="cal__today" id="cal-today">Tuesday October 20th 2026 <span aria-hidden="true">☀</span></div>
     </header>
 
     <div class="cal__body">
-      <section class="cal__agenda">
-        <h2 class="cal__day">Tuesday October 20</h2>
-        <ul class="cal__events">
-          <li>
-            <span class="statusbar__dot" aria-hidden="true"></span>
-            11:30-5pm - EPTAC Course (IPC-A-610 Specialist) @ABCD | Pool Table Closed
-          </li>
-          <li class="is-empty"></li>
-          <li class="is-empty"></li>
-        </ul>
-
-        <h2 class="cal__day">Wednesday October 21</h2>
-        <ul class="cal__events">
-          <li class="is-empty"></li>
-          <li class="is-empty"></li>
-          <li class="is-empty"></li>
-          <li class="is-empty"></li>
-          <li class="is-empty"></li>
-          <li class="is-empty"></li>
-        </ul>
+      <section class="cal__agenda" id="cal-agenda">
+        <p class="cal__empty">Loading&hellip;</p>
       </section>
 
-      <section class="cal__detail">
-        <h2 class="cal__detail-title">EPTAC Course<br>IPC&ndash;A&ndash;610 Specialist</h2>
-
-        <p>11:30am - 5pm<br>@ABCD</p>
-
-        <p><span class="cal__label">Description:</span><br>
-        This 4-day lectured course is for anyone needing to obtain an operator-level, IPC-A-610
-        Specialist Certification. The lecture will review the content of the IPC-A-610 Standard
-        and provide explanation of the accept/reject criteria, of all 3 product classes, to be
-        applied to their visual inspection process.</p>
-
-        <p>Lectures will be covered over a 4-day period, with testing daily on the modules
-        covered that day. Class length will vary daily based on the lectures covered and the
-        testing time needed by each attendee.</p>
-
-        <p>Attendees must successfully complete open book exams in all 7 modules to obtain a
-        full 610 Specialist certification.</p>
-
-        <p>All instruction and communication within the class will be conducted in English, and
-        attendees need to have the ability to understand both spoken and written English to
-        fully engage with the course material and complete the exams.</p>
-
-        <p>Contact: <a href="mailto:eptac@patonhall.ca">eptac@patonhall.ca</a></p>
+      <section class="cal__detail" id="cal-detail">
+        <p class="cal__empty">Select an event to see its details.</p>
       </section>
     </div>
 
   </div>
+
+  <script src="assets/js/spaces.js" defer></script>
+  <script src="assets/js/calendar.js" defer></script>

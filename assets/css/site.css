@@ -736,9 +736,17 @@ body {
   border-bottom: 1px solid #6f7f70;
   font-family: var(--font-mono);
   font-size: 16px;
+  cursor: pointer;
 }
 
-.cal__events li.is-empty { color: transparent; }
+.cal__events li:hover,
+.cal__events li:focus-visible { background: #f1f3f1; outline: none; }
+
+.cal__empty {
+  font-family: var(--font-mono);
+  font-size: 15px;
+  color: #55524d;
+}
 
 .cal__detail { border-left: 1px solid #b9c7ba; padding-left: 34px; }
 
