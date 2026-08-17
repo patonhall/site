@@ -52,9 +52,9 @@
   --green-7:     #2f9e44;
   --cyan-9:      #0b7285;
   /* Subscribe panel. These are not eyedropped from the mockup — they are the
-     real values from the existing Paton Hall site (patonhall-1stsite), whose
-     signup module this panel reskins. Names kept from that stylesheet so the
-     two stay recognisably the same component. */
+     real values from the existing Paton Hall site, whose signup module this
+     panel reskins. Names kept from that stylesheet so the two stay
+     recognisably the same component. */
   --enamel:       #16212c;  /* the sign plate */
   --tube:         #f8efd6;  /* fluorescent warm white */
   --panel-label:  #9db2c4;

@@ -21,7 +21,6 @@ Then open <http://localhost:8017>. There is no build step.
 | `assets/fonts/` | Self-hosted fonts + licence notes |
 | `docs/superpowers/` | Design spec and implementation plan |
 | `mockups_AUG17/` | The source mockups, kept as the fidelity reference |
-| `patonhall-1stsite/` | The existing live site, for reference (not committed) |
 
 ## Design notes
 
