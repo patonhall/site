@@ -1,0 +1,99 @@
+/* ==========================================================================
+   Paton Hall — site.css
+
+   Aesthetic: Excalidraw. Palette: Open Color. Typography: the faces
+   Excalidraw itself bundles.
+
+   The hand-drawn quality of this site lives in the borders, which are drawn
+   at runtime by assets/js/sketch.js. The type is not hand-drawn — see
+   assets/fonts/README.md for why.
+   ========================================================================== */
+
+/* --- Fonts. Self-hosted; the page makes no third-party requests. ---------- */
+
+@font-face {
+  font-family: 'Lilita One';
+  src: url('../fonts/LilitaOne-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: block; /* block, not swap: a FOUT would flash the wrong aesthetic */
+}
+
+@font-face {
+  font-family: 'Comic Shanns Mono';
+  src: url('../fonts/ComicShannsMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../fonts/nunito-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-display: block;
+}
+
+@font-face {
+  font-family: 'Nunito';
+  src: url('../fonts/nunito-latin-600-normal.woff2') format('woff2');
+  font-weight: 600;
+  font-display: block;
+}
+
+/* --- Tokens --------------------------------------------------------------- */
+
+:root {
+  /* Colour. Named after Open Color, the palette Excalidraw uses, so future
+     pages can pull any Excalidraw swatch and match exactly. */
+  --ink:         #1b1b1f;
+  --paper:       #ffffff;
+  --blue-3:      #a5d8ff;
+  --yellow-3:    #ffec99;
+  --green-0:     #ebfbee;
+  --green-7:     #2f9e44;
+  --cyan-9:      #0b7285;
+  --panel:       #1f2933;
+  --panel-field: #f2efe6;
+  --panel-btn:   #f5ecd7;
+
+  /* Page background is a token, not a literal: the Calendar mockup is mint and
+     the Paton Hall Inc. mockups are yellow, so later pages retint by
+     overriding this one value. */
+  --page-bg: var(--paper);
+
+  /* Active nav fill is a token for the same reason: blue on Home, yellow
+     on the other pages. */
+  --nav-active-fill: var(--blue-3);
+
+  /* Type */
+  --font-display: 'Lilita One', 'Arial Black', sans-serif;
+  --font-body:    'Nunito', system-ui, -apple-system, sans-serif;
+  --font-mono:    'Comic Shanns Mono', ui-monospace, 'Cascadia Mono', monospace;
+  --font-serif:   Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+
+  /* Stroke geometry, shared between the CSS fallback borders and sketch.js so
+     the two stay visually interchangeable. */
+  --stroke-w: 1.6px;
+  --radius:   8px;
+}
+
+/* --- Reset ---------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--page-bg);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; }

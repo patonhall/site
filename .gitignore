@@ -1,2 +1,6 @@
 .DS_Store
 node_modules/
+.playwright-mcp/
+/specimen.png
+/shot-*.png
+/patonhall-1stsite/
