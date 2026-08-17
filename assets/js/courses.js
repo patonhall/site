@@ -43,13 +43,18 @@
   }
 
   function indicatorFor(course) {
-    if (course.registrationMode === 'door') {
-      return '🚪 Register at Door';
+    if (course.registrationMode === 'capacity' &&
+        typeof course.seatsTotal === 'number' && typeof course.seatsFilled === 'number') {
+      if (course.seatsFilled >= course.seatsTotal) {
+        return '🔴 Closed ' + course.seatsFilled + '/' + course.seatsTotal;
+      }
+      return '🟢 Open ' + course.seatsFilled + '/' + course.seatsTotal;
     }
-    if (course.seatsFilled >= course.seatsTotal) {
-      return '🔴 Closed ' + course.seatsFilled + '/' + course.seatsTotal;
-    }
-    return '🟢 Open ' + course.seatsFilled + '/' + course.seatsTotal;
+    // Door mode, or any malformed/unexpected data (e.g. a hand-edited
+    // courses.json with a typo'd registrationMode or missing seat counts),
+    // falls through to this neutral text rather than ever rendering a
+    // fabricated-looking "undefined/undefined" count.
+    return '🚪 Register at Door';
   }
 
   function renderTable() {

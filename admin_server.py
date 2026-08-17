@@ -142,6 +142,22 @@ def generate_uid(existing_uids, now=None):
     raise RuntimeError('could not generate a unique event id')
 
 
+def resolve_category(payload, categories_path):
+    """Resolve which category name a course payload should use. A non-empty
+    newCategory always wins over category; if it isn't already present in
+    the categories file, it's appended and the file is saved. Returns the
+    resolved category name (stripped)."""
+    new_category = payload.get('newCategory', '')
+    if isinstance(new_category, str) and new_category.strip():
+        category = new_category.strip()
+        categories = load_items(categories_path)
+        if category not in categories:
+            categories.append(category)
+            save_items(categories_path, categories)
+        return category
+    return payload['category'].strip()
+
+
 def load_items(path):
     if not os.path.exists(path):
         return []
@@ -235,15 +251,7 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
             self._send_json(400, {'error': '; '.join(errors)})
             return
 
-        new_category = payload.get('newCategory', '')
-        if isinstance(new_category, str) and new_category.strip():
-            category = new_category.strip()
-            categories = load_items(CATEGORIES_PATH)
-            if category not in categories:
-                categories.append(category)
-                save_items(CATEGORIES_PATH, categories)
-        else:
-            category = payload['category'].strip()
+        category = resolve_category(payload, CATEGORIES_PATH)
 
         courses = load_items(COURSES_PATH)
         uid = generate_uid({c['uid'] for c in courses})

@@ -151,5 +151,51 @@ class ValidateCourseTests(unittest.TestCase):
                        admin_server.validate_course(payload))
 
 
+class ResolveCategoryTests(unittest.TestCase):
+    def test_new_category_wins_over_existing_category_field(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, 'course-categories.json')
+            admin_server.save_items(path, ['Existing Category'])
+            payload = {'category': 'Existing Category', 'newCategory': 'Woodworking'}
+            result = admin_server.resolve_category(payload, path)
+            self.assertEqual(result, 'Woodworking')
+
+    def test_new_category_is_appended_and_saved_when_absent(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, 'course-categories.json')
+            admin_server.save_items(path, ['Existing Category'])
+            payload = {'category': '', 'newCategory': 'Woodworking'}
+            admin_server.resolve_category(payload, path)
+            self.assertEqual(admin_server.load_items(path),
+                              ['Existing Category', 'Woodworking'])
+
+    def test_new_category_matching_existing_is_not_duplicated(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, 'course-categories.json')
+            admin_server.save_items(path, ['Woodworking'])
+            payload = {'category': '', 'newCategory': 'Woodworking'}
+            admin_server.resolve_category(payload, path)
+            self.assertEqual(admin_server.load_items(path), ['Woodworking'])
+
+    def test_empty_new_category_uses_existing_category_with_no_file_write(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, 'course-categories.json')
+            # Deliberately do not create the file: if resolve_category tried
+            # to write to it, save_items would create it and this assertion
+            # would catch that.
+            payload = {'category': 'EPTAC (Electronics Specialists)', 'newCategory': ''}
+            result = admin_server.resolve_category(payload, path)
+            self.assertEqual(result, 'EPTAC (Electronics Specialists)')
+            self.assertFalse(os.path.exists(path))
+
+    def test_missing_new_category_key_uses_existing_category(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            path = os.path.join(tmp, 'course-categories.json')
+            payload = {'category': 'EPTAC (Electronics Specialists)'}
+            result = admin_server.resolve_category(payload, path)
+            self.assertEqual(result, 'EPTAC (Electronics Specialists)')
+            self.assertFalse(os.path.exists(path))
+
+
 if __name__ == '__main__':
     unittest.main()
