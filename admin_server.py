@@ -12,9 +12,11 @@ belonging to someone who already has git push access to the whole repo,"
 the same boundary the repo itself relies on.
 """
 
+import http.server
 import json
 import os
 import secrets
+import sys
 import tempfile
 from datetime import datetime
 
@@ -101,3 +103,70 @@ def save_events(path, events):
         if os.path.exists(tmp_path):
             os.remove(tmp_path)
         raise
+
+
+EVENTS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            'assets', 'data', 'events.json')
+
+
+class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
+    """Static file serving (inherited) plus POST /api/events."""
+
+    def do_POST(self):
+        if self.path != '/api/events':
+            self.send_error(404, 'Not found')
+            return
+
+        length = int(self.headers.get('Content-Length', 0))
+        raw = self.rfile.read(length) if length else b''
+        try:
+            payload = json.loads(raw.decode('utf-8'))
+        except (ValueError, UnicodeDecodeError):
+            self._send_json(400, {'error': 'request body must be valid JSON'})
+            return
+
+        errors = validate_event(payload)
+        if errors:
+            self._send_json(400, {'error': '; '.join(errors)})
+            return
+
+        events = load_events(EVENTS_PATH)
+        uid = generate_uid({e['uid'] for e in events})
+        event = {
+            'uid': uid,
+            'title': payload['title'].strip(),
+            'start': payload['start'],
+            'end': payload['end'],
+            'allDay': bool(payload.get('allDay', False)),
+            'location': payload['location'],
+            'description': payload.get('description', ''),
+            'created': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S'),
+        }
+        events.append(event)
+        save_events(EVENTS_PATH, events)
+        self._send_json(201, event)
+
+    def _send_json(self, status, body):
+        data = json.dumps(body).encode('utf-8')
+        self.send_response(status)
+        self.send_header('Content-Type', 'application/json')
+        self.send_header('Content-Length', str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+
+
+def main():
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8017
+    root = os.path.dirname(os.path.abspath(__file__))
+    os.chdir(root)
+    server = http.server.HTTPServer(('', port), AdminRequestHandler)
+    print('Serving %s with write access at http://localhost:%d/  (Ctrl+C to stop)'
+          % (root, port))
+    try:
+        server.serve_forever()
+    except KeyboardInterrupt:
+        pass
+
+
+if __name__ == '__main__':
+    main()
