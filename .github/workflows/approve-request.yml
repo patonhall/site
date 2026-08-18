@@ -1,0 +1,62 @@
+name: Approve request
+
+# Turns a booking/training-request GitHub Issue into a real Calendar event
+# or Training course when the "approved" label is added. The issue must
+# carry a hidden JSON block (added by the Apps Script that created it — see
+# docs/superpowers/specs/2026-08-18-patonhall-booking-training-requests-design.md)
+# for scripts/approve_request.py to read.
+
+on:
+  issues:
+    types: [labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  approve:
+    if: github.event.label.name == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Process the approval
+        id: approve
+        run: python3 scripts/approve_request.py
+
+      - name: Commit and push the new record
+        if: steps.approve.outputs.status == 'created'
+        env:
+          KIND: ${{ steps.approve.outputs.kind }}
+          TITLE: ${{ steps.approve.outputs.title }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data/events.json assets/data/courses.json
+          git commit -m "Approve $KIND: $TITLE (#$ISSUE_NUMBER)"
+          git push
+
+      - name: Comment and close on success
+        if: steps.approve.outputs.status == 'created'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          UID: ${{ steps.approve.outputs.uid }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --body "Added as \`$UID\`."
+          gh issue close "$ISSUE_NUMBER"
+
+      - name: Comment the error
+        if: steps.approve.outputs.status == 'error'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          MESSAGE: ${{ steps.approve.outputs.message }}
+        run: |
+          gh issue comment "$ISSUE_NUMBER" --body "Not approved: $MESSAGE"
