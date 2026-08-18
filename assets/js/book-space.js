@@ -5,7 +5,9 @@
 
    The native <form action> still points at the Google Form directly, so a
    visitor with JS disabled can still submit — Name/Email/Space/Purpose are
-   real named fields and go through; Start/End date & time have no native
+   real named fields and go through (Space's options are static markup in
+   book-space.html for exactly this reason, and carry the Google Form's own
+   option strings as their values); Start/End date & time have no native
    `name` (Google's date/time questions need year/month/day and hour/minute
    submitted as separate sub-fields, which only this script's JS can build)
    so a no-JS submission simply omits them rather than sending something
@@ -19,16 +21,6 @@
   var LIVE_CHECK_URL = 'https://script.google.com/macros/s/AKfycbzlFByJFpKUxx4xgzB7_o-Mq8e9XJmbKLdS-bIxJ9iPK2xcqmIXRnmVnVWZMav9PMXv/exec';
 
   function byId(id) { return document.getElementById(id); }
-
-  function populateSpaces() {
-    var select = byId('bs-space');
-    window.PATON_SPACES.forEach(function (space) {
-      var option = document.createElement('option');
-      option.value = space.id;
-      option.textContent = window.PatonSpaceText(space.id);
-      select.appendChild(option);
-    });
-  }
 
   function splitDate(value) {
     var parts = value.split('-');
@@ -97,7 +89,9 @@
   function checkAvailability() {
     if (!LIVE_CHECK_URL) return;
 
-    var space = byId('bs-space').value;
+    /* events.json's `location` is the bare id, so undo the form-value
+       formatting before asking the availability endpoint. */
+    var space = window.PatonSpaceId(byId('bs-space').value);
     var startDate = byId('bs-start-date').value;
     var startTime = byId('bs-start-time').value;
     var endDate = byId('bs-end-date').value;
@@ -127,7 +121,6 @@
   }
 
   function init() {
-    populateSpaces();
     byId('book-space-form').addEventListener('submit', onSubmit);
     ['bs-space', 'bs-start-date', 'bs-start-time', 'bs-end-date', 'bs-end-time']
       .forEach(function (id) {

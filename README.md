@@ -33,9 +33,10 @@ output is stale.
 | `*.html` | Generated output, committed; this is what Pages serves |
 | `assets/css/site.css` | All styling; design tokens live at the top |
 | `assets/js/sketch.js` | Draws every hand-drawn border via Rough.js |
+| `assets/js/statusbar.js` | Fills the persistent bottom bar with today's date and the next scheduled event from `events.json` |
 | `admin_server.py` | Local write-capable dev server — static files plus `POST /api/events` |
 | `assets/data/events.json` | Calendar events; written by `admin_server.py`, read at runtime by `calendar.html` |
-| `assets/js/spaces.js` | Shared A–I space list, used by the admin form and the Calendar |
+| `assets/js/spaces.js` | Shared A–I space list; loaded by the shell on every page, so the status bar, Calendar, Book Space and admin form all name a space the same way |
 | `assets/js/calendar.js` | Renders the Calendar's agenda and detail pane from `events.json` |
 | `assets/js/admin-events.js` | Handles `admin-events.html`'s form and its `POST /api/events` submission |
 | `tests/test_admin_server.py` | Unit tests for `admin_server.py`'s validation, uid generation, and file I/O |
@@ -141,10 +142,6 @@ Desktop-only by decision; empty responsive stubs sit at the bottom of
   or mockup yet.
 - **Placeholder links** — Discord, Instagram, phone, the Updates filters, and
   the IPC-A-610 data sheet. Search `TODO`.
-- **Status bar** — shows what is on at the hub and opens the Calendar when
-  clicked. The event text is still static; wiring it to
-  `assets/data/events.json` is future work, separate from the Calendar agenda
-  itself.
 - **Phone number** — not yet supplied.
 - **Mobile** — not implemented, see Scope above.
 - **Site aerial** — `assets/img/site-aerial.webp` (187KB) with `.jpg` (412KB)

@@ -66,7 +66,23 @@
 
       <div class="full">
         <label for="bs-space">Space / Zone</label>
-        <select id="bs-space" name="entry.187152365" required></select>
+        <!-- Options are static, not built by JS, so the no-JS fallback POST can
+             still carry a space. `value` is the Google Form's own option string
+             (plain hyphen) because Google validates the answer against its list;
+             the visible text is the site's em-dash form. Kept in step with
+             assets/js/spaces.js by tests/test_book_space_options.py. -->
+        <select id="bs-space" name="entry.187152365" required>
+          <option value="" selected disabled>Choose a space</option>
+          <option value="A - Blackboard">A — Blackboard</option>
+          <option value="B - Assembly Zone">B — Assembly Zone</option>
+          <option value="C - Whiteboard">C — Whiteboard</option>
+          <option value="D - Assembly Zone">D — Assembly Zone</option>
+          <option value="E - Pool Table">E — Pool Table</option>
+          <option value="F - Work Table 1">F — Work Table 1</option>
+          <option value="G - Work Table 2">G — Work Table 2</option>
+          <option value="H - Loading Area">H — Loading Area</option>
+          <option value="I - Special Request">I — Special Request</option>
+        </select>
       </div>
 
       <div>
@@ -102,7 +118,6 @@
     <p id="bs-status" class="form-status" role="status"></p>
   </main>
 
-  <script src="assets/js/spaces.js" defer></script>
   <script src="assets/js/book-space.js" defer></script>
 
 
@@ -121,6 +136,12 @@
 
 <script src="vendor/rough.min.js" defer></script>
 <script src="assets/js/sketch.js" defer></script>
+<!-- spaces.js is shell-level rather than per-page because the status bar names
+     the space an event is in, and the status bar is on every page. Pages that
+     also need the space list (Calendar, Book Space, admin) read these same
+     globals instead of loading a second copy. Nothing reads them before
+     DOMContentLoaded, so loading here — after any page-level script — is safe. -->
+<script src="assets/js/spaces.js" defer></script>
 <script src="assets/js/statusbar.js" defer></script>
 </body>
 </html>
