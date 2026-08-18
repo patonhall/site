@@ -62,10 +62,14 @@
   --panel-border: #5a6d7e;
   --panel-fine:   #8fa3b4;
 
-  /* Page background is a token, not a literal: the Calendar mockup is mint and
-     the Paton Hall Inc. mockups are yellow, so later pages retint by
-     overriding this one value. */
-  --page-bg: var(--paper);
+  /* Two backgrounds, not one. --page-bg paints the viewport OUTSIDE the drawn
+     frame; --frame-fill paints inside it. They were a single token until the
+     Calendar's mint and the Inc. sub-site's yellow were found bleeding past
+     the hand-drawn border to the window edge -- the tint sat on <body> while
+     the shape is .frame, so the colour was never actually in the shape.
+     Retinting a page now means overriding --frame-fill, not --page-bg. */
+  --page-bg:    var(--paper);
+  --frame-fill: var(--paper);
 
   /* Active nav fill is a token for the same reason: blue on Home, yellow
      on the other pages. */
@@ -73,6 +77,10 @@
 
   /* The garage glyph inverts to white on the yellow Inc. sub-site. */
   --garage-fill: var(--yellow-3);
+
+  /* The ships glyph beside it. Blue reads as water against both the white
+     pages and the Calendar's mint, and stays distinct from the garage. */
+  --ships-fill: var(--blue-3);
 
   /* Type */
   --font-display: 'Lilita One', 'Arial Black', sans-serif;
@@ -152,6 +160,7 @@ body {
    end of this file) — hidden everywhere else, same reasoning as above. */
 .nav-toggle { display: none; }
 .cal__fab { display: none; }
+.rail__page { display: none; }
 
 /* Column widths and gaps are measured from the mockup: the rail's buttons run
    x28–168, the main column x228–1118, the photo x1178–1648.
@@ -177,6 +186,13 @@ body {
   max-width: 1698px;
   margin: 0 auto;
 }
+
+/* Same fallback/sketched pair as .garage below: sketch.js paints the fill
+   along the wobbly drawn path via data-sketch-fill, so this plain rounded
+   rect only shows if rough.js never ran. The page then keeps its tint with
+   a clean edge rather than losing the colour outright. */
+.frame[data-sketch]           { background: var(--frame-fill); }
+.sketched .frame[data-sketch] { background: transparent; }
 
 /* --- Left rail ------------------------------------------------------------ */
 
@@ -265,6 +281,25 @@ body {
    button before the script runs or if it never does. */
 .garage[data-sketch] { background: var(--garage-fill); }
 .sketched .garage[data-sketch] { background: transparent; }
+
+/* Left of .garage: 18px (garage's own right offset) + 60px (its width) +
+   12px gap. Sized and centred like .social's glyph buttons, and drawn by the
+   same rough.js circle, so the two corner icons read as one pair. */
+.ships-link {
+  position: absolute;
+  top: 14px;
+  right: 90px;
+  width: 60px;
+  height: 60px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.ships-link[data-sketch] { background: var(--ships-fill); }
+.sketched .ships-link[data-sketch] { background: transparent; }
 
 /* .garage--spin is added by assets/js/garage-spin.js only on a visitor's
    first page load (tracked in localStorage) — this is a multi-page site,
@@ -605,9 +640,9 @@ body {
   outline-offset: 2px;
 }
 
-/* Calendar: mint page, matching the status bar it is the destination for. */
+/* Calendar: mint frame, matching the status bar it is the destination for. */
 .page-calendar {
-  --page-bg: var(--green-0);
+  --frame-fill: var(--green-0);
   --nav-active-fill: var(--yellow-3);
   --garage-fill: var(--yellow-3);
 }
@@ -615,9 +650,10 @@ body {
 /* Paton Hall Inc.: the yellow sub-site. The garage glyph inverts to white so
    it stays visible against the yellow ground. */
 .page-inc {
-  --page-bg: var(--yellow-3);
+  --frame-fill: var(--yellow-3);
   --nav-active-fill: var(--blue-3);
   --garage-fill: var(--paper);
+  --ships-fill: var(--paper);
 }
 
 /* --- Shared content components ------------------------------------------- */
@@ -725,6 +761,9 @@ body {
 
 .courses td { padding: 11px 14px; vertical-align: top; border-top: 1px solid #d5d2cb; }
 .courses tbody tr:nth-child(even) { background: #e2e0da; }
+
+/* Ships puts copy directly below the board; Training does not. */
+#ships-table { margin-bottom: 4px; }
 
 /* --- Updates -------------------------------------------------------------- */
 
@@ -846,12 +885,26 @@ body {
   gap: 60px;
   margin-bottom: 30px;
   /* The Calendar is the one page whose content reaches the frame's top-right
-     corner, where the garage glyph now sits. Reserve that space so the date
-     does not run underneath it. */
-  padding-right: 88px;
+     corner, where the ships and garage glyphs now sit. Reserve that space so
+     the header does not run underneath them: 88px covered the garage alone,
+     and the ships icon adds another 72px to its left. */
+  padding-right: 160px;
 }
 
 .cal__actions, .cal__views { display: flex; gap: 44px; }
+
+/* Half the standard .page-title clamp -- the Calendar is a dense schedule,
+   not a landing page, so the title yields room to the agenda instead of
+   dominating it. margin:0 because .cal__bar already owns the gap below.
+   .cal__bar's align-items:baseline is what keeps this display face and the
+   17px mono action link reading as one line. */
+.page-title--cal {
+  font-size: clamp(21px, 2.05vw, 35px);
+  margin: 0;
+}
+
+/* Same push-right idiom as .cal__today below. */
+.cal__bar .cal__actions { margin-left: auto; }
 
 .cal__actions a, .cal__views a {
   font-family: var(--font-mono);
@@ -867,6 +920,55 @@ body {
   margin-left: auto;
   font-size: 27px;
 }
+
+/* Hamilton Harbour, schematic. Sized to sit beside the body copy rather than
+   dominate it -- this is an orientation aid for the table below, not a chart. */
+.ships__figure { margin: 0 0 26px; max-width: 520px; }
+
+.ships__map {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: var(--stroke-w) solid var(--ink);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.ships__water { fill: var(--blue-3); stroke: var(--ink); stroke-width: 1.4; }
+
+.ships__place {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  fill: #55524d;
+  text-anchor: middle;
+}
+
+.ships__place--lake { fill: #35566b; }
+
+/* Hollow = stopped, filled = making way. */
+.ships__dot { fill: var(--paper); stroke: var(--ink); stroke-width: 1.6; }
+.ships__dot--moving { fill: var(--green-7); }
+
+.ships__figure figcaption {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #55524d;
+  margin-top: 8px;
+}
+
+/* The vessel board reuses .courses' table skin; only the provenance line
+   below it is new. Small and quiet — it is a caveat, not a heading — but
+   always present, because a shipping board with no timestamp invites the
+   reader to assume it is live. */
+.ships__meta {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: #55524d;
+  margin-top: 14px;
+}
+
+.ships__name { font-weight: 700; }
 
 .cal__body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 470px); gap: clamp(20px, 2.3vw, 40px); }
 
@@ -1057,6 +1159,29 @@ body {
     cursor: pointer;
   }
 
+  /* Two 60px corner circles plus the menu button and page label do not fit
+     across a phone's top edge. The garage stays (it is the Inc. sub-site's
+     only entrance); ships is desktop-only for the beta. */
+  .ships-link { display: none; }
+
+  /* The rail is a column everywhere else. Here row one holds the menu
+     button and the page label side by side, and the lists wrap onto their
+     own full-width rows beneath when opened. */
+  .page-calendar .rail {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .page-calendar .rail__page {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 26px;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+
   .page-calendar .nav,
   .page-calendar .social {
     display: none;
@@ -1065,7 +1190,10 @@ body {
   .page-calendar .rail.is-open .nav,
   .page-calendar .rail.is-open .social {
     display: flex;
-    margin-top: 13px;
+    /* Full-width row of their own; the rail's 12px gap replaces the
+       margin-top this rule used to carry. */
+    flex: 1 0 100%;
+    margin-top: 0;
   }
 
   .page-calendar .statusbar { display: none; }

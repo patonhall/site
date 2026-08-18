@@ -22,16 +22,22 @@
   <button type="button" class="mobile-notice__close" id="mobile-notice-close" aria-label="Dismiss this notice">&times;</button>
 </p>
 
-<div class="frame" data-sketch="frame">
+<div class="frame" data-sketch="frame" data-sketch-fill="--frame-fill">
 
   <nav class="rail">
     <!-- Hidden by default everywhere (see .nav-toggle base rule); shown
          only on .page-calendar at mobile widths, where it replaces the
          full nav/social lists below with a single menu button that
-         reveals them (assets/js/nav-toggle.js toggles .rail.is-open). -->
+         reveals them (assets/js/nav-toggle.js toggles .rail.is-open).
+         .rail__page sits beside it: with both lists collapsed nothing else
+         on screen names the page, so the label is what the visitor reads
+         instead. Filled from the page's `pagename:` front matter at build
+         time rather than by script, for the same reason build.py marks the
+         active nav button there -- it must survive scripting being off. -->
     <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-list">
       <span aria-hidden="true">&#9776;</span>
     </button>
+    <span class="rail__page">{{PAGENAME}}</span>
     <ul class="nav" id="nav-list">
       <li><a class="nav-btn" href="{{ROOT}}index.html"       data-nav="home"       data-sketch="box">Paton Hall</a></li>
       <li><a class="nav-btn" href="{{ROOT}}membership.html"  data-nav="membership" data-sketch="box">Membership</a></li>
@@ -59,6 +65,21 @@
     </ul>
 
   </nav>
+
+  <!-- Sits immediately left of .garage in the frame's top-right corner. Both
+       are absolutely positioned there rather than being grid items, so the
+       pair stays put however tall the page runs. Hidden below the mobile
+       breakpoint, where two 60px circles would collide with the Calendar's
+       menu button and page label. -->
+  <a class="ships-link" href="{{ROOT}}ships.html" data-sketch="circle" data-sketch-fill="--ships-fill" aria-label="Ships on the lake">
+    <svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M2.5 16.5h19l-2.2 3.4a1.6 1.6 0 0 1-1.3.7H6a1.6 1.6 0 0 1-1.3-.7Z"/>
+      <path d="M4.6 16.5v-3.9h14.8v3.9"/>
+      <path d="M14.4 12.6V8.4h4.1v4.2"/>
+      <path d="M7.4 12.6v-1.7M10.4 12.6v-1.7"/>
+      <path d="M16.4 8.4V6.2"/>
+    </svg>
+  </a>
 
   <a class="garage" href="{{ROOT}}inc.html" data-sketch="garage" data-sketch-fill="--garage-fill" aria-label="About Paton Hall Inc."></a>
 

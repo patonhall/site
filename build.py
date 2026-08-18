@@ -31,6 +31,10 @@ DEFAULTS = {
             "product demos and launches.",
     "nav": "",
     "class": "",
+    # Short display name for the page, used by the shell's mobile rail
+    # label. Empty on every page whose rail never collapses behind the
+    # menu button, which is all of them except the Calendar today.
+    "pagename": "",
 }
 
 
@@ -81,6 +85,7 @@ def render(path, shell):
     page = page.replace("{{TITLE}}", meta["title"])
     page = page.replace("{{DESC}}", meta["desc"])
     page = page.replace("{{BODYCLASS}}", meta["class"])
+    page = page.replace("{{PAGENAME}}", meta["pagename"])
     page = page.replace("{{ROOT}}", "")
     page = page.replace("{{CONTENT}}", content)
     return page

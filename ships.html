@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Updates — Paton Hall</title>
-<meta name="description" content="Posts about member activities, special events, bookings and general operations at Paton Hall.">
+<title>Ships — Paton Hall</title>
+<meta name="description" content="Great Lakes and Seaway vessel traffic passing Hamilton — a Paton Hall beta.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
@@ -37,14 +37,14 @@
     <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-list">
       <span aria-hidden="true">&#9776;</span>
     </button>
-    <span class="rail__page"></span>
+    <span class="rail__page">Ships</span>
     <ul class="nav" id="nav-list">
       <li><a class="nav-btn" href="index.html"       data-nav="home"       data-sketch="box">Paton Hall</a></li>
       <li><a class="nav-btn" href="membership.html"  data-nav="membership" data-sketch="box">Membership</a></li>
       <li><a class="nav-btn" href="calendar.html"    data-nav="calendar"   data-sketch="box">Calendar</a></li>
       <li><a class="nav-btn" href="training.html"    data-nav="training"   data-sketch="box">Training</a></li>
       <li><a class="nav-btn" href="services.html"    data-nav="services"   data-sketch="box">Services</a></li>
-      <li><a class="nav-btn is-active" href="updates.html"     data-nav="updates"    data-sketch="box" aria-current="page" data-sketch-fill="--nav-active-fill">Updates</a></li>
+      <li><a class="nav-btn" href="updates.html"     data-nav="updates"    data-sketch="box">Updates</a></li>
       <li><a class="nav-btn nav-btn--short" href="maps.html" data-nav="maps" data-sketch="box">Maps</a></li>
     </ul>
 
@@ -84,35 +84,89 @@
   <a class="garage" href="inc.html" data-sketch="garage" data-sketch-fill="--garage-fill" aria-label="About Paton Hall Inc."></a>
 
 <main class="main">
-    <h1 class="page-title">Updates</h1>
+    <h1 class="page-title">Ships</h1>
 
-    <p>Posts about member activities, special events, bookings and general operations.</p>
+    <p>Hamilton is a working port. Lakers and ocean-going freighters move steel,
+    ore, grain and salt through the harbour year-round, and most of them reach us
+    by way of the Welland Canal and the St. Lawrence Seaway.</p>
+
+    <p>This board is a beta. It listens to AIS — the position beacon every
+    sizeable vessel broadcasts continuously on VHF — and lists what was heard
+    over western Lake Ontario, nearest the harbour first.</p>
 
     <hr class="rule">
 
-    <!-- TODO: Members and Operators need the posts index before they can do
-         anything. Mailing List is live and is what the page shows by default. -->
-    <p class="filters">
-      <a href="https://patonhall.kit.com/" rel="noopener" target="_blank">Mailing List</a>
-      <a href="#" aria-disabled="true">Posts by Members</a>
-      <a href="#" aria-disabled="true">Operators</a>
-    </p>
+    <!-- Schematic, not a chart: the outline is drawn by hand to read at this
+         size and must never be navigated by. The lat/lon bounds live on the
+         element as data attributes because assets/js/ships.js projects vessel
+         positions into this same viewBox -- keeping one copy means the dots
+         cannot drift away from the coastline they are drawn against. -->
+    <figure class="ships__figure">
+      <svg class="ships__map" id="ships-map" viewBox="0 0 400 305"
+           data-lat-min="43.24" data-lat-max="43.34"
+           data-lon-min="-79.92" data-lon-max="-79.74"
+           role="img" aria-label="Schematic map of Hamilton Harbour showing vessel positions">
+        <!-- Lake Ontario, beyond the canal. -->
+        <path class="ships__water"
+              d="M 300 0 L 400 0 L 400 305 L 300 305 Z"/>
+        <!-- The harbour itself, with the Burlington Canal running east. -->
+        <path class="ships__water ships__harbour"
+              d="M 40 170
+                 C 52 126 104 100 168 104
+                 C 214 107 248 112 264 118
+                 L 302 118 L 302 140 L 264 140
+                 C 244 190 190 224 128 222
+                 C 74 220 34 200 40 170 Z"/>
+        <text class="ships__place" x="150" y="258">HAMILTON</text>
+        <text class="ships__place" x="150" y="74">BURLINGTON</text>
+        <text class="ships__place ships__place--lake" x="352" y="196">LAKE</text>
+        <text class="ships__place ships__place--lake" x="352" y="212">ONTARIO</text>
+        <g id="ships-map-marks"></g>
+      </svg>
+      <figcaption>Schematic. Vessels outside this view are still listed below.</figcaption>
+    </figure>
 
-    <!-- Filled by assets/js/kit-posts.js from patonhall.kit.com at load time.
-         Falls back to a plain archive link if Kit's page state changes shape. -->
-    <div id="kit-posts">
-      <p class="cal__empty">Loading&hellip;</p>
-    </div>
+    <table class="courses" id="ships-table">
+      <thead>
+        <tr>
+          <th>Vessel</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Speed</th>
+          <th>From harbour</th>
+          <th>Heard (UTC)</th>
+        </tr>
+      </thead>
+      <tbody id="ships-tbody">
+        <tr><td colspan="6">Loading&hellip;</td></tr>
+      </tbody>
+    </table>
 
-    <div id="posts-list"></div>
+    <!-- Filled by assets/js/ships.js from the data file's own metadata, so the
+         age of the board and its provenance are always on screen rather than
+         implied. -->
+    <p class="ships__meta" id="ships-meta"></p>
+
+    <h2 class="section-head">How to read it</h2>
+
+    <p>This is what we heard, not what is there. AIS reception here is
+    terrestrial and crowd-sourced, so a vessel out of receiver range simply
+    does not appear, and the board refreshes on a schedule rather than
+    continuously — the collection time under the table is the honest one.
+    Distances are straight-line from the middle of the harbour.</p>
+
+    <p>The obvious next step is receiving AIS ourselves. It is broadcast in
+    the clear, and a hundred-dollar software radio on this roof would hear the
+    whole harbour without depending on anyone else's network. That is the kind
+    of thing this building is for. If you want to help build it, write to
+    <a href="mailto:patonhall.canada@gmail.com">patonhall.canada@gmail.com</a>.</p>
 
     <p class="colophon">Paton Hall Inc. is a Canadian corporation run by and for its local
     membership. Click the garage icon
     for more info.</p>
   </main>
 
-  <script src="assets/js/kit-posts.js" defer></script>
-  <script src="assets/js/posts.js" defer></script>
+  <script src="assets/js/ships.js" defer></script>
 
 
 </div>
