@@ -36,6 +36,10 @@
  */
 
 var REPO = 'patonhall/site';
+/* Kit Form 9788991 ("Join the Newsletter") is configured for double
+   opt-in — adding a subscriber to it is what makes Kit send its
+   confirmation ("Incentive") email. See kitUpsertAndTag_. */
+var DOUBLE_OPTIN_FORM_ID = 9788991;
 var KIT_TAG_REQUEST = 'booking-request';
 var KIT_TAG_APPROVED = 'booking-approved';
 var KIT_TAG_CONFLICT = 'booking-conflict';
@@ -204,7 +208,24 @@ function runSelfTest() {
     }
   }
 
-  /* 4. GitHub token valid and scoped to this repo. A bad token is the most
+  /* 4. The double opt-in Form confirmation emails depend on. Both API calls
+        in kitUpsertAndTag_ pass muteHttpExceptions, so a bad Form ID would
+        otherwise fail invisibly — nobody gets a confirmation email and
+        nothing anywhere says why. */
+  if (kitApiKey) {
+    var formResponse = UrlFetchApp.fetch(
+      'https://api.kit.com/v4/forms/' + DOUBLE_OPTIN_FORM_ID + '/subscribers?per_page=1',
+      { headers: { 'X-Kit-Api-Key': kitApiKey }, muteHttpExceptions: true });
+    Logger.log('4. Kit GET /v4/forms/' + DOUBLE_OPTIN_FORM_ID + '/subscribers -> HTTP '
+      + formResponse.getResponseCode());
+    if (formResponse.getResponseCode() !== 200) {
+      problems.push('Cannot reach double opt-in Form ' + DOUBLE_OPTIN_FORM_ID + ' (HTTP '
+        + formResponse.getResponseCode() + ') — confirmation emails will silently not '
+        + 'send. Check DOUBLE_OPTIN_FORM_ID matches a real Form in Kit.');
+    }
+  }
+
+  /* 5. GitHub token valid and scoped to this repo. A bad token is the most
         invisible failure of all: openGithubIssue_ swallows it and returns an
         object with no .number. */
   if (githubToken) {
@@ -212,7 +233,7 @@ function runSelfTest() {
       headers: { Authorization: 'Bearer ' + githubToken, Accept: 'application/vnd.github+json' },
       muteHttpExceptions: true
     });
-    Logger.log('4. GitHub GET /repos/' + REPO + ' -> HTTP ' + repoResponse.getResponseCode());
+    Logger.log('5. GitHub GET /repos/' + REPO + ' -> HTTP ' + repoResponse.getResponseCode());
     if (repoResponse.getResponseCode() !== 200) {
       problems.push('GITHUB_TOKEN cannot read ' + REPO + ': ' + repoResponse.getContentText());
     } else {
@@ -232,11 +253,11 @@ function runSelfTest() {
     }
   }
 
-  /* 5. The schedule data the conflict check reads. */
+  /* 6. The schedule data the conflict check reads. */
   var rawResponse = UrlFetchApp.fetch(
     'https://raw.githubusercontent.com/' + REPO + '/main/assets/data/events.json',
     { muteHttpExceptions: true });
-  Logger.log('5. raw events.json -> HTTP ' + rawResponse.getResponseCode());
+  Logger.log('6. raw events.json -> HTTP ' + rawResponse.getResponseCode());
   if (rawResponse.getResponseCode() !== 200) {
     problems.push('Cannot read events.json from the repo: HTTP '
       + rawResponse.getResponseCode());
@@ -317,11 +338,25 @@ function findKitTag_(tagName, apiKey) {
 }
 
 function kitUpsertAndTag_(email, firstName, tagName, apiKey) {
+  /* state:'inactive' + adding to the double opt-in form is what actually
+     triggers Kit's confirmation email — POST /v4/subscribers alone defaults
+     a new subscriber to state:'active' (already confirmed, no email sent).
+     Ignored for an existing subscriber: this endpoint does not update
+     state on an upsert, per Kit's docs, so re-submission can't downgrade
+     someone who already confirmed. */
   UrlFetchApp.fetch('https://api.kit.com/v4/subscribers', {
     method: 'post',
     contentType: 'application/json',
     headers: { 'X-Kit-Api-Key': apiKey },
-    payload: JSON.stringify({ email_address: email, first_name: firstName }),
+    payload: JSON.stringify({ email_address: email, first_name: firstName, state: 'inactive' }),
+    muteHttpExceptions: true
+  });
+
+  UrlFetchApp.fetch('https://api.kit.com/v4/forms/' + DOUBLE_OPTIN_FORM_ID + '/subscribers', {
+    method: 'post',
+    contentType: 'application/json',
+    headers: { 'X-Kit-Api-Key': apiKey },
+    payload: JSON.stringify({ email_address: email }),
     muteHttpExceptions: true
   });
 
