@@ -18,7 +18,7 @@
  * Script Properties required (Project Settings (gear icon) > Script
  * Properties > Add script property):
  *   KIT_API_KEY     — Kit v4 API key
- *   GITHUB_TOKEN    — a GitHub PAT scoped to `repo` on peers8862/patonhall-excalisite
+ *   GITHUB_TOKEN    — a GitHub PAT scoped to `repo` on patonhall/site
  *
  * Install onFormSubmit as an INSTALLABLE trigger (Triggers icon in the
  * left sidebar > + Add Trigger > function onFormSubmit > event source
@@ -26,7 +26,7 @@
  * simple trigger of the same name can't call UrlFetchApp at all.
  */
 
-var REPO = 'peers8862/patonhall-excalisite';
+var REPO = 'patonhall/site';
 
 var TIER_TAGS = {
   List: 'list-subscriber',

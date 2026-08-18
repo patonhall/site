@@ -15,7 +15,7 @@
  * Script Properties required (Project Settings (gear icon) > Script
  * Properties > Add script property):
  *   KIT_API_KEY     — Kit v4 API key
- *   GITHUB_TOKEN    — a GitHub PAT scoped to `repo` on peers8862/patonhall-excalisite
+ *   GITHUB_TOKEN    — a GitHub PAT scoped to `repo` on patonhall/site
  *
  * Install onFormSubmit as an INSTALLABLE trigger (Triggers icon in the
  * left sidebar > + Add Trigger > function onFormSubmit > event source
@@ -30,7 +30,7 @@
  * rather than writing a broken course record.
  */
 
-var REPO = 'peers8862/patonhall-excalisite';
+var REPO = 'patonhall/site';
 var KIT_TAG_REQUEST = 'training-requested';
 var KIT_TAG_REVIEWED = 'training-reviewed';
 

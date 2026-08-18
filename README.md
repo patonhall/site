@@ -166,9 +166,15 @@ for the full design.
 
 ## Deployment
 
-GitHub Pages, served from the repository root. `.nojekyll` is in place so Pages
-does not run Jekyll. No build step and no Actions workflow required.
+Live at <https://patonhall.github.io/site/>, in `patonhall/site` under the
+`patonhall` GitHub org. GitHub Pages, served from the repository root.
+`.nojekyll` is in place so Pages does not run Jekyll — the static build
+(`build.py`) is still a local development convenience, never a runtime
+dependency. `.github/workflows/approve-request.yml` is the one Actions
+workflow that does exist, for the booking/training request pipeline (see
+above); it plays no part in serving the site itself.
 
-Note: the existing `patonhall` repository owns a `CNAME`. If this site is to
-take over that domain, that file has to move — a deliberate decision, not
-something this repo does on its own.
+Note: `babbworks/patonhall` (a separate, older repo — business-case docs, not
+this site) owns a `CNAME` pointing at `paton.babb.tel`. A custom domain for
+this site (e.g. `patonhall.ca`, set as the `patonhall` org's profile URL) is
+a deliberate future decision, not something set up automatically here.

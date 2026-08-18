@@ -20,7 +20,7 @@
  * Script Properties required (Project Settings (gear icon) > Script
  * Properties > Add script property):
  *   KIT_API_KEY     — Kit v4 API key
- *   GITHUB_TOKEN    — a GitHub PAT scoped to `repo` on peers8862/patonhall-excalisite
+ *   GITHUB_TOKEN    — a GitHub PAT scoped to `repo` on patonhall/site
  *
  * onFormSubmit must be added as an INSTALLABLE trigger (Triggers icon in
  * the left sidebar > + Add Trigger > choose function onFormSubmit > event
@@ -37,7 +37,7 @@
  * actually entered, not something garbled.
  */
 
-var REPO = 'peers8862/patonhall-excalisite';
+var REPO = 'patonhall/site';
 var KIT_TAG_REQUEST = 'booking-request';
 var KIT_TAG_APPROVED = 'booking-approved';
 var KIT_TAG_CONFLICT = 'booking-conflict';
