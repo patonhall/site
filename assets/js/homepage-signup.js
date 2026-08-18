@@ -33,7 +33,7 @@
     var form = byId('homepage-signup-form');
     fetch(form.action, { method: 'POST', mode: 'no-cors', body: new FormData(form) })
       .then(function () {
-        setStatus('Thanks — we'll follow up by email.', 'success');
+        setStatus("Thanks — we'll follow up by email.", 'success');
         form.reset();
         updateTier();
       })
