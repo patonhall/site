@@ -185,7 +185,10 @@ function runSelfTest() {
     });
     Logger.log('3. Kit GET /v4/tags -> HTTP ' + tagsResponse.getResponseCode());
     if (tagsResponse.getResponseCode() !== 200) {
-      problems.push('Kit API rejected the key: ' + tagsResponse.getContentText());
+      problems.push('Kit rejected the key (HTTP ' + tagsResponse.getResponseCode()
+        + '): ' + tagsResponse.getContentText()
+        + ' -- a 401 here usually means a v3 key is being used against the v4 API. '
+        + 'Create a V4 key: Kit > Settings > Developer > V4 Keys > Add a new key.');
     } else {
       var names = (JSON.parse(tagsResponse.getContentText()).tags || [])
         .map(function (t) { return t.name.toLowerCase(); });
@@ -208,9 +211,20 @@ function runSelfTest() {
     Logger.log('4. GitHub GET /repos/' + REPO + ' -> HTTP ' + repoResponse.getResponseCode());
     if (repoResponse.getResponseCode() !== 200) {
       problems.push('GITHUB_TOKEN cannot read ' + REPO + ': ' + repoResponse.getContentText());
-    } else if (!JSON.parse(repoResponse.getContentText()).permissions.push) {
-      problems.push('GITHUB_TOKEN can read ' + REPO + ' but has no write access, '
-        + 'so it cannot open issues. It needs the `repo` scope.');
+    } else {
+      /* Advisory, not fatal. push=false is conclusive for a classic PAT
+         missing the `repo` scope, but a fine-grained token scoped only to
+         Issues can open issues while still reporting push=false here. There
+         is no way to prove issue-write access without actually writing an
+         issue, so this reports rather than fails. */
+      var perms = JSON.parse(repoResponse.getContentText()).permissions || {};
+      Logger.log('   repo permissions seen by this token: push=' + perms.push
+        + ' pull=' + perms.pull);
+      if (!perms.push) {
+        Logger.log('   NOTE: push=false. If this is a classic PAT it needs the '
+          + '`repo` scope. If it is fine-grained with Issues: read and write, '
+          + 'this is expected and fine.');
+      }
     }
   }
 
