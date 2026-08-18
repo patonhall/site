@@ -43,12 +43,12 @@
   }
 
   function renderPost(post) {
-    var item = el('li', 'kit-post', null);
+    var item = el('li', 'feed__item', null);
 
     var thumb = safeUrl(post.thumbnailUrl);
     if (thumb) {
       var img = document.createElement('img');
-      img.className = 'kit-post__thumb';
+      img.className = 'feed__thumb';
       img.src = thumb;
       /* Empty alt is correct for a thumbnail whose meaning is already
          carried by the title beside it. */
@@ -57,9 +57,9 @@
       item.appendChild(img);
     }
 
-    var body = el('div', 'kit-post__body', null);
+    var body = el('div', 'feed__body', null);
 
-    var heading = el('h3', 'kit-post__title', null);
+    var heading = el('h3', 'feed__title', null);
     var link = el('a', '', post.title);
     link.href = safeUrl(post.url) || ARCHIVE_URL;
     link.rel = 'noopener';
@@ -68,10 +68,10 @@
     body.appendChild(heading);
 
     var date = formatDate(post.publishedAt);
-    if (date) body.appendChild(el('p', 'footnote', date));
+    if (date) body.appendChild(el('p', 'feed__meta', date));
 
     var summary = post.metaDescription || post.introContent;
-    if (summary) body.appendChild(el('p', 'kit-post__summary', summary));
+    if (summary) body.appendChild(el('p', 'feed__summary', summary));
 
     item.appendChild(body);
     return item;
@@ -101,7 +101,7 @@
         if (!Array.isArray(posts) || !posts.length) return renderFallback(container);
 
         container.innerHTML = '';
-        var list = el('ul', 'kit-posts', null);
+        var list = el('ul', 'feed', null);
         posts.forEach(function (post) {
           if (post && post.title) list.appendChild(renderPost(post));
         });

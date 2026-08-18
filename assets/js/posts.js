@@ -5,7 +5,6 @@
 (function () {
   'use strict';
 
-  var DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                       'August', 'September', 'October', 'November', 'December'];
 
@@ -14,8 +13,9 @@
     return new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
   }
 
-  function dateHeading(date) {
-    return DAY_NAMES[date.getDay()] + ' ' + MONTH_NAMES[date.getMonth()] + ' ' + date.getDate();
+  /* Same shape kit-posts.js produces, so the two columns' dates match. */
+  function formatDate(date) {
+    return MONTH_NAMES[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
   }
 
   function el(tag, className, text) {
@@ -36,39 +36,47 @@
   function render(container, posts) {
     container.innerHTML = '';
 
-    /* Render nothing at all when there are no posts. This list sits below
-       the live Mailing List archive on Updates, so an empty-state message
-       here read as though the whole page had nothing on it. The container
-       stays wired, so member/operator posts appear the moment posts.json
-       has any. A fetch *failure* still reports itself below — that is a
-       different situation from simply having nothing yet. */
+    /* Render nothing at all when there are no posts. This column sits beside
+       the live Mailing List archive, so an empty-state message here read as
+       though the whole page had nothing on it. The container stays wired, so
+       member posts appear the moment posts.json has any. A fetch *failure*
+       still reports itself below -- a different situation from having
+       nothing yet. */
     if (!posts.length) return;
 
     var sorted = posts.slice().sort(function (a, b) {
       return parseDateOnly(b.date) - parseDateOnly(a.date);
     });
 
-    var currentKey = null;
-    var list = null;
+    /* No date grouping. Posts used to sit under a bold display-face heading
+       per day, which made this column look nothing like the mailing list
+       beside it. Each entry now carries its own date under its title, in the
+       same markup kit-posts.js emits. */
+    var list = el('ul', 'feed', null);
 
     sorted.forEach(function (post) {
-      if (post.date !== currentKey) {
-        currentKey = post.date;
-        container.appendChild(el('h2', 'date-head', dateHeading(parseDateOnly(post.date))));
-        list = el('ul', 'post-list', null);
-        container.appendChild(list);
-      }
+      var item = el('li', 'feed__item', null);
+      var body = el('div', 'feed__body', null);
 
-      var item = document.createElement('li');
+      var heading = el('h3', 'feed__title', null);
       var link = el('a', '', post.title);
       link.href = 'post.html?uid=' + encodeURIComponent(post.uid);
-      item.appendChild(link);
-      item.appendChild(el('span', 'footnote', ' — ' + post.author));
+      heading.appendChild(link);
+      body.appendChild(heading);
+
+      body.appendChild(el('p', 'feed__meta', formatDate(parseDateOnly(post.date))));
+
+      var byline = el('p', 'feed__byline', post.author);
       if (post.topics && post.topics.length) {
-        item.appendChild(renderTopics(post.topics));
+        byline.appendChild(renderTopics(post.topics));
       }
+      body.appendChild(byline);
+
+      item.appendChild(body);
       list.appendChild(item);
     });
+
+    container.appendChild(list);
   }
 
   function init() {

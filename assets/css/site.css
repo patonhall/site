@@ -368,6 +368,12 @@ body {
 
 .building { width: 100%; height: auto; margin-bottom: 20px; }
 
+/* .frame sets align-items:start, so an aside is only as tall as its content
+   and position:sticky inside it would have nothing to travel through --
+   it would simply sit still. This one stretches to the row so the contents
+   rail can actually follow a long article. */
+.aside--toc { align-self: stretch; }
+
 .leasing-note {
   font-family: var(--font-mono);
   font-size: 13px;
@@ -676,7 +682,7 @@ body {
 
 .main > .section-head:first-of-type { margin-top: 8px; }
 
-.plain-list, .link-list, .dash-list, .post-list, .topic-list,
+.plain-list, .link-list, .dash-list, .topic-list,
 .section-list, .subnav {
   list-style: none;
   margin: 0;
@@ -802,6 +808,16 @@ body {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(20px, 2.5vw, 44px);
   align-items: start;
+}
+
+/* Simpler face than the display heading it sits in: this is a destination,
+   not part of the title. */
+.updates__head a {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
 }
 
 .updates__head {
@@ -950,32 +966,28 @@ body.is-editor-max .statusbar { display: none; }
 .filters { font-size: 17px; }
 .filters a { margin-left: 26px; text-decoration: none; }
 
-.date-head {
-  font-family: var(--font-display);
-  font-size: 17px;
-  font-weight: 400;
-  text-transform: uppercase;
-  margin: 30px 0 8px;
-}
+/* --- Updates feeds (assets/js/kit-posts.js and assets/js/posts.js) --------
+   ONE treatment for both columns. They previously diverged hard -- the
+   mailing list in the body face at 20px, members' posts in mono at 17px
+   under a bold display-face date heading -- which read as two unrelated
+   widgets sitting next to each other rather than two streams of the same
+   thing. Both renderers now emit this markup, so the columns match by
+   construction instead of by two sets of rules kept in sync by hand.
 
-.post-list li { border-bottom: 1px solid var(--ink); }
+   Thumbnails are remote Kit CDN URLs of unknown dimensions, so the box is
+   fixed and the image is cropped to fit rather than dictating row height. */
 
-/* --- Mailing list archive (assets/js/kit-posts.js) ------------------------
-   Rendered from patonhall.kit.com's own page state. Thumbnails are remote
-   Kit CDN URLs of unknown dimensions, so the box is fixed and the image is
-   cropped to fit rather than being allowed to dictate row height. */
+.feed { list-style: none; margin: 0; padding: 0; }
 
-.kit-posts { list-style: none; margin: 0; padding: 0; }
-
-.kit-post {
+.feed__item {
   display: flex;
   gap: 18px;
   align-items: flex-start;
-  padding: 18px 0;
+  padding: 16px 0;
   border-bottom: 1px solid var(--ink);
 }
 
-.kit-post__thumb {
+.feed__thumb {
   width: 132px;
   height: 88px;
   object-fit: cover;
@@ -983,25 +995,47 @@ body.is-editor-max .statusbar { display: none; }
   flex: 0 0 auto;
 }
 
-.kit-post__body { flex: 1 1 auto; min-width: 0; }
+.feed__body { flex: 1 1 auto; min-width: 0; }
 
-.kit-post__title { font-size: 20px; margin: 0 0 4px; }
-.kit-post__title a { text-decoration: none; }
-.kit-post__title a:hover { text-decoration: underline; }
+.feed__title {
+  font-family: var(--font-body);
+  font-size: 19px;
+  font-weight: 700;
+  line-height: 1.25;
+  margin: 0 0 3px;
+}
 
-.kit-post__summary { margin: 6px 0 0; }
+.feed__title a { text-decoration: none; }
+.feed__title a:hover { text-decoration: underline; }
+
+/* The date, under the title and deliberately not bold -- it is context for
+   the headline above it, not a heading in its own right. */
+.feed__meta {
+  font-size: 13px;
+  font-weight: 400;
+  color: #55524d;
+  margin: 0;
+}
+
+/* Several steps down from the title so a column of entries stays compact
+   and scannable rather than reading as a wall of same-sized text. */
+.feed__summary {
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 5px 0 0;
+}
+
+/* Author and topic pills. The padding is what stops the next entry's title
+   crowding this line. */
+.feed__byline {
+  font-size: 13px;
+  color: #55524d;
+  margin: 6px 0 0;
+  padding-bottom: 8px;
+}
 
 /* The first filter is the live one; the others stay visibly inert. */
 .filters a:first-child { margin-left: 0; }
-
-
-.post-list a {
-  display: block;
-  padding: 12px 2px;
-  font-family: var(--font-mono);
-  font-size: 17px;
-  text-decoration: none;
-}
 
 .post-header { display: flex; align-items: center; gap: 28px; width: 100%; }
 .back { font-size: 34px; line-height: 1; text-decoration: none; }
@@ -1070,6 +1104,51 @@ body.is-editor-max .statusbar { display: none; }
 }
 .post-body pre code { background: none; padding: 0; }
 .post-body hr { border: none; border-top: 1px solid #c9c6bf; margin: 24px 0; }
+
+/* Anchor jumps from the contents rail should not land with the heading
+   flush against the viewport edge. */
+.post-body h2, .post-body h3, .post-body h4 { scroll-margin-top: 18px; }
+
+/* --- Post contents rail (assets/js/post.js) ------------------------------
+   Sticky so it stays available through a long article. Indentation carries
+   the heading hierarchy rather than nested lists: the depth is only ever
+   three levels, and a flat list with padding is far easier to keep legible
+   in a 470px column than nested <ul>s. */
+.toc {
+  position: sticky;
+  top: 20px;
+  align-self: start;
+  width: 100%;
+  padding-left: 16px;
+  border-left: 1px solid #c9c6bf;
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
+.toc__head {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #55524d;
+  margin: 0 0 10px;
+}
+
+.toc__list { list-style: none; margin: 0; padding: 0; }
+
+.toc__item { margin-bottom: 7px; line-height: 1.35; }
+.toc__item--h3 { padding-left: 13px; }
+.toc__item--h4 { padding-left: 26px; }
+
+.toc__item a {
+  font-size: 14px;
+  color: #3a3833;
+  text-decoration: none;
+}
+
+.toc__item--h2 a { font-weight: 700; color: var(--ink); }
+.toc__item a:hover { text-decoration: underline; }
+.toc__item a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .post-body p:last-child { margin-bottom: 0; }
 
 /* --- Maps ----------------------------------------------------------------- */
@@ -1305,6 +1384,12 @@ body.is-editor-max .statusbar { display: none; }
   .editor { grid-template-columns: 1fr; }
   .editor__pane, .editor__pane.is-split { grid-template-columns: 1fr; height: auto; }
   #post-body { min-height: 300px; }
+
+  .toc {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
 
   /* The desktop bar is a fixed 36px single row with the event and date
      side by side — on a narrow screen that either truncates the date or

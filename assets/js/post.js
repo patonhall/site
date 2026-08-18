@@ -31,6 +31,50 @@
     });
   }
 
+  /* Ids come from the heading text so a copied link stays meaningful and
+     stable across edits elsewhere in the post. Collisions get a numeric
+     suffix -- two sections legitimately called "Notes" must not both answer
+     to #notes, or the second one becomes unreachable. */
+  function slugify(text, used) {
+    var base = text.toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'section';
+    var slug = base;
+    var n = 2;
+    while (used[slug]) { slug = base + '-' + n; n++; }
+    used[slug] = true;
+    return slug;
+  }
+
+  /* h2-h4 only. h1 is the post title, which lives outside the body, and
+     h5/h6 are deeper than a sidebar can usefully show. */
+  function buildToc(body) {
+    var nav = byId('post-toc');
+    var list = byId('post-toc-list');
+    if (!nav || !list) return;
+
+    var headings = body.querySelectorAll('h2, h3, h4');
+    if (!headings.length) return;      /* stays hidden; no empty rail */
+
+    var used = {};
+    for (var i = 0; i < headings.length; i++) {
+      var heading = headings[i];
+      var text = heading.textContent.trim();
+      if (!text) continue;
+      if (!heading.id) heading.id = slugify(text, used);
+
+      var item = document.createElement('li');
+      item.className = 'toc__item toc__item--' + heading.tagName.toLowerCase();
+      var link = document.createElement('a');
+      link.href = '#' + heading.id;
+      link.textContent = text;
+      item.appendChild(link);
+      list.appendChild(item);
+    }
+
+    if (list.children.length) nav.hidden = false;
+  }
+
   function showNotFound() {
     byId('post-title').textContent = 'Post not found';
     byId('post-date').textContent = '';
@@ -60,6 +104,7 @@
         byId('post-date').textContent = post.date;
         byId('post-author').textContent = post.author;
         renderBody(byId('post-body'), post.body);
+        buildToc(byId('post-body'));
       })
       .catch(showNotFound);
   }

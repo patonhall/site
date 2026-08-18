@@ -22,5 +22,18 @@ desc: A post from Paton Hall's Updates.
     <article class="post-body" id="post-body"></article>
   </main>
 
+  <!-- .frame's third track (470px against the main column's 890px, so the
+       article keeps roughly two thirds of the width) held nothing on this
+       page. It now carries a contents list built from the post's own
+       Markdown headings by assets/js/post.js. Shipped hidden: a short post
+       with no headings gets no rail rather than an empty box, and the
+       markup only means anything once the body has rendered. -->
+  <aside class="aside aside--flush aside--toc">
+    <nav class="toc" id="post-toc" aria-label="Contents" hidden>
+      <p class="toc__head">Contents</p>
+      <ul class="toc__list" id="post-toc-list"></ul>
+    </nav>
+  </aside>
+
   <script src="assets/js/markdown.js" defer></script>
   <script src="assets/js/post.js" defer></script>
