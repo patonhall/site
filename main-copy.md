@@ -35,6 +35,23 @@ resizable textarea — no longer a fixed dropdown, and no longer hidden
 for Member/Founder. Whatever's typed passes straight through into the
 GitHub signup issue's body regardless of tier.
 
+## Membership page interest form
+
+Simplest of the four pipelines — Name and Email only, no tier selection.
+Sits below the tier tables on the Membership page.
+
+> Interested?
+> Leave your name and email and we'll follow up to talk through which tier fits.
+
+**Fixed fine print under the button:**
+
+> Submitting this form adds you to our mailing list. A confirmation email
+> will be sent. We'll follow up personally to talk membership.
+
+Kit tag: `membership-interest`. GitHub issue label: `type:membership-interest`.
+Pure notification like homepage signup — no repo write-back, admin closes
+the issue by hand once they've followed up.
+
 ## Kit automation emails (paste into Kit by hand — not deployed from this repo)
 
 **List** (tag `list-subscriber`):
