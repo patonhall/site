@@ -28,13 +28,11 @@
  * default *simple* trigger of the same name does NOT work here — simple
  * triggers run in a restricted sandbox that can't call UrlFetchApp at all.
  *
- * UNVERIFIED, flag for a real test: e.namedValues' exact string format for
- * the Date/Time questions. isoFromParts_() assumes Google's typical
- * "9/1/2026" / "2:30:00 PM" formatting (JS's built-in Date parser handles
- * both directly) — this is the standard behavior, but locale settings on
- * the account could shift it. Submit one real test booking after deploying
- * and confirm the GitHub Issue's "Requested:" line shows the date/time you
- * actually entered, not something garbled.
+ * isoFromParts_() was verified end to end on 2026-08-18: a submission for
+ * 2026-09-01 14:00-16:00 produced "Requested: 2026-09-01T14:00 –
+ * 2026-09-01T16:00" on the resulting issue, so this account's locale
+ * formats e.namedValues' Date/Time strings the way JS's Date parser
+ * expects. Re-check it if the Google account's locale ever changes.
  */
 
 var REPO = 'patonhall/site';
