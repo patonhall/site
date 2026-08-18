@@ -250,12 +250,31 @@ body {
   height: 60px;
   border-radius: 50%;
   color: var(--ink);
+  animation: garage-spin 3.6s cubic-bezier(0.34, 1.2, 0.4, 1) 1;
 }
 
 /* The CSS fallback: a plain filled circle, so the glyph still reads as a
    button before the script runs or if it never does. */
 .garage[data-sketch] { background: var(--garage-fill); }
 .sketched .garage[data-sketch] { background: transparent; }
+
+/* A one-shot, slightly silly spin-up on load — wobbles past a full turn
+   twice before settling, rather than one clean rotation. Ends at 720deg
+   (== 0deg) with scale back to 1, so it always settles looking normal. */
+@keyframes garage-spin {
+  0%   { transform: rotate(0deg) scale(1); }
+  12%  { transform: rotate(-25deg) scale(1.05); }
+  24%  { transform: rotate(380deg) scale(0.95); }
+  38%  { transform: rotate(340deg) scale(1.08); }
+  52%  { transform: rotate(760deg) scale(0.96); }
+  68%  { transform: rotate(700deg) scale(1.06); }
+  84%  { transform: rotate(745deg) scale(0.99); }
+  100% { transform: rotate(720deg) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .garage { animation: none; }
+}
 
 /* --- Main ----------------------------------------------------------------- */
 
