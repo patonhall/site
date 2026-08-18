@@ -10,6 +10,18 @@
 </head>
 <body class="page-inner">
 
+<!-- Mobile-only advisory — hidden by default, shown by the mobile
+     breakpoint in site.css. The layout's mobile pass so far covers the
+     shared shell and the homepage; several page-specific grids (Calendar,
+     Training's table, admin forms) aren't reworked yet, so this sets
+     expectations rather than presenting those as broken. Dismissible via
+     assets/js/mobile-notice.js, which remembers the dismissal in
+     localStorage so it stays gone across pages, not just the current one. -->
+<p class="mobile-notice" id="mobile-notice">
+  View site on desktop
+  <button type="button" class="mobile-notice__close" id="mobile-notice-close" aria-label="Dismiss this notice">&times;</button>
+</p>
+
 <div class="frame" data-sketch="frame">
 
   <nav class="rail">
@@ -80,6 +92,7 @@
 <script src="vendor/rough.min.js" defer></script>
 <script src="assets/js/sketch.js" defer></script>
 <script src="assets/js/garage-spin.js" defer></script>
+<script src="assets/js/mobile-notice.js" defer></script>
 <!-- spaces.js is shell-level rather than per-page because the status bar names
      the space an event is in, and the status bar is on every page. Pages that
      also need the space list (Calendar, Book Space, admin) read these same

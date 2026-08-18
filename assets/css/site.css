@@ -136,13 +136,17 @@ a { color: inherit; }
 /* --- Page frame ----------------------------------------------------------- */
 
 body {
-  /* Desktop-only still: the layout keeps its three columns and simply sizes
-     to the window. 960px is the floor at which the rail, body copy and right
-     column are all still usable; below it the page scrolls rather than
-     collapsing into a phone layout, which is separate work. */
+  /* 960px is the floor at which the rail, body copy and right column are
+     all still usable at their desktop sizing. Below it, the mobile
+     breakpoint near the end of this file overrides both of these. */
   min-width: 960px;
   padding: 12px 12px 50px;     /* bottom clears the fixed status bar */
 }
+
+/* Shown only below the mobile breakpoint (see the mobile-notice rule near
+   the end of this file) — hidden here so it never appears at desktop
+   widths, including briefly before that later rule loads. */
+.mobile-notice { display: none; }
 
 /* Column widths and gaps are measured from the mockup: the rail's buttons run
    x28–168, the main column x228–1118, the photo x1178–1648.
@@ -947,5 +951,48 @@ body {
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  /* Overrides the display:none base rule (near body, top of file) —
+     shown only below this breakpoint. Dismissal is handled by
+     assets/js/mobile-notice.js. */
+  .mobile-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    /* Cancels body's own top/left/right padding (10px each in this
+       breakpoint) so the bar sits flush against the viewport's edges
+       instead of floating in an inset box; the 14px bottom margin then
+       spaces it from .frame below. */
+    margin: -10px -10px 14px;
+    padding: 10px 44px 10px 16px;
+    background: var(--green-7);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .mobile-notice__close {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: transparent;
+    color: var(--paper);
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0;
+  }
+
+  .mobile-notice__close:hover,
+  .mobile-notice__close:focus-visible { opacity: 0.75; }
 }
 .cal__label { text-transform: uppercase; }
