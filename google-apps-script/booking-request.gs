@@ -53,6 +53,7 @@ function onFormSubmit(e) {
   var start = isoFromParts_(firstValue_(values, 'Start Date'), firstValue_(values, 'Start Time'));
   var end = isoFromParts_(firstValue_(values, 'End Date'), firstValue_(values, 'End Time'));
   var purpose = firstValue_(values, 'Purpose / Nature of Activity');
+  var eventName = firstValue_(values, 'Event Name');
 
   Logger.log('onFormSubmit: %s <%s> space=%s %s - %s', name, email, space, start, end);
 
@@ -65,15 +66,16 @@ function onFormSubmit(e) {
   });
 
   var hasConflict = sameSpaceConflicts.length > 0;
-  var body = buildIssueBody_(name, email, space, start, end, purpose, sameSpaceConflicts, concurrent);
+  var body = buildIssueBody_(eventName, name, email, space, start, end, purpose,
+    sameSpaceConflicts, concurrent);
   var requestData = {
     kind: 'booking',
-    /* The full purpose, untruncated. This becomes the event's title in
-       events.json via approve_request.py, and a clipped title is what the
-       Calendar and status bar would then show forever. It was never needed
-       for the GitHub issue title, which is built from space and start
-       below and does not use purpose at all. */
-    title: purpose || ('Booking — Space ' + space),
+    /* Event Name is the event's title in events.json (via
+       approve_request.py); purpose is only its description. The fallbacks
+       matter for rows submitted before the Event Name question existed —
+       firstValue_ returns '' for a question the form did not have, and an
+       empty title would fail admin_server's validation on approval. */
+    title: eventName || purpose || ('Booking — Space ' + space),
     space: space,
     start: start,
     end: end,
@@ -82,7 +84,8 @@ function onFormSubmit(e) {
   body += '\n\n<!-- request-data: ' + JSON.stringify(requestData) + ' -->';
 
   var title = (hasConflict ? '[Book Space] CONFLICT — ' : '[Book Space] Approved — ')
-    + 'Space ' + space + ', ' + start;
+    + (eventName ? eventName + ' (Space ' + space + ', ' + start + ')'
+                 : 'Space ' + space + ', ' + start);
   var labels = ['type:booking'];
   if (hasConflict) labels.push('booking-conflict');
 
@@ -365,8 +368,10 @@ function closeGithubIssue_(issueNumber, token) {
   }
 }
 
-function buildIssueBody_(name, email, space, start, end, purpose, sameSpaceConflicts, concurrent) {
+function buildIssueBody_(eventName, name, email, space, start, end, purpose,
+                        sameSpaceConflicts, concurrent) {
   var lines = [];
+  lines.push('**Event:** ' + (eventName || '(none given)'));
   lines.push('**Requester:** ' + name + ' <' + email + '>');
   lines.push('**Space:** ' + space);
   lines.push('**Requested:** ' + start + ' – ' + end);

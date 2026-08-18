@@ -34,6 +34,7 @@
 
   function buildFormData() {
     var fd = new FormData();
+    fd.append('entry.263604960', byId('bs-event-name').value);
     fd.append('entry.1317811418', byId('bs-name').value);
     fd.append('entry.823169727', byId('bs-email').value);
     fd.append('entry.187152365', byId('bs-space').value);

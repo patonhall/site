@@ -83,6 +83,7 @@ tab rather than navigating the visitor away from the site entirely.
 
 | Field | Google entry ID |
 |---|---|
+| Event Name (short answer) | `entry.263604960` |
 | Name | `entry.1317811418` |
 | Email Address | `entry.823169727` |
 | Space / Zone (select, A–I with the real labels below) | `entry.187152365` |
@@ -91,6 +92,13 @@ tab rather than navigating the visitor away from the site entirely.
 | End Date | `entry.538228151_year`, `_month`, `_day` |
 | End Time | `entry.1902716208_hour`, `_minute` |
 | Purpose / Nature of Activity | `entry.673408033` |
+
+Event Name was added on 2026-08-18. Before it, `requestData.title` was
+derived from Purpose, so the paragraph someone wrote about their activity
+became the event's title in `events.json` — and it was truncated to 60
+characters on the way. Event Name is now the title and Purpose is only the
+description. It is a **short answer** question, never a dropdown, for the
+same reason as every other free-text field here.
 
 Space options (already defined in the live form, and now the real values for
 `assets/js/spaces.js`'s labels — see §8): A Blackboard, B Assembly Zone, C
