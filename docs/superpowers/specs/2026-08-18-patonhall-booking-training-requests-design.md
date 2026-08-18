@@ -257,14 +257,25 @@ or, for `"kind": "training"`:
 ```json
 {
   "kind": "training",
-  "title": "string",
+  "title": "string — admin fills this in, e.g. \"EPTAC IPC-A-610 Specialist\"",
   "category": "EPTAC",
-  "cost": "string — admin fills this in before approving, since a signup form doesn't collect it",
+  "startDate": "",
+  "endDate": "",
+  "cost": "",
   "registrationMode": "capacity",
   "seatsTotal": 20,
   "seatsFilled": 0
 }
 ```
+
+A training sign-up is interest in a *category*, not a request for one
+specific dated offering — Apps Script embeds `startDate`/`endDate`/`cost`/
+`title` as empty placeholders, since a course's actual schedule doesn't
+exist yet at request time. The admin fills these in directly in the issue
+body before adding the `approved` label. If they label it before filling
+these in, `validate_course` rejects it the normal way — the approval Action
+comments the specific missing fields and leaves the issue open, rather than
+writing an incomplete course record.
 
 New `scripts/approve_request.py` (stdlib only, matching this repo's existing
 scripts):
