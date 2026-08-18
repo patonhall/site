@@ -17,24 +17,28 @@ desc: Membership tiers at Paton Hall — Bench, Shop, Keyholder, and industry pa
 
     <h2 class="section-head">Regular</h2>
 
+    <!-- Each "LINK" jumps to the single interest form below and sets its
+         hidden Tier field via assets/js/membership-interest.js, so one
+         form/one Google Form/one Apps Script serves all five tiers, and
+         the GitHub issue that results says which one was clicked. -->
     <dl class="tiers">
-      <dt>Bench &mdash; $50</dt>
+      <dt>Bench &mdash; $50 &mdash; <a href="#membership-interest" class="tier-link" data-tier="Bench">LINK</a></dt>
       <dd>Every Hall event and learning day. Member directory. Drop-in during open hours.</dd>
 
-      <dt>Shop &mdash; $100</dt>
+      <dt>Shop &mdash; $100 &mdash; <a href="#membership-interest" class="tier-link" data-tier="Shop">LINK</a></dt>
       <dd>Everything in Bench, plus priority for Assembly Zones, Project Benches, and Event Bookings.</dd>
 
-      <dt>Keyholder &mdash; $200</dt>
+      <dt>Keyholder &mdash; $200 &mdash; <a href="#membership-interest" class="tier-link" data-tier="Keyholder">LINK</a></dt>
       <dd>Everything in Shop, plus your own key and after-hours access, guest passes, and extra storage.</dd>
     </dl>
 
     <h2 class="section-head">Industry</h2>
 
     <dl class="tiers">
-      <dt>Patron &mdash; $500 - $1,000</dt>
+      <dt>Patron &mdash; $500 - $1,000 &mdash; <a href="#membership-interest" class="tier-link" data-tier="Patron">LINK</a></dt>
       <dd>Your business backing the Hall, with recognition and a few employee passes.</dd>
 
-      <dt>Champion &mdash; $2,500 - $10,000</dt>
+      <dt>Champion &mdash; $2,500 - $10,000 &mdash; <a href="#membership-interest" class="tier-link" data-tier="Champion">LINK</a></dt>
       <dd>Sponsor equipment, a workshop series, or a zone, as a founding industry partner.</dd>
     </dl>
 
@@ -47,14 +51,18 @@ desc: Membership tiers at Paton Hall — Bench, Shop, Keyholder, and industry pa
          field IDs from https://forms.gle/rFShnKtj2aempxr57 — the Form's
          own question titles are Name / Email Address (not "Email"),
          extracted from the live viewform's FB_PUBLIC_LOAD_DATA_, not
-         guessed from a prefill URL. -->
-    <section class="signup">
+         guessed from a prefill URL. entry.REPLACE_WITH_TIER is a new
+         question ("Tier", short answer, not required) that doesn't exist
+         on the Form yet — add it, then send me the updated form so I can
+         pull its real entry ID the same way. -->
+    <section class="signup" id="membership-interest">
       <p class="eyebrow">Interested?</p>
-      <p>Leave your name and email and we'll follow up to talk through which tier fits.</p>
+      <p id="mi-subhead">Leave your name and email and we'll follow up to talk through which tier fits.</p>
 
       <form id="membership-interest-form" class="signup-form"
             action="https://docs.google.com/forms/d/e/1FAIpQLScPbHqIcpris1ikAtFUQQsq9UUt7a8V2rYWk1joWvlHhFZzOQ/formResponse"
             method="POST" target="_blank">
+        <input type="hidden" id="mi-tier" name="entry.REPLACE_WITH_TIER" value="">
         <div>
           <label for="mi-name">Name</label>
           <input id="mi-name" type="text" name="entry.1581945559" autocomplete="given-name" required>

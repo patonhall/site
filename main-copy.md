@@ -52,6 +52,14 @@ Kit tag: `membership-interest`. GitHub issue label: `type:membership-interest`.
 Pure notification like homepage signup — no repo write-back, admin closes
 the issue by hand once they've followed up.
 
+**Per-tier LINKs:** each of Bench/Shop/Keyholder/Patron/Champion has a
+"LINK" after its dollar amount. All five point at the same form — clicking
+one sets a hidden Tier field and updates the subhead ("we'll follow up
+about Shop.") so the selection is visibly confirmed, not just silently
+recorded. The GitHub issue title and body both carry the tier. Needs a new
+"Tier" (short answer, not required) question added to the Google Form —
+not yet done as of this note.
+
 ## Kit automation emails (paste into Kit by hand — not deployed from this repo)
 
 **List** (tag `list-subscriber`):

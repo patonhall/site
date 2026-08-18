@@ -37,25 +37,30 @@ function onFormSubmit(e) {
   var kitApiKey = props.getProperty('KIT_API_KEY');
   var githubToken = props.getProperty('GITHUB_TOKEN');
 
-  // { "Name": ["..."], "Email Address": ["..."] } — keys must exactly
-  // match the Form's question titles. A title mismatch makes firstValue_
-  // silently return '' below.
+  // { "Name": ["..."], "Email Address": ["..."], "Tier": ["..."] } — keys
+  // must exactly match the Form's question titles. A title mismatch makes
+  // firstValue_ silently return '' below. Tier comes from a hidden field
+  // the site sets when a visitor clicks one of the per-tier "LINK"s
+  // (Bench/Shop/Keyholder/Patron/Champion) — it's free text here, not a
+  // fixed set the way homepage-signup.gs's Reason is, so nothing throws
+  // if it's blank (e.g. a no-JS submission from the plain form).
   var values = e.namedValues;
   var name = firstValue_(values, 'Name');
   var email = firstValue_(values, 'Email Address');
+  var tier = firstValue_(values, 'Tier');
 
   if (!email) {
     throw new Error('No email captured from this submission — check that the '
       + 'Form\'s "Email Address" question title matches exactly (namedValues '
       + 'keys are case- and text-sensitive).');
   }
-  Logger.log('onFormSubmit: %s <%s>', name, email);
+  Logger.log('onFormSubmit: %s <%s> tier=%s', name, email, tier || '(none)');
 
   /* Issue first, Kit second — same reasoning as the other three pipelines:
      a Kit misconfiguration must not silently destroy a lead an admin never
      gets to see. */
-  var title = '[Membership Interest] ' + (name || email);
-  var body = buildIssueBody_(name, email);
+  var title = '[Membership Interest] ' + (tier ? tier + ' — ' : '') + (name || email);
+  var body = buildIssueBody_(name, email, tier);
   var issue = openGithubIssue_(title, body, ['type:membership-interest'], githubToken);
   Logger.log('opened issue #%s', issue.number);
 
@@ -269,12 +274,11 @@ function openGithubIssue_(title, body, labels, token) {
   return JSON.parse(response.getContentText());
 }
 
-function buildIssueBody_(name, email) {
+function buildIssueBody_(name, email, tier) {
   var lines = [];
   lines.push('**Requester:** ' + (name || '(no name given)') + ' <' + email + '>');
+  lines.push('**Tier of interest:** ' + (tier || '(not specified — used the plain form, not one of the tier LINKs)'));
   lines.push('');
-  lines.push('Submitted interest via the Membership page\'s simple name/email form '
-    + '(no tier selected). Follow up to find out what they\'re looking for, then '
-    + 'close this issue.');
+  lines.push('Follow up to talk through what they\'re looking for, then close this issue.');
   return lines.join('\n');
 }
