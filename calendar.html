@@ -25,7 +25,14 @@
 <div class="frame" data-sketch="frame">
 
   <nav class="rail">
-    <ul class="nav">
+    <!-- Hidden by default everywhere (see .nav-toggle base rule); shown
+         only on .page-calendar at mobile widths, where it replaces the
+         full nav/social lists below with a single menu button that
+         reveals them (assets/js/nav-toggle.js toggles .rail.is-open). -->
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-list">
+      <span aria-hidden="true">&#9776;</span>
+    </button>
+    <ul class="nav" id="nav-list">
       <li><a class="nav-btn" href="index.html"       data-nav="home"       data-sketch="box">Paton Hall</a></li>
       <li><a class="nav-btn" href="membership.html"  data-nav="membership" data-sketch="box">Membership</a></li>
       <li><a class="nav-btn is-active" href="calendar.html"    data-nav="calendar"   data-sketch="box" aria-current="page" data-sketch-fill="--nav-active-fill">Calendar</a></li>
@@ -79,6 +86,12 @@
 
   </div>
 
+  <!-- Mobile-only: replaces the header's "Book Space" text link (hidden at
+       this breakpoint, see .page-calendar .cal__bar) and the status bar
+       (also hidden here — redundant on the page it links to) with a single
+       fixed circular action, the same treatment as .social's icon buttons. -->
+  <a href="book-space.html" class="cal__fab" aria-label="Book Space"><span aria-hidden="true">+</span></a>
+
   <script src="assets/js/calendar.js" defer></script>
 
 
@@ -99,6 +112,7 @@
 <script src="assets/js/sketch.js" defer></script>
 <script src="assets/js/garage-spin.js" defer></script>
 <script src="assets/js/mobile-notice.js" defer></script>
+<script src="assets/js/nav-toggle.js" defer></script>
 <!-- spaces.js is shell-level rather than per-page because the status bar names
      the space an event is in, and the status bar is on every page. Pages that
      also need the space list (Calendar, Book Space, admin) read these same

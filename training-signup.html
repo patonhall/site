@@ -25,7 +25,14 @@
 <div class="frame" data-sketch="frame">
 
   <nav class="rail">
-    <ul class="nav">
+    <!-- Hidden by default everywhere (see .nav-toggle base rule); shown
+         only on .page-calendar at mobile widths, where it replaces the
+         full nav/social lists below with a single menu button that
+         reveals them (assets/js/nav-toggle.js toggles .rail.is-open). -->
+    <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-list">
+      <span aria-hidden="true">&#9776;</span>
+    </button>
+    <ul class="nav" id="nav-list">
       <li><a class="nav-btn" href="index.html"       data-nav="home"       data-sketch="box">Paton Hall</a></li>
       <li><a class="nav-btn" href="membership.html"  data-nav="membership" data-sketch="box">Membership</a></li>
       <li><a class="nav-btn" href="calendar.html"    data-nav="calendar"   data-sketch="box">Calendar</a></li>
@@ -119,6 +126,7 @@
 <script src="assets/js/sketch.js" defer></script>
 <script src="assets/js/garage-spin.js" defer></script>
 <script src="assets/js/mobile-notice.js" defer></script>
+<script src="assets/js/nav-toggle.js" defer></script>
 <!-- spaces.js is shell-level rather than per-page because the status bar names
      the space an event is in, and the status bar is on every page. Pages that
      also need the space list (Calendar, Book Space, admin) read these same

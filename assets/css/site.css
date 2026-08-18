@@ -148,6 +148,11 @@ body {
    widths, including briefly before that later rule loads. */
 .mobile-notice { display: none; }
 
+/* Both shown only on .page-calendar below the mobile breakpoint (near the
+   end of this file) — hidden everywhere else, same reasoning as above. */
+.nav-toggle { display: none; }
+.cal__fab { display: none; }
+
 /* Column widths and gaps are measured from the mockup: the rail's buttons run
    x28–168, the main column x228–1118, the photo x1178–1648.
 
@@ -994,5 +999,80 @@ body {
 
   .mobile-notice__close:hover,
   .mobile-notice__close:focus-visible { opacity: 0.75; }
+
+  /* --- Calendar mobile ---------------------------------------------------
+     The one page with page-specific mobile treatment so far: the full
+     nav/social lists collapse behind a menu button (the status bar is
+     redundant here — it exists to link TO the Calendar — and both would
+     otherwise eat the phone's limited height before reaching any actual
+     schedule content), the status bar is hidden outright, and the header's
+     "Book Space" text link is replaced by a fixed circular action so it's
+     reachable without scrolling back up. */
+
+  .page-calendar .nav-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: var(--stroke-w) solid var(--ink);
+    border-radius: 50%;
+    background: var(--paper);
+    font-size: 19px;
+    cursor: pointer;
+  }
+
+  .page-calendar .nav,
+  .page-calendar .social {
+    display: none;
+  }
+
+  .page-calendar .rail.is-open .nav,
+  .page-calendar .rail.is-open .social {
+    display: flex;
+    margin-top: 13px;
+  }
+
+  .page-calendar .statusbar { display: none; }
+
+  /* Empty once .cal__actions (the Book Space link) is hidden — the .cal__fab
+     below replaces it, so the header itself shouldn't reserve space. */
+  .page-calendar .cal__bar { display: none; }
+
+  /* .cal spans grid-column: 2 / 4 on desktop, where .frame has 3 explicit
+     column tracks. Unset here — with only 1 explicit column on mobile,
+     that same rule would place .cal in an implicit column past the visible
+     one, pushing all of Calendar's content off-screen to the right. */
+  .page-calendar .cal { grid-column: 1; }
+
+  .page-calendar .cal__body { grid-template-columns: 1fr; }
+
+  .page-calendar .cal__detail {
+    border-left: none;
+    border-top: 1px solid #b9c7ba;
+    padding-left: 0;
+    padding-top: 20px;
+    margin-top: 20px;
+  }
+
+  .page-calendar .cal__fab {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--green-7);
+    color: var(--paper);
+    font-size: 30px;
+    font-weight: 700;
+    line-height: 1;
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+    z-index: 5;
+  }
 }
 .cal__label { text-transform: uppercase; }
