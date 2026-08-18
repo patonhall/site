@@ -899,6 +899,12 @@ body {
 
   .frame {
     grid-template-columns: 1fr;
+    /* .frame only ever had a column-gap (for the desktop 3-column row) —
+       row-gap defaulted to 0, invisible there since everything shared one
+       row. Once the grid stacks rail/main/aside into separate rows on
+       mobile, that 0 leaves them touching — the nav row butts straight
+       into the page title with no breathing room. */
+    row-gap: 24px;
     padding: 16px 12px 24px;
   }
 
