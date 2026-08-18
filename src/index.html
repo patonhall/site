@@ -15,28 +15,31 @@ class: page-home
          google-apps-script/homepage-signup.gs and
          docs/superpowers/specs/2026-08-18-patonhall-membership-signup-design.md)
          instead of posting to Kit directly — Kit still gets updated, via
-         Apps Script's API calls, not a Kit-hosted form. Replace every
-         entry.REPLACE_WITH_* name below, and the form's action URL, once
-         the Google Form exists. -->
+         Apps Script's API calls, not a Kit-hosted form. entry.* names below
+         are the real field IDs from https://forms.gle/Jvi7GBtZb7V8fRgu6 —
+         the Form's own question titles are Name / Email Address / Reason /
+         Interest (Reason is what the script and this markup call "Tier"),
+         extracted from the live viewform's FB_PUBLIC_LOAD_DATA_, not
+         guessed from a prefill URL. -->
     <section class="signup">
       <p class="eyebrow">Join Us</p>
       <p>Receive progress updates, or help launch Paton Hall as a Member or&nbsp;Founder.</p>
 
       <form id="homepage-signup-form" class="signup-form"
-            action="https://docs.google.com/forms/d/e/REPLACE_WITH_FORM_ID/formResponse"
+            action="https://docs.google.com/forms/d/e/1FAIpQLSd1E9TPGsmE7eIeJjcSV5Kh6f12dDm32uOkRJRY_rdyKOn6RQ/formResponse"
             method="POST" target="_blank">
         <div>
           <label for="hs-name">Name</label>
-          <input id="hs-name" type="text" name="entry.REPLACE_WITH_NAME" autocomplete="given-name" required>
+          <input id="hs-name" type="text" name="entry.1024216618" autocomplete="given-name" required>
         </div>
         <div>
           <label for="hs-email">Email</label>
-          <input id="hs-email" type="email" name="entry.REPLACE_WITH_EMAIL" autocomplete="email" required>
+          <input id="hs-email" type="email" name="entry.247867169" autocomplete="email" required>
         </div>
 
         <div class="full">
           <label for="hs-tier">I want to</label>
-          <select id="hs-tier" name="entry.REPLACE_WITH_TIER">
+          <select id="hs-tier" name="entry.281286988">
             <option value="List">Join the list</option>
             <option value="Member">Become a Member</option>
             <option value="Founder">Become a Founder</option>
@@ -45,7 +48,7 @@ class: page-home
 
         <div class="full" id="hs-interest-row">
           <label for="hs-interest">What brings you here</label>
-          <select id="hs-interest" name="entry.REPLACE_WITH_INTEREST">
+          <select id="hs-interest" name="entry.2055101528">
             <option value="Build nights">Build nights</option>
             <option value="Learning days and talks">Learning days and talks</option>
             <option value="Certified electronics training">Certified electronics training</option>
