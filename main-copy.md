@@ -26,8 +26,9 @@ form, per `docs/superpowers/specs/2026-08-18-patonhall-membership-signup-design.
 
 **Fixed fine print under the button (all tiers):**
 
-> Submitting reserves your spot — we'll follow up by email to arrange
-> payment. Nothing is charged now.
+> Submitting this form adds you to our mailing list. A confirmation email
+> will be sent. If you've indicated interest in Membership of either type,
+> we'll follow up with you manually.
 
 **"What brings you here" options** (List tier only):
 Build nights / Learning days and talks / Certified electronics training /
