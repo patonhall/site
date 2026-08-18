@@ -197,5 +197,82 @@ class ResolveCategoryTests(unittest.TestCase):
             self.assertFalse(os.path.exists(path))
 
 
+class CreateEventTests(unittest.TestCase):
+    def setUp(self):
+        self.tmpdir = tempfile.TemporaryDirectory()
+        self.events_path = os.path.join(self.tmpdir.name, 'events.json')
+        self._orig_events_path = admin_server.EVENTS_PATH
+        admin_server.EVENTS_PATH = self.events_path
+
+    def tearDown(self):
+        admin_server.EVENTS_PATH = self._orig_events_path
+        self.tmpdir.cleanup()
+
+    def valid_payload(self):
+        return {
+            'title': 'Build Night',
+            'location': 'C',
+            'start': '2026-09-01T18:00',
+            'end': '2026-09-01T21:00',
+            'allDay': False,
+            'description': 'Open bench time.',
+        }
+
+    def test_creates_and_persists_event(self):
+        event = admin_server.create_event(self.valid_payload())
+        self.assertEqual(event['title'], 'Build Night')
+        self.assertIn('uid', event)
+        self.assertEqual(admin_server.load_items(self.events_path), [event])
+
+    def test_raises_value_error_on_invalid_payload(self):
+        payload = self.valid_payload()
+        payload['title'] = ''
+        with self.assertRaises(ValueError) as ctx:
+            admin_server.create_event(payload)
+        self.assertIn('title is required', str(ctx.exception))
+        self.assertEqual(admin_server.load_items(self.events_path), [])
+
+
+class CreateCourseTests(unittest.TestCase):
+    def setUp(self):
+        self.tmpdir = tempfile.TemporaryDirectory()
+        self.courses_path = os.path.join(self.tmpdir.name, 'courses.json')
+        self.categories_path = os.path.join(self.tmpdir.name, 'course-categories.json')
+        self._orig_courses_path = admin_server.COURSES_PATH
+        self._orig_categories_path = admin_server.CATEGORIES_PATH
+        admin_server.COURSES_PATH = self.courses_path
+        admin_server.CATEGORIES_PATH = self.categories_path
+
+    def tearDown(self):
+        admin_server.COURSES_PATH = self._orig_courses_path
+        admin_server.CATEGORIES_PATH = self._orig_categories_path
+        self.tmpdir.cleanup()
+
+    def valid_payload(self):
+        return {
+            'title': 'IPC-A-610 Specialist',
+            'category': 'EPTAC',
+            'startDate': '2026-10-20',
+            'endDate': '2026-10-23',
+            'cost': '$500',
+            'registrationMode': 'capacity',
+            'seatsTotal': 26,
+            'seatsFilled': 22,
+        }
+
+    def test_creates_and_persists_course(self):
+        course = admin_server.create_course(self.valid_payload())
+        self.assertEqual(course['category'], 'EPTAC')
+        self.assertEqual(admin_server.load_items(self.courses_path), [course])
+
+    def test_raises_value_error_on_invalid_payload(self):
+        payload = self.valid_payload()
+        payload['registrationMode'] = 'whenever'
+        with self.assertRaises(ValueError) as ctx:
+            admin_server.create_course(payload)
+        self.assertIn('registrationMode must be "capacity" or "door"', str(ctx.exception))
+        self.assertEqual(admin_server.load_items(self.courses_path), [])
+
+
 if __name__ == '__main__':
     unittest.main()

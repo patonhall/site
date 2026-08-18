@@ -216,6 +216,64 @@ CATEGORIES_PATH = os.path.join(DATA_DIR, 'course-categories.json')
 POSTS_PATH = os.path.join(DATA_DIR, 'posts.json')
 
 
+def create_event(payload):
+    """Validate, construct, and persist a new event from a raw payload.
+    Raises ValueError (joined error messages) if the payload is invalid.
+    Returns the created event dict. Shared by the HTTP handler and
+    scripts/approve_request.py, so both write identically-shaped records."""
+    errors = validate_event(payload)
+    if errors:
+        raise ValueError('; '.join(errors))
+
+    events = load_items(EVENTS_PATH)
+    uid = generate_uid({e['uid'] for e in events})
+    event = {
+        'uid': uid,
+        'title': payload['title'].strip(),
+        'start': payload['start'],
+        'end': payload['end'],
+        'allDay': bool(payload.get('allDay', False)),
+        'location': payload['location'],
+        'description': payload.get('description', ''),
+        'created': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S'),
+    }
+    events.append(event)
+    save_items(EVENTS_PATH, events)
+    return event
+
+
+def create_course(payload):
+    """Validate, construct, and persist a new course from a raw payload.
+    Raises ValueError (joined error messages) if the payload is invalid.
+    Returns the created course dict. Shared by the HTTP handler and
+    scripts/approve_request.py, so both write identically-shaped records."""
+    errors = validate_course(payload)
+    if errors:
+        raise ValueError('; '.join(errors))
+
+    category = resolve_category(payload, CATEGORIES_PATH)
+
+    courses = load_items(COURSES_PATH)
+    uid = generate_uid({c['uid'] for c in courses})
+    course = {
+        'uid': uid,
+        'title': payload['title'].strip(),
+        'category': category,
+        'startDate': payload['startDate'],
+        'endDate': payload['endDate'],
+        'cost': payload['cost'].strip(),
+        'registrationMode': payload['registrationMode'],
+        'created': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S'),
+    }
+    if payload['registrationMode'] == 'capacity':
+        course['seatsTotal'] = payload['seatsTotal']
+        course['seatsFilled'] = payload['seatsFilled']
+
+    courses.append(course)
+    save_items(COURSES_PATH, courses)
+    return course
+
+
 class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
     """Static file serving (inherited) plus POST /api/events."""
 
@@ -248,26 +306,11 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
         if error:
             self._send_json(*error)
             return
-
-        errors = validate_event(payload)
-        if errors:
-            self._send_json(400, {'error': '; '.join(errors)})
+        try:
+            event = create_event(payload)
+        except ValueError as e:
+            self._send_json(400, {'error': str(e)})
             return
-
-        events = load_items(EVENTS_PATH)
-        uid = generate_uid({e['uid'] for e in events})
-        event = {
-            'uid': uid,
-            'title': payload['title'].strip(),
-            'start': payload['start'],
-            'end': payload['end'],
-            'allDay': bool(payload.get('allDay', False)),
-            'location': payload['location'],
-            'description': payload.get('description', ''),
-            'created': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S'),
-        }
-        events.append(event)
-        save_items(EVENTS_PATH, events)
         self._send_json(201, event)
 
     def _handle_create_course(self):
@@ -275,32 +318,11 @@ class AdminRequestHandler(http.server.SimpleHTTPRequestHandler):
         if error:
             self._send_json(*error)
             return
-
-        errors = validate_course(payload)
-        if errors:
-            self._send_json(400, {'error': '; '.join(errors)})
+        try:
+            course = create_course(payload)
+        except ValueError as e:
+            self._send_json(400, {'error': str(e)})
             return
-
-        category = resolve_category(payload, CATEGORIES_PATH)
-
-        courses = load_items(COURSES_PATH)
-        uid = generate_uid({c['uid'] for c in courses})
-        course = {
-            'uid': uid,
-            'title': payload['title'].strip(),
-            'category': category,
-            'startDate': payload['startDate'],
-            'endDate': payload['endDate'],
-            'cost': payload['cost'].strip(),
-            'registrationMode': payload['registrationMode'],
-            'created': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S'),
-        }
-        if payload['registrationMode'] == 'capacity':
-            course['seatsTotal'] = payload['seatsTotal']
-            course['seatsFilled'] = payload['seatsFilled']
-
-        courses.append(course)
-        save_items(COURSES_PATH, courses)
         self._send_json(201, course)
 
     def _handle_create_post(self):
