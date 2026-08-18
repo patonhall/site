@@ -318,15 +318,13 @@ function buildIssueBody_(name, email, tier, interest) {
   var lines = [];
   lines.push('**Requester:** ' + name + ' <' + email + '>');
   lines.push('**Tier:** ' + tier);
+  lines.push('**Interest:** ' + (interest || '(none given)'));
+  lines.push('');
   if (tier === 'List') {
-    lines.push('**Interest:** ' + (interest || '(none given)'));
-    lines.push('');
     lines.push('No follow-up action needed beyond Kit\'s own welcome email.');
   } else if (tier === 'Member') {
-    lines.push('');
     lines.push('Follow up to arrange the $50 first-month payment.');
   } else {
-    lines.push('');
     lines.push('Follow up to arrange the $1000 Founding Membership payment.');
   }
   return lines.join('\n');

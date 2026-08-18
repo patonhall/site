@@ -16,12 +16,6 @@
 
   function updateTier() {
     var tier = byId('hs-tier').value;
-    var isList = tier === 'List';
-    byId('hs-interest-row').style.display = isList ? '' : 'none';
-    // A hidden <select> is still an active control and submits its default
-    // option unless disabled — without this, Member/Founder submissions
-    // would silently carry a phantom "Interest: Build nights" value.
-    byId('hs-interest').disabled = !isList;
     byId('hs-submit').textContent = BUTTON_TEXT[tier] || BUTTON_TEXT.List;
   }
 

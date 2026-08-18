@@ -82,10 +82,10 @@ this codebase (e.g. `admin-courses.js`'s registration-mode toggle).
 ## 4. Google Form / Sheet
 
 One new Form (`homepage-signup`), fields: Name, Email, Tier (multiple
-choice: "List" / "Member" / "Founder"), Interest (short answer — only
-populated when Tier is List; submitted blank otherwise, same
-progressive-disclosure-but-single-underlying-form approach as Book Space's
-date fields). Linked Sheet, no "publish to web" needed (Apps Script reads
+choice: "List" / "Member" / "Founder"), Interest (free text — shown and
+submitted for all three tiers; the site's own field is a two-line
+resizable textarea, not gated behind tier the way Book Space's date
+fields are). Linked Sheet, no "publish to web" needed (Apps Script reads
 it natively, per the established pattern).
 
 **Hard contract with `homepage-signup.gs`.** `onFormSubmit` reads
