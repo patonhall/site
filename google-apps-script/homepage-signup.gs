@@ -45,11 +45,22 @@ function onFormSubmit(e) {
   var kitApiKey = props.getProperty('KIT_API_KEY');
   var githubToken = props.getProperty('GITHUB_TOKEN');
 
+  // { "Name": ["..."], "Email": ["..."], "Tier": ["List"|"Member"|"Founder"],
+  //   "Interest": ["..."] } — keys must exactly match the Form's question
+  //   titles, and Tier's answer must exactly match one of its multiple-
+  //   choice option strings (List/Member/Founder, not the friendly button
+  //   labels). A title mismatch makes firstValue_ silently return '' below.
   var values = e.namedValues;
   var name = firstValue_(values, 'Name');
   var email = firstValue_(values, 'Email');
   var tier = firstValue_(values, 'Tier');
   var interest = firstValue_(values, 'Interest');
+
+  if (!email) {
+    throw new Error('No email captured from this submission — check that the '
+      + 'Form\'s "Email" question title matches exactly (namedValues keys '
+      + 'are case- and text-sensitive).');
+  }
 
   var tag = TIER_TAGS[tier];
   if (!tag) {

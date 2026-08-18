@@ -156,9 +156,13 @@ Desktop-only by decision; empty responsive stubs sit at the bottom of
       magick assets/paton-with-google-earth-two.png -resize 2400x -strip \
         -quality 80 assets/img/site-aerial.webp
 
-The subscribe panel is a reskin of the signup module from the existing site:
-same markup, same field names, and the same Kit form endpoint
-(`app.kit.com/forms/9788991/subscriptions`), so both sites feed one list.
+The homepage's `.signup` panel is a tiered membership/founders signup form.
+`assets/js/homepage-signup.js` submits it in the background to a Google Form
+(`homepage-signup`); `google-apps-script/homepage-signup.gs` processes each
+response by upserting and tagging the subscriber in Kit via its API (no
+direct Kit-hosted form post) and opening a GitHub Issue for admin follow-up.
+See `docs/superpowers/specs/2026-08-18-patonhall-membership-signup-design.md`
+for the full design.
 
 ## Deployment
 

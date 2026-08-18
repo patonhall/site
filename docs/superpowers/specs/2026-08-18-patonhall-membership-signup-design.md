@@ -88,6 +88,30 @@ progressive-disclosure-but-single-underlying-form approach as Book Space's
 date fields). Linked Sheet, no "publish to web" needed (Apps Script reads
 it natively, per the established pattern).
 
+**Hard contract with `homepage-signup.gs`.** `onFormSubmit` reads
+`e.namedValues` by key and matches Tier's answer against fixed strings —
+there is no schema validation between the Form and the script, so the
+question titles and Tier's option strings must be created in the Form
+*exactly* as follows:
+
+| Form question | Must be titled exactly | Tier options must be exactly |
+|---|---|---|
+| Name | `Name` | — |
+| Email | `Email` | — |
+| Tier | `Tier` | `List`, `Member`, `Founder` (not the friendly button labels like "Join the list") |
+| Interest | `Interest` | — |
+
+A title typo on Name or Email is a **silent** failure: `firstValue_`
+returns `''` for a missing key, so the script still runs, Kit gets called
+with an empty email, and the GitHub Issue opens with a blank requester —
+`onFormSubmit` now throws before that happens (see §5), so this instead
+fails loudly as a trigger error visible in the Apps Script executions log.
+A Tier title/option mismatch has always failed **loudly**, since
+`onFormSubmit` throws when the tag lookup for an unrecognized Tier value
+comes up empty. If a submission isn't reaching Kit or GitHub, check the
+executions log first, then re-check these four titles and three option
+strings against the Form.
+
 ---
 
 ## 5. Apps Script (`google-apps-script/homepage-signup.gs`)
