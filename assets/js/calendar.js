@@ -6,7 +6,6 @@
 (function () {
   'use strict';
 
-  var WINDOW_DAYS = 14;
   var DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   var MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
                       'August', 'September', 'October', 'November', 'December'];
@@ -118,42 +117,41 @@
 
     if (!hasAny) {
       agendaEl.appendChild(el('p', 'cal__empty',
-        'Nothing on the calendar for the next ' + WINDOW_DAYS + ' days.'));
+        'Nothing on the calendar.'));
     }
   }
 
+  /* Buckets upcoming events by day, with no upper horizon. A day only gets
+     a bucket if an event actually occupies it, so the agenda's length
+     tracks the schedule rather than a fixed window — a booking any distance
+     out still appears, and empty days cost nothing because renderAgenda
+     skips them anyway. This previously capped at 14 days, which silently
+     hid anything further out while the status bar happily advertised it. */
   function bucketEvents(events, today) {
-    var windowEnd = new Date(today);
-    windowEnd.setDate(windowEnd.getDate() + WINDOW_DAYS);
-
     var byDay = {};
     var days = [];
-    for (var i = 0; i < WINDOW_DAYS; i++) {
-      var date = new Date(today);
-      date.setDate(date.getDate() + i);
-      var key = dayKey(date);
-      byDay[key] = { date: date, events: [] };
-      days.push(byDay[key]);
-    }
-
-    var lastWindowDay = days[days.length - 1].date;
 
     events.forEach(function (event) {
       var dayStart = startOfDay(new Date(event.start));
       var dayEnd = startOfDay(new Date(event.end));
-      // Skip events that don't overlap the window at all: ended before
-      // today, or don't start until after the window's last day.
-      if (dayEnd < today || dayStart >= windowEnd) return;
+      // Events that already finished are the only thing filtered out.
+      if (dayEnd < today) return;
 
+      // A multi-day event lands on each of its days; one that began before
+      // today picks up from today rather than repeating days already gone.
       var rangeStart = dayStart < today ? today : dayStart;
-      var rangeEnd = dayEnd > lastWindowDay ? lastWindowDay : dayEnd;
-
-      for (var d = new Date(rangeStart); d <= rangeEnd; d.setDate(d.getDate() + 1)) {
-        var bucket = byDay[dayKey(d)];
-        if (bucket) bucket.events.push(event);
+      for (var d = new Date(rangeStart); d <= dayEnd; d.setDate(d.getDate() + 1)) {
+        var key = dayKey(d);
+        if (!byDay[key]) {
+          // new Date(d) because d is mutated by the loop.
+          byDay[key] = { date: new Date(d), events: [] };
+          days.push(byDay[key]);
+        }
+        byDay[key].events.push(event);
       }
     });
 
+    days.sort(function (a, b) { return a.date - b.date; });
     days.forEach(function (day) {
       day.events.sort(function (a, b) { return new Date(a.start) - new Date(b.start); });
     });

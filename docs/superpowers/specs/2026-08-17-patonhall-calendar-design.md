@@ -136,7 +136,10 @@ On load:
 
 1. `fetch('assets/data/events.json')`.
 2. Compute "today" from the browser's clock. Bucket events into today + the next 13
-   days (a 14-day rolling window).
+   days. (Originally a 14-day rolling window; the cap was removed on
+   2026-08-18 after a booking 14 days out was hidden from the Calendar
+   while the status bar advertised it. The agenda now runs from today to
+   the last scheduled event, rendering only days that have something on.)
 3. Render one `<h2 class="cal__day">` + `<ul class="cal__events">` per day with at
    least one event; render each event's time range and title.
 4. Clicking an event updates `.cal__detail` (title, time range, location,
@@ -174,7 +177,7 @@ script) and none is being introduced. Verification is manual:
 - `admin_server.py`: start it, submit valid and invalid events via `admin-events.html`,
   confirm `events.json` updates atomically and validation errors surface inline.
   Confirm plain `python3 -m http.server` still works unchanged for everyone else.
-- `calendar.js`: with a handful of events spread across the 14-day window (including
+- `calendar.js`: with a handful of events spread across the agenda (including
   today, an all-day event, and one outside the window), confirm correct bucketing,
   click-to-select, and the no-JS / fetch-failure fallback (test by renaming
   `events.json` temporarily).

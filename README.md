@@ -114,7 +114,8 @@ sub-site pages.
 
 Two of these are **static views of applications that do not exist yet**:
 
-- **Calendar** renders a live 14-day agenda from `assets/data/events.json`, with
+- **Calendar** renders a live agenda of everything upcoming from
+  `assets/data/events.json` — no horizon, so a booking any distance out shows — with
   click-to-select event detail. Adding events requires running `admin_server.py`
   locally (see Running locally); there is no public booking flow yet. View
   switching (3-Day/Week/Month), space booking and sign-in are still inert

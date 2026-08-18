@@ -177,7 +177,7 @@ function runSelfTest() {
   /* 3. Kit reachable, and every tag the script uses already exists —
         kitUpsertAndTag_ throws on a missing tag. */
   if (kitApiKey) {
-    var tagsResponse = UrlFetchApp.fetch('https://api.kit.com/v4/tags?per_page=100', {
+    var tagsResponse = UrlFetchApp.fetch('https://api.kit.com/v4/tags?per_page=1', {
       headers: { 'X-Kit-Api-Key': kitApiKey },
       muteHttpExceptions: true
     });
@@ -188,10 +188,8 @@ function runSelfTest() {
         + ' -- a 401 here usually means a v3 key is being used against the v4 API. '
         + 'Create a V4 key: Kit > Settings > Developer > V4 Keys > Add a new key.');
     } else {
-      var names = (JSON.parse(tagsResponse.getContentText()).tags || [])
-        .map(function (t) { return t.name.toLowerCase(); });
       [KIT_TAG_REQUEST, KIT_TAG_APPROVED, KIT_TAG_CONFLICT].forEach(function (tag) {
-        var found = names.indexOf(tag.toLowerCase()) !== -1;
+        var found = findKitTag_(tag, kitApiKey);
         Logger.log('   tag "' + tag + '" ' + (found ? 'exists' : 'MISSING'));
         if (!found) problems.push('Kit has no tag named "' + tag + '" — create it.');
       });
@@ -278,6 +276,38 @@ function fetchRepoJson_(path) {
   return JSON.parse(response.getContentText());
 }
 
+/* Pages through every tag instead of assuming the first page holds them all.
+   Kit's v4 list endpoint is cursor-paginated (max 1000 per page, follow
+   pagination.end_cursor via ?after=). The previous single request capped at
+   a hundred per page silently missed any tag past the first hundred and
+   surfaced it as a bogus "Kit has no tag named X". */
+function findKitTag_(tagName, apiKey) {
+  var wanted = tagName.toLowerCase();
+  var url = 'https://api.kit.com/v4/tags?per_page=1000';
+
+  while (url) {
+    var response = UrlFetchApp.fetch(url, {
+      headers: { 'X-Kit-Api-Key': apiKey },
+      muteHttpExceptions: true
+    });
+    if (response.getResponseCode() !== 200) {
+      throw new Error('Kit rejected the tags request (HTTP '
+        + response.getResponseCode() + '): ' + response.getContentText());
+    }
+    var payload = JSON.parse(response.getContentText());
+    var match = (payload.tags || []).filter(function (t) {
+      return t.name.toLowerCase() === wanted;
+    })[0];
+    if (match) return match;
+
+    var page = payload.pagination || {};
+    url = (page.has_next_page && page.end_cursor)
+      ? 'https://api.kit.com/v4/tags?per_page=1000&after=' + encodeURIComponent(page.end_cursor)
+      : null;
+  }
+  return null;
+}
+
 function kitUpsertAndTag_(email, firstName, tagName, apiKey) {
   UrlFetchApp.fetch('https://api.kit.com/v4/subscribers', {
     method: 'post',
@@ -287,12 +317,7 @@ function kitUpsertAndTag_(email, firstName, tagName, apiKey) {
     muteHttpExceptions: true
   });
 
-  var tagsResponse = UrlFetchApp.fetch('https://api.kit.com/v4/tags?per_page=100', {
-    headers: { 'X-Kit-Api-Key': apiKey },
-    muteHttpExceptions: true
-  });
-  var tags = JSON.parse(tagsResponse.getContentText()).tags || [];
-  var match = tags.filter(function (t) { return t.name.toLowerCase() === tagName.toLowerCase(); })[0];
+  var match = findKitTag_(tagName, apiKey);
   if (!match) {
     throw new Error('Kit has no tag named "' + tagName + '" — create it first.');
   }
