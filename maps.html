@@ -81,17 +81,19 @@
 
 </div>
 
-<!-- Shows what is on at the hub right now, and opens the Calendar when
-     clicked. Static for this pass; becomes data-driven with the Calendar app. -->
+<!-- Shows the next scheduled event and today's date, and opens the
+     Calendar when clicked. Filled in by assets/js/statusbar.js from
+     assets/data/events.json at load time. -->
 <a class="statusbar" href="calendar.html" aria-label="Today at Paton Hall — open the calendar">
   <span class="statusbar__event">
     <span class="statusbar__dot" aria-hidden="true"></span>
-    11:30-5pm - EPTAC Course (IPC-A-610 Specialist) @ABCD | Pool Table Closed
+    Loading&hellip;
   </span>
-  <span class="statusbar__date">TUESDAY OCTOBER 20th 2026 <span aria-hidden="true">☀</span></span>
+  <span class="statusbar__date"></span>
 </a>
 
 <script src="vendor/rough.min.js" defer></script>
 <script src="assets/js/sketch.js" defer></script>
+<script src="assets/js/statusbar.js" defer></script>
 </body>
 </html>
