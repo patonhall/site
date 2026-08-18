@@ -1,27 +1,29 @@
-/* Renders the mailing list archive from patonhall.kit.com natively on the
-   Updates page.
+/* Renders the mailing list archive on the Updates page from
+   assets/data/kit-posts.json, which scripts/fetch_kit_posts.py writes from
+   patonhall.kit.com (see .github/workflows/kit-posts.yml).
 
-   Kit publishes no RSS feed and no public JSON for a creator profile, but it
-   does serve the profile page with `access-control-allow-origin: *`, and that
-   page embeds its own state as `window.__PROPS__` — including `recentPosts`
-   with title, metaDescription, thumbnailUrl and url for each post. Reading it
-   needs no API key and no server, so nothing here is proxied.
+   The browser deliberately does NOT fetch Kit directly. Kit serves its
+   profile page with TWO `Access-Control-Allow-Origin: *` headers; curl
+   accepts that, but the CORS spec allows exactly one and browsers reject
+   the response outright, so a client-side fetch can never work. Fetching at
+   build time also makes this a local file (~60ms rather than a cross-origin
+   round trip) and moves any Kit breakage into a workflow run we can see.
 
-   That blob is Kit's INTERNAL page state, not a documented API: it can be
-   renamed or reshaped by any Kit deploy, without notice. Every step below is
-   therefore defensive, and any failure falls back to a plain link to the
-   archive rather than an error or a half-rendered list — the same convention
-   calendar.js and posts.js use. A broken upstream should cost the visitor a
-   nicer layout, never the ability to reach the posts. */
+   Never shows stale or fabricated data: if the file is missing or empty,
+   the page falls back to a plain link to the archive rather than an error
+   or a half-built list — the same convention calendar.js and posts.js use.
+   A broken upstream should cost the visitor a nicer layout, never access to
+   the posts. */
 (function () {
   'use strict';
 
   var ARCHIVE_URL = 'https://patonhall.kit.com/';
-  var MARKER = 'window.__PROPS__ =';
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+                'August', 'September', 'October', 'November', 'December'];
 
-  /* post.url and post.thumbnailUrl come from a third party we do not control.
-     Assigning an attacker-controlled string to href or src would accept
-     javascript: and data: URLs, so only http(s) is allowed through. */
+  /* These strings originate at Kit and become href and src attributes.
+     fetch_kit_posts.py applies the same guard when writing the file; it is
+     repeated here so the page is safe whatever the file happens to hold. */
   function safeUrl(value) {
     if (typeof value !== 'string') return null;
     return /^https?:\/\//i.test(value) ? value : null;
@@ -34,48 +36,10 @@
     return node;
   }
 
-  /* Brace-matches the object literal after the marker, respecting strings and
-     escapes. A regex cannot do this: the blob contains braces inside post
-     content, so any non-greedy match truncates and any greedy one overshoots. */
-  function extractProps(html) {
-    var i = html.indexOf(MARKER);
-    if (i === -1) return null;
-    var depth = 0, start = -1, inString = false, escaped = false;
-
-    for (var j = i + MARKER.length; j < html.length; j++) {
-      var c = html.charAt(j);
-      if (inString) {
-        if (escaped) escaped = false;
-        else if (c === '\\') escaped = true;
-        else if (c === '"') inString = false;
-        continue;
-      }
-      if (c === '"') inString = true;
-      else if (c === '{') { if (depth === 0) start = j; depth++; }
-      else if (c === '}') {
-        depth--;
-        if (depth === 0) {
-          try { return JSON.parse(html.slice(start, j + 1)); }
-          catch (e) { return null; }
-        }
-      }
-    }
-    return null;
-  }
-
-  function postsFrom(props) {
-    if (!props || !Array.isArray(props.recentPosts)) return null;
-    return props.recentPosts.filter(function (p) {
-      return p && p.title && safeUrl(p.url);
-    });
-  }
-
   function formatDate(value) {
     var d = new Date(value);
     if (isNaN(d.getTime())) return '';
-    var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-                  'August', 'September', 'October', 'November', 'December'];
-    return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+    return MONTHS[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
   }
 
   function renderPost(post) {
@@ -86,8 +50,8 @@
       var img = document.createElement('img');
       img.className = 'kit-post__thumb';
       img.src = thumb;
-      /* Decorative unless Kit gave real alt text; an empty alt is correct for
-         a thumbnail whose meaning is already carried by the title beside it. */
+      /* Empty alt is correct for a thumbnail whose meaning is already
+         carried by the title beside it. */
       img.alt = post.thumbnailAlt || '';
       img.loading = 'lazy';
       item.appendChild(img);
@@ -128,18 +92,19 @@
     var container = document.getElementById('kit-posts');
     if (!container) return;
 
-    fetch(ARCHIVE_URL)
+    fetch('assets/data/kit-posts.json')
       .then(function (r) {
         if (!r.ok) throw new Error('bad response');
-        return r.text();
+        return r.json();
       })
-      .then(function (html) {
-        var posts = postsFrom(extractProps(html));
-        if (!posts || !posts.length) return renderFallback(container);
+      .then(function (posts) {
+        if (!Array.isArray(posts) || !posts.length) return renderFallback(container);
 
         container.innerHTML = '';
         var list = el('ul', 'kit-posts', null);
-        posts.forEach(function (post) { list.appendChild(renderPost(post)); });
+        posts.forEach(function (post) {
+          if (post && post.title) list.appendChild(renderPost(post));
+        });
         container.appendChild(list);
       })
       .catch(function () { renderFallback(container); });

@@ -1,0 +1,44 @@
+name: Refresh Kit posts
+
+# Pulls the mailing list archive from patonhall.kit.com into
+# assets/data/kit-posts.json, which the Updates page reads.
+#
+# This runs here rather than in the visitor's browser because Kit serves its
+# profile page with two Access-Control-Allow-Origin headers, which browsers
+# reject outright. Running it here also means a Kit page change fails a run
+# we can see, instead of failing silently for every visitor.
+
+on:
+  schedule:
+    - cron: '17 */6 * * *'   # four times a day; a newsletter is not real-time
+  workflow_dispatch:          # and on demand, right after publishing a post
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Exits non-zero if Kit's page structure changed, rather than writing a
+      # partial file — the site keeps serving the last good data.
+      - name: Fetch posts
+        run: python3 scripts/fetch_kit_posts.py
+
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -- assets/data/kit-posts.json; then
+            echo "No change."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data/kit-posts.json
+          git commit -m "Refresh Kit mailing list posts"
+          git push
