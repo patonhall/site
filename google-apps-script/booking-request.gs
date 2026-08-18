@@ -68,7 +68,12 @@ function onFormSubmit(e) {
   var body = buildIssueBody_(name, email, space, start, end, purpose, sameSpaceConflicts, concurrent);
   var requestData = {
     kind: 'booking',
-    title: purpose ? (purpose.length > 60 ? purpose.slice(0, 60) + '…' : purpose) : ('Booking — Space ' + space),
+    /* The full purpose, untruncated. This becomes the event's title in
+       events.json via approve_request.py, and a clipped title is what the
+       Calendar and status bar would then show forever. It was never needed
+       for the GitHub issue title, which is built from space and start
+       below and does not use purpose at all. */
+    title: purpose || ('Booking — Space ' + space),
     space: space,
     start: start,
     end: end,
