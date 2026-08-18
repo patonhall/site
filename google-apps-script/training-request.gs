@@ -45,7 +45,7 @@ function onFormSubmit(e) {
   var course = firstValue_(values, 'Course');
   var notes = firstValue_(values, 'Note / Comments');
 
-  kitUpsertAndTag_(email, name, KIT_TAG_REQUEST, kitApiKey);
+  Logger.log('onFormSubmit: %s <%s> course=%s', name, email, course);
 
   var courses = fetchRepoJson_('assets/data/courses.json');
   var today = new Date();
@@ -75,12 +75,139 @@ function onFormSubmit(e) {
   var hasOpen = open.length > 0;
   var title = (hasOpen ? '[Training] Open offering exists — ' : '[Training] No upcoming offering — ')
     + course;
+  /* Issue first, Kit second. Kit tagging used to run before this and threw
+     on a missing tag or an unset KIT_API_KEY, which silently destroyed the
+     whole request rather than merely failing to tag someone. The issue is
+     what an admin acts on; it must not be hostage to the mailing list. */
   var issue = openGithubIssue_(title, body, ['type:training'], githubToken);
-
+  Logger.log('opened issue #%s (openOffering=%s)', issue.number, hasOpen);
   if (hasOpen) {
     closeGithubIssue_(issue.number, githubToken);
   }
-  kitUpsertAndTag_(email, name, KIT_TAG_REVIEWED, kitApiKey);
+
+  tagQuietly_(email, name, KIT_TAG_REQUEST, kitApiKey);
+  tagQuietly_(email, name, KIT_TAG_REVIEWED, kitApiKey);
+}
+
+/* Kit problems are logged, never thrown: by the time this runs the request
+   is already in front of an admin, and losing that to a tagging failure
+   would be far worse than an untagged subscriber. */
+function tagQuietly_(email, name, tagName, apiKey) {
+  try {
+    kitUpsertAndTag_(email, name, tagName, apiKey);
+    Logger.log('kit: tagged %s with "%s"', email, tagName);
+  } catch (err) {
+    Logger.log('kit: FAILED to tag %s with "%s" — %s', email, tagName, err.message);
+  }
+}
+
+/* --- diagnostics ------------------------------------------------------- */
+
+/**
+ * Read-only health check. Run this straight from the Apps Script editor
+ * (select runSelfTest, press Run) and read the Execution log — it creates
+ * nothing, tags nobody, and opens no issue.
+ *
+ * The booking pipeline failed for days behind an unset KIT_API_KEY and an
+ * unset GITHUB_TOKEN, both invisible from outside. This turns "nothing
+ * happened" into a specific line item before that can happen here.
+ */
+function runSelfTest() {
+  var props = PropertiesService.getScriptProperties();
+  var kitApiKey = props.getProperty('KIT_API_KEY');
+  var githubToken = props.getProperty('GITHUB_TOKEN');
+  var problems = [];
+
+  Logger.log('=== Paton Hall training pipeline self-test ===');
+
+  /* 1. A form-sourced trigger hands the handler an event with no
+        namedValues, so onFormSubmit throws on its first line. */
+  var triggers = ScriptApp.getProjectTriggers();
+  Logger.log('1. Triggers on this project: ' + triggers.length);
+  var formSubmitTrigger = null;
+  triggers.forEach(function (t) {
+    Logger.log('   - handler=' + t.getHandlerFunction()
+      + '  source=' + t.getTriggerSource()
+      + '  event=' + t.getEventType());
+    if (t.getHandlerFunction() === 'onFormSubmit') formSubmitTrigger = t;
+  });
+  if (!formSubmitTrigger) {
+    problems.push('No trigger calling onFormSubmit on this project. Add one: '
+      + 'Triggers (clock icon) > Add Trigger > function onFormSubmit, '
+      + 'event source "From spreadsheet", event type "On form submit".');
+  } else if (String(formSubmitTrigger.getTriggerSource()) !== 'SPREADSHEETS') {
+    problems.push('The onFormSubmit trigger is sourced from '
+      + formSubmitTrigger.getTriggerSource() + ', not SPREADSHEETS. It must be '
+      + '"From spreadsheet" — a form-sourced event has no namedValues.');
+  }
+
+  Logger.log('2. KIT_API_KEY  ' + (kitApiKey ? 'set' : 'MISSING'));
+  Logger.log('   GITHUB_TOKEN ' + (githubToken ? 'set' : 'MISSING'));
+  if (!kitApiKey) problems.push('KIT_API_KEY script property is not set.');
+  if (!githubToken) problems.push('GITHUB_TOKEN script property is not set.');
+
+  if (kitApiKey) {
+    var tagsResponse = UrlFetchApp.fetch('https://api.kit.com/v4/tags?per_page=100', {
+      headers: { 'X-Kit-Api-Key': kitApiKey },
+      muteHttpExceptions: true
+    });
+    Logger.log('3. Kit GET /v4/tags -> HTTP ' + tagsResponse.getResponseCode());
+    if (tagsResponse.getResponseCode() !== 200) {
+      problems.push('Kit rejected the key (HTTP ' + tagsResponse.getResponseCode()
+        + '): ' + tagsResponse.getContentText()
+        + ' -- a 401 here usually means a v3 key is being used against the v4 API. '
+        + 'Create a V4 key: Kit > Settings > Developer > V4 Keys > Add a new key.');
+    } else {
+      var names = (JSON.parse(tagsResponse.getContentText()).tags || [])
+        .map(function (t) { return t.name.toLowerCase(); });
+      [KIT_TAG_REQUEST, KIT_TAG_REVIEWED].forEach(function (tag) {
+        var found = names.indexOf(tag.toLowerCase()) !== -1;
+        Logger.log('   tag "' + tag + '" ' + (found ? 'exists' : 'MISSING'));
+        if (!found) problems.push('Kit has no tag named "' + tag + '" — create it.');
+      });
+    }
+  }
+
+  if (githubToken) {
+    var repoResponse = UrlFetchApp.fetch('https://api.github.com/repos/' + REPO, {
+      headers: { Authorization: 'Bearer ' + githubToken, Accept: 'application/vnd.github+json' },
+      muteHttpExceptions: true
+    });
+    Logger.log('4. GitHub GET /repos/' + REPO + ' -> HTTP ' + repoResponse.getResponseCode());
+    if (repoResponse.getResponseCode() !== 200) {
+      problems.push('GITHUB_TOKEN cannot read ' + REPO + ': ' + repoResponse.getContentText());
+    } else {
+      /* Advisory only: a fine-grained token scoped to Issues can open issues
+         while still reporting push=false here. */
+      var perms = JSON.parse(repoResponse.getContentText()).permissions || {};
+      Logger.log('   repo permissions seen by this token: push=' + perms.push
+        + ' pull=' + perms.pull);
+      if (!perms.push) {
+        Logger.log('   NOTE: push=false. If this is a classic PAT it needs the '
+          + '`repo` scope. If it is fine-grained with Issues: read and write, '
+          + 'this is expected and fine.');
+      }
+    }
+  }
+
+  /* 5. The course data the open-offering check reads. */
+  var rawResponse = UrlFetchApp.fetch(
+    'https://raw.githubusercontent.com/' + REPO + '/main/assets/data/courses.json',
+    { muteHttpExceptions: true });
+  Logger.log('5. raw courses.json -> HTTP ' + rawResponse.getResponseCode());
+  if (rawResponse.getResponseCode() !== 200) {
+    problems.push('Cannot read courses.json from the repo: HTTP '
+      + rawResponse.getResponseCode());
+  }
+
+  Logger.log('');
+  if (problems.length === 0) {
+    Logger.log('RESULT: all checks passed.');
+  } else {
+    Logger.log('RESULT: ' + problems.length + ' problem(s) found:');
+    problems.forEach(function (p, i) { Logger.log('  ' + (i + 1) + '. ' + p); });
+  }
+  return problems;
 }
 
 /* --- shared helpers (duplicated from booking-request.gs — these are two
@@ -95,6 +222,10 @@ function firstValue_(namedValues, key) {
 function fetchRepoJson_(path) {
   var url = 'https://raw.githubusercontent.com/' + REPO + '/main/' + path;
   var response = UrlFetchApp.fetch(url, { muteHttpExceptions: true });
+  if (response.getResponseCode() !== 200) {
+    throw new Error('could not read ' + path + ' from the repo (HTTP '
+      + response.getResponseCode() + ') — cannot check for open offerings');
+  }
   return JSON.parse(response.getContentText());
 }
 
@@ -134,17 +265,25 @@ function openGithubIssue_(title, body, labels, token) {
     payload: JSON.stringify({ title: title, body: body, labels: labels }),
     muteHttpExceptions: true
   });
+  if (response.getResponseCode() !== 201) {
+    throw new Error('GitHub refused to open the issue (HTTP '
+      + response.getResponseCode() + '): ' + response.getContentText());
+  }
   return JSON.parse(response.getContentText());
 }
 
 function closeGithubIssue_(issueNumber, token) {
-  UrlFetchApp.fetch('https://api.github.com/repos/' + REPO + '/issues/' + issueNumber, {
+  var response = UrlFetchApp.fetch('https://api.github.com/repos/' + REPO + '/issues/' + issueNumber, {
     method: 'patch',
     contentType: 'application/json',
     headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' },
     payload: JSON.stringify({ state: 'closed' }),
     muteHttpExceptions: true
   });
+  if (response.getResponseCode() !== 200) {
+    Logger.log('could not close issue #%s (HTTP %s) — it stays open, harmless',
+      issueNumber, response.getResponseCode());
+  }
 }
 
 function buildIssueBody_(name, email, course, notes, matching, open) {
