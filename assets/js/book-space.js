@@ -16,7 +16,7 @@
   /* Fill in after deploying the booking Apps Script's Web App (doGet) —
      until then this stays inert and the availability check is silently
      skipped, never blocking submission. */
-  var LIVE_CHECK_URL = '';
+  var LIVE_CHECK_URL = 'https://script.google.com/macros/s/AKfycbzlFByJFpKUxx4xgzB7_o-Mq8e9XJmbKLdS-bIxJ9iPK2xcqmIXRnmVnVWZMav9PMXv/exec';
 
   function byId(id) { return document.getElementById(id); }
 
