@@ -94,20 +94,27 @@ there is no schema validation between the Form and the script, so the
 question titles and Tier's option strings must be created in the Form
 *exactly* as follows:
 
-| Form question | Must be titled exactly | Tier options must be exactly |
+| Concept | Must be titled exactly | Options must be exactly |
 |---|---|---|
 | Name | `Name` | — |
-| Email | `Email` | — |
-| Tier | `Tier` | `List`, `Member`, `Founder` (not the friendly button labels like "Join the list") |
+| Email | `Email Address` | — |
+| Tier | `Reason` | `List`, `Member`, `Founder` (not the friendly button labels like "Join the list") |
 | Interest | `Interest` | — |
 
-A title typo on Name or Email is a **silent** failure: `firstValue_`
+The as-built Form titles the Email and Tier questions `Email Address` and
+`Reason` rather than `Email`/`Tier` — the script was adjusted to match the
+Form as created, rather than the Form being renamed to match the original
+plan above. `homepage-signup.gs`'s `onFormSubmit` reads these exact keys
+via `e.namedValues`; nothing else in this pipeline (the site's own copy,
+Book Space, Training) uses these titles, so don't copy them elsewhere.
+
+A title typo on Name or Email Address is a **silent** failure: `firstValue_`
 returns `''` for a missing key, so the script still runs, Kit gets called
 with an empty email, and the GitHub Issue opens with a blank requester —
 `onFormSubmit` now throws before that happens (see §5), so this instead
 fails loudly as a trigger error visible in the Apps Script executions log.
-A Tier title/option mismatch has always failed **loudly**, since
-`onFormSubmit` throws when the tag lookup for an unrecognized Tier value
+A Reason title/option mismatch has always failed **loudly**, since
+`onFormSubmit` throws when the tag lookup for an unrecognized Reason value
 comes up empty. If a submission isn't reaching Kit or GitHub, check the
 executions log first, then re-check these four titles and three option
 strings against the Form.
