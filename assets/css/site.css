@@ -656,6 +656,13 @@ body {
   --ships-fill: var(--paper);
 }
 
+/* Pages with no right rail leave .frame's third track empty -- 470px of
+   nothing beside a cramped main column. .page-wide lets the content span
+   both tracks instead. Prose is unaffected: .main p still caps at 890px, so
+   line length stays readable and only the things that want the room (the
+   Updates columns, the admin editors, wide tables) actually take it. */
+.page-wide .main { grid-column: 2 / 4; }
+
 /* --- Shared content components ------------------------------------------- */
 
 .section-head {
@@ -762,8 +769,181 @@ body {
 .courses td { padding: 11px 14px; vertical-align: top; border-top: 1px solid #d5d2cb; }
 .courses tbody tr:nth-child(even) { background: #e2e0da; }
 
+/* The title becomes a button when a description exists. Styled as the plain
+   title it replaces, plus a marker -- it must not read as a form control
+   sitting in a table. */
+.courses__toggle {
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.courses__toggle::after { content: ' \25B8'; color: #55524d; }
+.courses__toggle.is-open::after { content: ' \25BE'; }
+.courses__toggle:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.courses__detail > td { padding: 4px 14px 18px; }
+.courses__detail p:last-child { margin-bottom: 0; }
+
 /* Ships puts copy directly below the board; Training does not. */
 #ships-table { margin-bottom: 4px; }
+
+/* --- Updates -------------------------------------------------------------- */
+
+/* Two independent streams side by side. Equal tracks: neither is the lesser
+   feed, and a fixed narrow column for members' posts would have looked like
+   a sidebar rather than a second stream. */
+.updates {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(20px, 2.5vw, 44px);
+  align-items: start;
+}
+
+.updates__head {
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #c9c6bf;
+}
+
+/* Built by assets/js/updates-tabs.js and only ever shown on mobile. */
+.updates__tabs { display: none; }
+
+.updates__tab {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  color: var(--ink);
+  background: var(--panel-field);
+  border: 1px solid #b9b6ae;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.updates__tab.is-current {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+/* --- Post editor (admin) -------------------------------------------------- */
+
+/* Writing surface left, metadata right. The body is where the time goes, so
+   it takes the width and the height; the four short fields beside it do not
+   need either. */
+.editor {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 290px;
+  /* .page-wide gives this the full remaining width; without it the metadata
+     column would squeeze the writing surface to about half a screen. */
+  gap: 28px;
+  align-items: start;
+}
+
+.editor__main { display: flex; flex-direction: column; min-width: 0; }
+
+.editor__bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.editor__bar-gap { flex: 1 1 auto; }
+
+.editor__btn {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1;
+  padding: 8px 11px;
+  color: var(--ink);
+  background: var(--panel-field);
+  border: 1px solid #b9b6ae;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.editor__btn:hover { background: #e8e5dd; }
+.editor__btn.is-current { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.editor__btn:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+/* editor.js wraps each data-editor textarea in .editor__group > .editor__bar
+   + .editor__pane, so these two carry the column behaviour rather than the
+   page-level .editor grid. */
+.editor__group { display: flex; flex-direction: column; min-width: 0; }
+
+/* Sized to the viewport, not to a row count -- the old ten-row textarea was
+   the same small box whatever the screen. 340px is the header, toolbar,
+   intro copy and status line above and below it. */
+.editor__pane {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+  height: calc(100vh - 340px);
+  min-height: 300px;
+}
+
+.editor__pane.is-split { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+
+.editor__label {
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: #55524d;
+}
+
+#post-body {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  resize: none;
+  padding: 14px 16px;
+  font-family: var(--font-mono);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--panel-field);
+  border: 1px solid #b9b6ae;
+  border-radius: var(--radius);
+}
+
+.editor__preview {
+  overflow-y: auto;
+  padding: 14px 18px;
+  background: var(--paper);
+  border: 1px solid #b9b6ae;
+  border-radius: var(--radius);
+}
+
+.editor__meta { display: grid; gap: 16px; }
+
+/* Full screen: covers the site's own frame and rail, not the browser chrome,
+   so Escape can always get back out. Only the maximized group is promoted --
+   a page with two editors on it keeps the other one where it was. */
+.editor__group.is-max {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  padding: 16px 18px;
+  background: var(--paper);
+}
+
+.editor__group.is-max .editor__pane { height: calc(100vh - 96px); }
+body.is-editor-max .statusbar { display: none; }
 
 /* --- Updates -------------------------------------------------------------- */
 
@@ -857,6 +1037,39 @@ body {
 }
 
 .post-body p { margin: 0 0 17px; }
+.post-body h2, .post-body h3, .post-body h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 26px 0 12px;
+}
+.post-body h2 { font-size: 25px; }
+.post-body h3 { font-size: 20px; }
+.post-body h4 { font-size: 17px; text-transform: uppercase; letter-spacing: 0.04em; }
+.post-body ul, .post-body ol { margin: 0 0 17px; padding-left: 24px; }
+.post-body li { margin-bottom: 6px; }
+.post-body blockquote {
+  margin: 0 0 17px;
+  padding-left: 16px;
+  border-left: 3px solid #c9c6bf;
+  color: #55524d;
+}
+.post-body code {
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  background: #efece4;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+.post-body pre {
+  margin: 0 0 17px;
+  padding: 12px 14px;
+  overflow-x: auto;
+  background: #efece4;
+  border-radius: var(--radius);
+}
+.post-body pre code { background: none; padding: 0; }
+.post-body hr { border: none; border-top: 1px solid #c9c6bf; margin: 24px 0; }
 .post-body p:last-child { margin-bottom: 0; }
 
 /* --- Maps ----------------------------------------------------------------- */
@@ -1071,6 +1284,28 @@ body {
 
   .signup-form { grid-template-columns: 1fr; }
 
+  /* Stacked, the second stream sits under all of the first one's posts and
+     is easy to miss entirely -- so updates-tabs.js switches between them and
+     .updates--tabbed is what actually hides the inactive one. Without JS the
+     class never lands and both columns simply stack, fully readable. */
+  .updates { grid-template-columns: 1fr; }
+
+  .updates__tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+
+  .updates--tabbed .updates__col { display: none; }
+  .updates--tabbed .updates__col.is-active { display: block; }
+
+  /* The editor's two columns stack, and the body stops being viewport-height
+     -- on a phone that measurement fights the on-screen keyboard. */
+  .editor { grid-template-columns: 1fr; }
+  .editor__pane, .editor__pane.is-split { grid-template-columns: 1fr; height: auto; }
+  #post-body { min-height: 300px; }
+
   /* The desktop bar is a fixed 36px single row with the event and date
      side by side — on a narrow screen that either truncates the date or
      overflows past the edge. Stacking the two lines is more robust than
@@ -1172,6 +1407,13 @@ body {
     flex-wrap: wrap;
     align-items: center;
     gap: 12px;
+    /* .rail carries align-self:stretch for the desktop column layout. Left
+       alone here it stretches to the whole grid row, and align-content then
+       centres this single flex line inside that height -- which dropped the
+       menu button below the garage glyph it is supposed to sit level with.
+       Pin the rail to the top and stop the line stretching. */
+    align-self: start;
+    align-content: flex-start;
   }
 
   .page-calendar .rail__page {

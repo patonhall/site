@@ -31,7 +31,8 @@
       startDate: byId('course-start-date').value,
       endDate: byId('course-end-date').value,
       cost: byId('course-cost').value,
-      registrationMode: byId('course-registration-mode').value
+      registrationMode: byId('course-registration-mode').value,
+      description: byId('course-description').value
     };
     if (payload.registrationMode === 'capacity') {
       payload.seatsTotal = parseInt(byId('course-seats-total').value, 10);

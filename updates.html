@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body class="page-inner">
+<body class="page-inner page-wide">
 
 <!-- Mobile-only advisory — hidden by default, shown by the mobile
      breakpoint in site.css. The layout's mobile pass so far covers the
@@ -90,27 +90,40 @@
 
     <hr class="rule">
 
-    <!-- TODO: Members and Operators need the posts index before they can do
-         anything. Mailing List is live and is what the page shows by default. -->
-    <p class="filters">
-      <a href="https://patonhall.kit.com/" rel="noopener" target="_blank">Mailing List</a>
-      <a href="#" aria-disabled="true">Posts by Members</a>
-      <a href="#" aria-disabled="true">Operators</a>
-    </p>
+    <!-- Two independent streams, side by side, so neither buries the other.
+         The old filter row is gone: its two live entries are these column
+         headings now, and "Operators" went with it -- it was disabled, had no
+         index behind it, and a dead link in a heading row reads as broken
+         rather than as forthcoming.
 
-    <!-- Filled by assets/js/kit-posts.js from patonhall.kit.com at load time.
-         Falls back to a plain archive link if Kit's page state changes shape. -->
-    <div id="kit-posts">
-      <p class="cal__empty">Loading&hellip;</p>
+         Below the mobile breakpoint the columns stack, which would make the
+         second stream easy to miss, so assets/js/updates-tabs.js turns these
+         same headings into a two-tab switcher there. -->
+    <div class="updates" id="updates">
+      <section class="updates__col" id="updates-col-mailing">
+        <h2 class="updates__head">Mailing List &mdash;
+          <a href="https://patonhall.kit.com/" rel="noopener" target="_blank">LINK</a></h2>
+
+        <!-- Filled by assets/js/kit-posts.js from patonhall.kit.com at load
+             time. Falls back to a plain archive link if Kit's page state
+             changes shape. -->
+        <div id="kit-posts">
+          <p class="cal__empty">Loading&hellip;</p>
+        </div>
+      </section>
+
+      <section class="updates__col" id="updates-col-members">
+        <h2 class="updates__head">Posts by Members</h2>
+        <div id="posts-list"></div>
+      </section>
     </div>
-
-    <div id="posts-list"></div>
 
     <p class="colophon">Paton Hall Inc. is a Canadian corporation run by and for its local
     membership. Click the garage icon
     for more info.</p>
   </main>
 
+  <script src="assets/js/updates-tabs.js" defer></script>
   <script src="assets/js/kit-posts.js" defer></script>
   <script src="assets/js/posts.js" defer></script>
 

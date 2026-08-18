@@ -1,6 +1,6 @@
 <!--
 title: Add Post — Paton Hall (admin)
-class: page-inner
+class: page-inner page-wide
 desc: Internal tool for adding Updates posts. Requires admin_server.py running locally.
 -->
   <main class="main">
@@ -8,41 +8,59 @@ desc: Internal tool for adding Updates posts. Requires admin_server.py running l
 
     <p>Internal tool, not linked from the site. Only works when
     <code>admin_server.py</code> is running on this machine — submitting from the
-    live site fails, on purpose, rather than pretend to save anything.</p>
+    live site fails, on purpose, rather than pretend to save anything. Bodies are
+    Markdown, rendered by <code>assets/js/markdown.js</code> the same way the
+    published post will be.</p>
 
     <hr class="rule">
 
-    <form id="post-form" class="signup-form">
-      <div class="full">
-        <label for="post-title">Title</label>
-        <input id="post-title" type="text" name="title" required>
+    <!-- Writing surface left, metadata right. The body is the part that takes
+         real time, so it gets the height; the four short fields beside it are
+         a minute's work and do not need a column of their own width.
+         .editor__pane is sized to the viewport rather than a row count, so the
+         box grows with the window instead of being a fixed ten lines. -->
+    <form id="post-form" class="editor">
+
+      <div class="editor__main">
+        <label class="editor__label" for="post-body">Body (Markdown)</label>
+        <!-- data-editor is all assets/js/editor.js needs: it builds the
+             formatting bar, the preview and the full-screen toggle around
+             this box. Without JS it stays a plain textarea, which still
+             accepts Markdown perfectly well. -->
+        <textarea id="post-body" name="body" data-editor required spellcheck="true"></textarea>
       </div>
 
-      <div>
-        <label for="post-date">Date</label>
-        <input id="post-date" type="date" name="date" required>
-      </div>
-      <div>
-        <label for="post-author">Author</label>
-        <input id="post-author" type="text" name="author" required>
-      </div>
+      <aside class="editor__meta">
+        <div>
+          <label for="post-title">Title</label>
+          <input id="post-title" type="text" name="title" required>
+        </div>
 
-      <div class="full">
-        <label for="post-topics">Topics (comma separated)</label>
-        <input id="post-topics" type="text" name="topics" placeholder="Members, Build Night">
-      </div>
+        <div>
+          <label for="post-date">Date</label>
+          <input id="post-date" type="date" name="date" required>
+        </div>
 
-      <div class="full">
-        <label for="post-body">Body</label>
-        <textarea id="post-body" name="body" rows="10" required></textarea>
-      </div>
+        <div>
+          <label for="post-author">Author</label>
+          <input id="post-author" type="text" name="author" required>
+        </div>
 
-      <div class="full">
-        <button type="submit">Save post</button>
-      </div>
+        <div>
+          <label for="post-topics">Topics (comma separated)</label>
+          <input id="post-topics" type="text" name="topics" placeholder="Members, Build Night">
+        </div>
+
+        <div>
+          <button type="submit">Save post</button>
+        </div>
+
+        <p id="post-status" class="form-status" role="status"></p>
+      </aside>
+
     </form>
-
-    <p id="post-status" class="form-status" role="status"></p>
   </main>
 
+  <script src="assets/js/markdown.js" defer></script>
+  <script src="assets/js/editor.js" defer></script>
   <script src="assets/js/admin-posts.js" defer></script>

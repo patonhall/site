@@ -102,6 +102,13 @@ def validate_course(payload):
     if not isinstance(cost, str) or not cost.strip():
         errors.append('cost is required')
 
+    # Optional: a course scheduled in a hurry can be saved without one, and
+    # the Training table simply shows no expander for it. Markdown, rendered
+    # by assets/js/markdown.js exactly as post bodies are.
+    description = payload.get('description', '')
+    if not isinstance(description, str):
+        errors.append('description must be text')
+
     start_dt = parse_date(payload.get('startDate', ''))
     end_dt = parse_date(payload.get('endDate', ''))
     if start_dt is None:
@@ -262,6 +269,7 @@ def create_course(payload):
         'startDate': payload['startDate'],
         'endDate': payload['endDate'],
         'cost': payload['cost'].strip(),
+        'description': payload.get('description', '').strip(),
         'registrationMode': payload['registrationMode'],
         'created': datetime.utcnow().strftime('%Y-%m-%dT%H:%M:%S'),
     }

@@ -12,8 +12,17 @@
     return params.get('uid');
   }
 
+  /* Post bodies are Markdown. assets/js/markdown.js escapes the whole
+     source before it inserts any tag of its own, so the string handed to
+     innerHTML here contains only markup that file wrote -- never anything
+     the author could have injected. If it failed to load, fall back to the
+     old plain-paragraph rendering rather than showing raw syntax. */
   function renderBody(container, text) {
     container.innerHTML = '';
+    if (window.PatonMarkdown) {
+      container.innerHTML = window.PatonMarkdown.toHtml(text);
+      return;
+    }
     text.split(/\n\s*\n/).forEach(function (para) {
       if (!para.trim()) return;
       var p = document.createElement('p');

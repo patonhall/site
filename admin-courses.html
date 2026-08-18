@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body class="page-inner">
+<body class="page-inner page-wide">
 
 <!-- Mobile-only advisory — hidden by default, shown by the mobile
      breakpoint in site.css. The layout's mobile pass so far covers the
@@ -138,6 +138,12 @@
       </div>
 
       <div class="full">
+        <label class="editor__label" for="course-description">Description (Markdown)</label>
+        <textarea id="course-description" name="description" data-editor
+                  spellcheck="true" placeholder="What the course covers, who it is for, what a participant leaves with."></textarea>
+      </div>
+
+      <div class="full">
         <button type="submit">Save course</button>
       </div>
     </form>
@@ -145,6 +151,8 @@
     <p id="course-status" class="form-status" role="status"></p>
   </main>
 
+  <script src="assets/js/markdown.js" defer></script>
+  <script src="assets/js/editor.js" defer></script>
   <script src="assets/js/admin-courses.js" defer></script>
 
 

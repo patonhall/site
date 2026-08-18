@@ -1,10 +1,15 @@
-/* Handles admin-posts.html: splits the comma-separated Topics field into
-   an array and submits new posts to admin_server.py's write endpoint.
-   Never reports success it didn't get. */
+/* Handles admin-posts.html: builds the payload and submits new posts to
+   admin_server.py's write endpoint. Never reports success it didn't get.
+
+   The Markdown toolbar, preview and full-screen mode are not here -- they
+   are assets/js/editor.js, attached to any textarea carrying data-editor, so
+   the course description form gets the identical writing surface. */
 (function () {
   'use strict';
 
   function byId(id) { return document.getElementById(id); }
+
+  /* --- saving ------------------------------------------------------------ */
 
   function buildPayload() {
     var topics = byId('post-topics').value
@@ -50,8 +55,13 @@
     });
   }
 
+  /* --- wiring ------------------------------------------------------------ */
+
   function init() {
-    byId('post-form').addEventListener('submit', onSubmit);
+    var form = byId('post-form');
+    if (!form) return;
+    form.addEventListener('submit', onSubmit);
+
   }
 
   if (document.readyState === 'loading') {

@@ -76,7 +76,45 @@
 
     visible.forEach(function (course) {
       var tr = document.createElement('tr');
-      tr.appendChild(el('td', '', course.title));
+      var titleCell = el('td', '', null);
+
+      /* A course with a description gets an expander rather than the prose
+         inline: descriptions run to paragraphs and lists, and dropping that
+         into a four-column row destroys the table's rhythm for every other
+         course. Courses without one look exactly as they always did. */
+      if (course.description && window.PatonMarkdown) {
+        var toggle = el('button', 'courses__toggle', course.title);
+        toggle.type = 'button';
+        toggle.setAttribute('aria-expanded', 'false');
+        titleCell.appendChild(toggle);
+        tr.appendChild(titleCell);
+        tr.appendChild(el('td', '', formatDateRange(course)));
+        tr.appendChild(el('td', '', course.cost));
+        tr.appendChild(el('td', '', indicatorFor(course)));
+        tbody.appendChild(tr);
+
+        var detail = document.createElement('tr');
+        detail.className = 'courses__detail';
+        detail.hidden = true;
+        var cell = el('td', 'post-body', null);
+        cell.colSpan = 4;
+        /* Safe: markdown.js escapes the entire source before adding any tag
+           of its own. Same renderer, same guarantee, as a post body. */
+        cell.innerHTML = window.PatonMarkdown.toHtml(course.description);
+        detail.appendChild(cell);
+        tbody.appendChild(detail);
+
+        toggle.addEventListener('click', function () {
+          var open = detail.hidden;
+          detail.hidden = !open;
+          toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+          toggle.classList.toggle('is-open', open);
+        });
+        return;
+      }
+
+      titleCell.textContent = course.title;
+      tr.appendChild(titleCell);
       tr.appendChild(el('td', '', formatDateRange(course)));
       tr.appendChild(el('td', '', course.cost));
       tr.appendChild(el('td', '', indicatorFor(course)));
