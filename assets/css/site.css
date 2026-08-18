@@ -250,7 +250,6 @@ body {
   height: 60px;
   border-radius: 50%;
   color: var(--ink);
-  animation: garage-spin 3.6s cubic-bezier(0.34, 1.2, 0.4, 1) 1;
 }
 
 /* The CSS fallback: a plain filled circle, so the glyph still reads as a
@@ -258,9 +257,17 @@ body {
 .garage[data-sketch] { background: var(--garage-fill); }
 .sketched .garage[data-sketch] { background: transparent; }
 
-/* A one-shot, slightly silly spin-up on load — wobbles past a full turn
-   twice before settling, rather than one clean rotation. Ends at 720deg
-   (== 0deg) with scale back to 1, so it always settles looking normal. */
+/* .garage--spin is added by assets/js/garage-spin.js only on a visitor's
+   first page load (tracked in localStorage) — this is a multi-page site,
+   not an SPA, so a plain always-on animation here would replay on every
+   single navigation. A one-shot, slightly silly spin-up: wobbles past a
+   full turn twice before settling, rather than one clean rotation. Ends
+   at 720deg (== 0deg) with scale back to 1, so it always settles looking
+   normal. */
+.garage--spin {
+  animation: garage-spin 3.6s cubic-bezier(0.34, 1.2, 0.4, 1) 1;
+}
+
 @keyframes garage-spin {
   0%   { transform: rotate(0deg) scale(1); }
   12%  { transform: rotate(-25deg) scale(1.05); }
@@ -273,7 +280,7 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .garage { animation: none; }
+  .garage--spin { animation: none; }
 }
 
 /* --- Main ----------------------------------------------------------------- */
