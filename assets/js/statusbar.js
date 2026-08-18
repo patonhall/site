@@ -61,6 +61,7 @@
     el.appendChild(dot);
 
     var text = document.createElement('span');
+    text.className = 'statusbar__event-text';
     text.textContent = event
       ? timeRange(event) + ' — ' + event.title + ' @ ' + spaceText(event.location)
       : 'Nothing scheduled';
@@ -86,6 +87,7 @@
       .catch(function () {
         eventEl.innerHTML = '';
         var text = document.createElement('span');
+        text.className = 'statusbar__event-text';
         text.textContent = 'Schedule unavailable';
         eventEl.appendChild(text);
       });

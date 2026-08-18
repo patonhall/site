@@ -381,6 +381,11 @@ body {
   height: 9px;
   border-radius: 50%;
   border: 1.5px solid var(--green-7);
+  /* Without this the flex row's default shrink algorithm can squash the
+     circle into an oval once the event text is long enough to contend
+     for space — most visible once the bar's own width isn't guaranteed
+     by min-width, i.e. on the mobile breakpoint below. */
+  flex-shrink: 0;
 }
 
 /* --- Subscribe panel ------------------------------------------------------
@@ -872,4 +877,69 @@ body {
 }
 
 .cal__detail p { margin: 0 0 17px; max-width: 460px; }
+
+/* ==========================================================================
+   Mobile — below the 960px desktop floor (see body's min-width comment
+   near the top of this file). The grid-based desktop layout (rail | main
+   | aside columns, a fixed-width nav rail, a fixed-height status bar) was
+   built to size to the window, not to collapse — none of those fixed
+   widths reflow gracefully below their own content's needs, so this
+   switches the frame to a single scrolling column instead. First pass
+   covers the shared shell (every page) and the homepage's own signup
+   form; page-specific grids (Calendar's agenda/detail split, the
+   Training/Courses table, admin forms) are a known follow-up, not
+   covered here.
+   ========================================================================== */
+
+@media (max-width: 959px) {
+  body {
+    min-width: 0;
+    padding: 10px 10px 74px;
+  }
+
+  .frame {
+    grid-template-columns: 1fr;
+    padding: 16px 12px 24px;
+  }
+
+  /* Nav and social both switch from a tall vertical list to a compact
+     wrapping row — a phone screen doesn't have the vertical rail's worth
+     of height to spare before reaching actual content. padding-right on
+     .rail keeps wrapped buttons clear of .garage, which stays absolutely
+     positioned in .frame's corner regardless of how the grid stacks. */
+  .rail { padding-right: 76px; }
+
+  .nav, .social {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .social { margin-left: 0; }
+
+  .signup-form { grid-template-columns: 1fr; }
+
+  /* The desktop bar is a fixed 36px single row with the event and date
+     side by side — on a narrow screen that either truncates the date or
+     overflows past the edge. Stacking the two lines is more robust than
+     truncating either one. */
+  .statusbar {
+    min-width: 0;
+    height: auto;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+    padding: 8px 14px;
+    font-size: 13px;
+  }
+
+  .statusbar__event { min-width: 0; max-width: 100%; }
+
+  .statusbar__event-text {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
 .cal__label { text-transform: uppercase; }
