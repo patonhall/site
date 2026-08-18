@@ -46,14 +46,15 @@
     return slug;
   }
 
-  /* h2-h4 only. h1 is the post title, which lives outside the body, and
-     h5/h6 are deeper than a sidebar can usefully show. */
+  /* Every level the Markdown renderer can emit, h1 through h6. The post's
+     own title is an <h2> outside .post-body, so nothing here competes with
+     it and a body-level '# Heading' is the author's, not a duplicate. */
   function buildToc(body) {
     var nav = byId('post-toc');
     var list = byId('post-toc-list');
     if (!nav || !list) return;
 
-    var headings = body.querySelectorAll('h2, h3, h4');
+    var headings = body.querySelectorAll('h1, h2, h3, h4, h5, h6');
     if (!headings.length) return;      /* stays hidden; no empty rail */
 
     var used = {};

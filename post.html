@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body class="page-inner">
+<body class="page-inner page-thirds">
 
 <!-- Mobile-only advisory — hidden by default, shown by the mobile
      breakpoint in site.css. The layout's mobile pass so far covers the
@@ -106,7 +106,11 @@
        page. It now carries a contents list built from the post's own
        Markdown headings by assets/js/post.js. Shipped hidden: a short post
        with no headings gets no rail rather than an empty box, and the
-       markup only means anything once the body has rendered. -->
+       markup only means anything once the body has rendered.
+
+       .page-thirds on <body> makes the split an exact 2fr/1fr rather than
+       the shell's default 890px/470px caps, which drift out of ratio as the
+       window narrows. -->
   <aside class="aside aside--flush aside--sticky">
     <nav class="toc" id="post-toc" aria-label="Contents" hidden>
       <p class="toc__head">Contents</p>

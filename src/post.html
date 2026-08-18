@@ -1,7 +1,7 @@
 <!--
 title: Post — Updates — Paton Hall
 nav: updates
-class: page-inner
+class: page-inner page-thirds
 desc: A post from Paton Hall's Updates.
 -->
   <main class="main">
@@ -27,7 +27,11 @@ desc: A post from Paton Hall's Updates.
        page. It now carries a contents list built from the post's own
        Markdown headings by assets/js/post.js. Shipped hidden: a short post
        with no headings gets no rail rather than an empty box, and the
-       markup only means anything once the body has rendered. -->
+       markup only means anything once the body has rendered.
+
+       .page-thirds on <body> makes the split an exact 2fr/1fr rather than
+       the shell's default 890px/470px caps, which drift out of ratio as the
+       window narrows. -->
   <aside class="aside aside--flush aside--sticky">
     <nav class="toc" id="post-toc" aria-label="Contents" hidden>
       <p class="toc__head">Contents</p>

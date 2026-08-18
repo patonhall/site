@@ -1081,15 +1081,28 @@ body.is-editor-max .statusbar { display: none; }
 }
 
 .post-body p { margin: 0 0 17px; }
-.post-body h2, .post-body h3, .post-body h4 {
+/* All six levels, because markdown.js emits all six and the contents rail
+   now lists all six -- an unstyled h1 or h6 in a body would otherwise fall
+   back to the browser's defaults and look like a different website. */
+.post-body :is(h1, h2, h3, h4, h5, h6) {
   font-family: var(--font-display);
   font-weight: 400;
   line-height: 1.2;
   margin: 26px 0 12px;
 }
+.post-body h1 { font-size: 31px; }
 .post-body h2 { font-size: 25px; }
 .post-body h3 { font-size: 20px; }
 .post-body h4 { font-size: 17px; text-transform: uppercase; letter-spacing: 0.04em; }
+.post-body h5, .post-body h6 {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #55524d;
+  margin: 22px 0 8px;
+}
+.post-body h6 { text-transform: none; letter-spacing: 0; font-style: italic; }
 .post-body ul, .post-body ol { margin: 0 0 17px; padding-left: 24px; }
 .post-body li { margin-bottom: 6px; }
 .post-body blockquote {
@@ -1117,7 +1130,7 @@ body.is-editor-max .statusbar { display: none; }
 
 /* Anchor jumps from the contents rail should not land with the heading
    flush against the viewport edge. */
-.post-body h2, .post-body h3, .post-body h4 { scroll-margin-top: 18px; }
+.post-body :is(h1, h2, h3, h4, h5, h6) { scroll-margin-top: 18px; }
 
 /* --- Services detail panel (assets/js/services.js) ------------------------
    Same shape as the Calendar's agenda/detail split: the choice on the left,
@@ -1194,8 +1207,15 @@ body.is-editor-max .statusbar { display: none; }
 .toc__list { list-style: none; margin: 0; padding: 0; }
 
 .toc__item { margin-bottom: 7px; line-height: 1.35; }
-.toc__item--h3 { padding-left: 13px; }
-.toc__item--h4 { padding-left: 26px; }
+
+/* One step per level, h1 through h6. 11px rather than a wider indent
+   because six levels of it have to stay legible in a third of the page --
+   at 13px a deep h6 would have lost a third of its own line to padding. */
+.toc__item--h2 { padding-left: 11px; }
+.toc__item--h3 { padding-left: 22px; }
+.toc__item--h4 { padding-left: 33px; }
+.toc__item--h5 { padding-left: 44px; }
+.toc__item--h6 { padding-left: 55px; }
 
 .toc__item a {
   font-size: 14px;
@@ -1203,7 +1223,10 @@ body.is-editor-max .statusbar { display: none; }
   text-decoration: none;
 }
 
-.toc__item--h2 a { font-weight: 700; color: var(--ink); }
+/* Only the top two levels take weight; past that the indent carries the
+   hierarchy on its own and more bold text would just be noise. */
+.toc__item--h1 a, .toc__item--h2 a { font-weight: 700; color: var(--ink); }
+.toc__item--h5 a, .toc__item--h6 a { font-size: 13px; }
 .toc__item a:hover { text-decoration: underline; }
 .toc__item a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
 .post-body p:last-child { margin-bottom: 0; }
