@@ -45,8 +45,9 @@ Sits below the tier tables on the Membership page.
 
 **Fixed fine print under the button:**
 
-> Submitting this form adds you to our mailing list. A confirmation email
-> will be sent. We'll follow up personally to talk membership.
+> Submitting this form adds you to our mailing list. Look out for our
+> confirmation email if you're not already subscribed. We'll follow up
+> personally to discuss your new Membership.
 
 Kit tag: `membership-interest`. GitHub issue label: `type:membership-interest`.
 Pure notification like homepage signup — no repo write-back, admin closes
