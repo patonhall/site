@@ -36,10 +36,13 @@
   function render(container, posts) {
     container.innerHTML = '';
 
-    if (!posts.length) {
-      container.appendChild(el('p', 'cal__empty', 'No posts yet.'));
-      return;
-    }
+    /* Render nothing at all when there are no posts. This list sits below
+       the live Mailing List archive on Updates, so an empty-state message
+       here read as though the whole page had nothing on it. The container
+       stays wired, so member/operator posts appear the moment posts.json
+       has any. A fetch *failure* still reports itself below — that is a
+       different situation from simply having nothing yet. */
+    if (!posts.length) return;
 
     var sorted = posts.slice().sort(function (a, b) {
       return parseDateOnly(b.date) - parseDateOnly(a.date);
