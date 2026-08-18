@@ -46,10 +46,64 @@
 <main class="main">
     <h1 class="page-title">Paton Hall</h1>
 
-    <p>An industrial hub in downtown Hamilton focused on electronics, machinery,
-    robotics, peer education, industrial certifications, product demos and launches. An all
-    ages environment with only a pool table as its permanent fixture. A place to accelerate
-    the formation of communities.</p>
+    <p>Paton Hall is a members-run industrial hub opening in downtown Hamilton —
+    electronics, machinery, robotics, and hands-on training. We're raising our
+    founding membership before we open: join the list, or help launch us as a
+    Member or Founder.</p>
+
+    <!-- Submits to the homepage-signup Google Form (see
+         google-apps-script/homepage-signup.gs and
+         docs/superpowers/specs/2026-08-18-patonhall-membership-signup-design.md)
+         instead of posting to Kit directly — Kit still gets updated, via
+         Apps Script's API calls, not a Kit-hosted form. Replace every
+         entry.REPLACE_WITH_* name below, and the form's action URL, once
+         the Google Form exists. -->
+    <section class="signup">
+      <p class="eyebrow">Join Us</p>
+      <p>Receive progress updates, or help launch Paton Hall as a Member or Founder.</p>
+
+      <form id="homepage-signup-form" class="signup-form"
+            action="https://docs.google.com/forms/d/e/REPLACE_WITH_FORM_ID/formResponse"
+            method="POST" target="_blank">
+        <div>
+          <label for="hs-name">Name</label>
+          <input id="hs-name" type="text" name="entry.REPLACE_WITH_NAME" autocomplete="given-name" required>
+        </div>
+        <div>
+          <label for="hs-email">Email</label>
+          <input id="hs-email" type="email" name="entry.REPLACE_WITH_EMAIL" autocomplete="email" required>
+        </div>
+
+        <div class="full">
+          <label for="hs-tier">I want to</label>
+          <select id="hs-tier" name="entry.REPLACE_WITH_TIER">
+            <option value="List">Join the list</option>
+            <option value="Member">Become a Member</option>
+            <option value="Founder">Become a Founder</option>
+          </select>
+        </div>
+
+        <div class="full" id="hs-interest-row">
+          <label for="hs-interest">What brings you here</label>
+          <select id="hs-interest" name="entry.REPLACE_WITH_INTEREST">
+            <option value="Build nights">Build nights</option>
+            <option value="Learning days and talks">Learning days and talks</option>
+            <option value="Certified electronics training">Certified electronics training</option>
+            <option value="Just keeping an eye on it">Just keeping an eye on it</option>
+          </select>
+        </div>
+
+        <div class="full">
+          <button type="submit" id="hs-submit">Put me on the list</button>
+        </div>
+      </form>
+
+      <p class="fineprint">Submitting reserves your spot — we'll follow up by email to
+      arrange payment. Nothing is charged now. Questions:
+      <a href="mailto:paton@babb.tel">paton@babb.tel</a>.</p>
+
+      <p id="hs-status" class="form-status" role="status"></p>
+    </section>
 
     <hr class="rule">
 
@@ -67,46 +121,8 @@
     If you are a local business or organization interested in using the space or a membership, contact us!<br>
     Space re-organized every AM or PM to support in-demand activities.</p>
 
-    <!-- Reskin of the signup module from the existing Paton Hall site.
-         Structure, field names and the Kit form endpoint are unchanged so
-         both sites feed the same list. -->
-    <section class="signup">
-      <p class="eyebrow">Subscribe</p>
-      <p>Receive progress updates and information on becoming a member.</p>
-      <p class="signup-sub">The first twenty-five members get a founding rate and a say in how the
-      room runs. We open within ninety days.</p>
-
-      <form id="subscribe-form" class="signup-form" action="https://app.kit.com/forms/9788991/subscriptions" method="post">
-        <div>
-          <label for="su-name">Name</label>
-          <input id="su-name" type="text" name="fields[first_name]" autocomplete="given-name" required>
-        </div>
-        <div>
-          <label for="su-email">Email</label>
-          <input id="su-email" type="email" name="email_address" autocomplete="email" required>
-        </div>
-        <div class="full">
-          <label for="su-interest">What brings you here</label>
-          <select id="su-interest" name="fields[interest]">
-            <option value="Build nights">Build nights</option>
-            <option value="Learning days and talks">Learning days and talks</option>
-            <option value="Certified electronics training">Certified electronics training</option>
-            <option value="Founding membership">Founding membership</option>
-            <option value="Just keeping an eye on it">Just keeping an eye on it</option>
-          </select>
-        </div>
-        <div class="full">
-          <button type="submit">Put me on the list</button>
-        </div>
-      </form>
-
-      <p class="fineprint">We will email you about Paton Hall and nothing else.
-      Unsubscribe in one click, any time. No sharing, no selling, no third
-      parties. Questions: <a href="mailto:paton@babb.tel">paton@babb.tel</a>.</p>
-    </section>
-
     <p class="colophon">Paton Hall Inc. is a Canadian corporation run by and for its local
-    membership. Click garage icon for more info.</p>
+    membership.</p>
   </main>
 
   <aside class="aside">
@@ -132,6 +148,8 @@
       <li>Demos &amp; Launches</li>
     </ul>
   </aside>
+
+  <script src="assets/js/homepage-signup.js" defer></script>
 
 
 </div>

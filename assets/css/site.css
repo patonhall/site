@@ -348,9 +348,10 @@ body {
 }
 
 /* --- Subscribe panel ------------------------------------------------------
-   A reskin of the signup module from the existing Paton Hall site. The
-   structure and field names are kept identical so it posts to the same Kit
-   form; only the surrounding type and spacing follow this site's tokens.
+   The tiered membership/founders signup form. Submits in the background to
+   a Google Form (assets/js/homepage-signup.js); google-apps-script/
+   homepage-signup.gs updates Kit via its API from there, rather than this
+   form posting to Kit directly.
    -------------------------------------------------------------------------- */
 
 .signup {
@@ -479,6 +480,13 @@ body {
 }
 
 .signup .fineprint a { color: #cfe0ee; }
+
+/* #hs-status lives inside this dark enamel panel, unlike the sibling forms'
+   .form-status (on the white .page-inner background) that #c92a2a below was
+   tuned for — against --enamel (#16212c) that red is ~3:1, failing AA.
+   Lighten it here, same scoped-override pattern as .page-inner's button
+   states further down: ~7:1 against --enamel. */
+.signup .form-status.is-error { color: #ff8787; }
 
 /* --- Inline form result messages (admin add-event form) ------------------ */
 
