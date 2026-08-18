@@ -369,10 +369,11 @@ body {
 .building { width: 100%; height: auto; margin-bottom: 20px; }
 
 /* .frame sets align-items:start, so an aside is only as tall as its content
-   and position:sticky inside it would have nothing to travel through --
-   it would simply sit still. This one stretches to the row so the contents
-   rail can actually follow a long article. */
-.aside--toc { align-self: stretch; }
+   and position:sticky inside it would have nothing to travel through -- it
+   would simply sit still. This stretches the aside to the row so a sticky
+   child (the post contents rail, the Services detail panel) can actually
+   follow the page. */
+.aside--sticky { align-self: stretch; }
 
 .leasing-note {
   font-family: var(--font-mono);
@@ -668,6 +669,15 @@ body {
    line length stays readable and only the things that want the room (the
    Updates columns, the admin editors, wide tables) actually take it. */
 .page-wide .main { grid-column: 2 / 4; }
+
+/* The default tracks are the mockup's measured 890px and 470px -- close to
+   two thirds and one third, but not it (they land at about 65/35, and both
+   are capped rather than proportional). .page-thirds makes the split exact
+   and keeps it exact as the window narrows, since fr units stay in ratio
+   where two independent minmax caps do not. */
+.page-thirds .frame {
+  grid-template-columns: 140px minmax(0, 2fr) minmax(0, 1fr);
+}
 
 /* --- Shared content components ------------------------------------------- */
 
@@ -1109,6 +1119,53 @@ body.is-editor-max .statusbar { display: none; }
    flush against the viewport edge. */
 .post-body h2, .post-body h3, .post-body h4 { scroll-margin-top: 18px; }
 
+/* --- Services detail panel (assets/js/services.js) ------------------------
+   Same shape as the Calendar's agenda/detail split: the choice on the left,
+   the reading on the right. Names are anchors rather than buttons so the
+   page degrades to a plain document with scripting off. */
+
+.svc__list a.svc__name {
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.svc__name:hover { border-bottom-color: var(--ink); }
+
+.svc__name.is-current {
+  font-weight: 700;
+  border-bottom-color: var(--ink);
+}
+
+.svc__name:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+.svc__detail {
+  position: sticky;
+  top: 20px;
+  width: 100%;
+  padding-left: 30px;
+  border-left: 1px solid #c9c6bf;
+  max-height: calc(100vh - 60px);
+  overflow-y: auto;
+}
+
+.svc__title {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 14px;
+}
+
+.svc__detail p { margin: 0 0 15px; }
+.svc__detail p:last-child { margin-bottom: 0; }
+
+.svc__hint {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.5;
+  color: #55524d;
+}
+
 /* --- Post contents rail (assets/js/post.js) ------------------------------
    Sticky so it stays available through a long article. Indentation carries
    the heading hierarchy rather than nested lists: the depth is only ever
@@ -1171,16 +1228,23 @@ body.is-editor-max .statusbar { display: none; }
    it spans both content columns. */
 .cal { grid-column: 2 / 4; display: flex; flex-direction: column; }
 
+/* The same two tracks as .cal__body below, so the bar's first cell lines up
+   exactly with the agenda column. The second cell is left empty -- it sits
+   under the ships and garage glyphs in the frame's corner, which is why the
+   bar no longer needs padding to clear them: nothing is in that cell to
+   collide with. */
 .cal__bar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 470px);
+  gap: clamp(20px, 2.3vw, 40px);
+  margin-bottom: 30px;
+}
+
+.cal__bar-main {
   display: flex;
   align-items: baseline;
   gap: 60px;
-  margin-bottom: 30px;
-  /* The Calendar is the one page whose content reaches the frame's top-right
-     corner, where the ships and garage glyphs now sit. Reserve that space so
-     the header does not run underneath them: 88px covered the garage alone,
-     and the ships icon adds another 72px to its left. */
-  padding-right: 160px;
+  min-width: 0;
 }
 
 .cal__actions, .cal__views { display: flex; gap: 44px; }
@@ -1195,8 +1259,9 @@ body.is-editor-max .statusbar { display: none; }
   margin: 0;
 }
 
-/* Same push-right idiom as .cal__today below. */
-.cal__bar .cal__actions { margin-left: auto; }
+/* Pushes Book Space to the right edge of the agenda column, not the page.
+   Same idiom as .cal__today below. */
+.cal__bar-main .cal__actions { margin-left: auto; }
 
 .cal__actions a, .cal__views a {
   font-family: var(--font-mono);
@@ -1385,11 +1450,15 @@ body.is-editor-max .statusbar { display: none; }
   .editor__pane, .editor__pane.is-split { grid-template-columns: 1fr; height: auto; }
   #post-body { min-height: 300px; }
 
-  .toc {
+  .toc, .svc__detail {
     position: static;
     max-height: none;
     overflow-y: visible;
   }
+
+  /* Stacked below the names, the panel's rule reads as a stray vertical
+     line rather than a column divider. */
+  .svc__detail { padding-left: 0; border-left: none; }
 
   /* The desktop bar is a fixed 36px single row with the event and date
      side by side — on a narrow screen that either truncates the date or

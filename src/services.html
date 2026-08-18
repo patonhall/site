@@ -15,27 +15,107 @@ desc: What is available at Paton Hall to everyone, and what is available to memb
 
     <hr class="rule">
 
+    <!-- Each name is an anchor to its panel in the aside, not a button, so the
+         page still works with scripting off: every panel is visible and the
+         link jumps to it. assets/js/services.js collapses that into a
+         one-at-a-time detail view when it runs. -->
     <h2 class="section-head">Everyone</h2>
 
-    <ul class="plain-list">
-      <li>Pool Table</li>
-      <li>Space Rental</li>
-      <li>Event Rental</li>
+    <ul class="plain-list svc__list">
+      <li><a class="svc__name" href="#svc-pool-table">Pool Table</a></li>
+      <li><a class="svc__name" href="#svc-space-rental">Space Rental</a></li>
+      <li><a class="svc__name" href="#svc-event-rental">Event Rental</a></li>
     </ul>
 
     <h2 class="section-head">Members</h2>
 
-    <ul class="plain-list plain-list--indent">
-      <li>Blackboard &amp; Whiteboard</li>
-      <li>Work Tables</li>
-      <li>Work Benches</li>
-      <li>Assembly Zones</li>
-      <li>Tool Room</li>
-      <li>Storage Bins</li>
-      <li>Discord</li>
+    <ul class="plain-list plain-list--indent svc__list">
+      <li><a class="svc__name" href="#svc-boards">Blackboard &amp; Whiteboard</a></li>
+      <li><a class="svc__name" href="#svc-work-tables">Work Tables</a></li>
+      <li><a class="svc__name" href="#svc-work-benches">Work Benches</a></li>
+      <li><a class="svc__name" href="#svc-assembly-zones">Assembly Zones</a></li>
+      <li><a class="svc__name" href="#svc-tool-room">Tool Room</a></li>
+      <li><a class="svc__name" href="#svc-storage-bins">Storage Bins</a></li>
+      <li><a class="svc__name" href="#svc-discord">Discord</a></li>
     </ul>
 
     <p class="colophon">Paton Hall Inc. is a Canadian corporation run by and for its local
     membership. Click the garage icon
     for more info.</p>
   </main>
+
+  <aside class="aside aside--flush aside--sticky">
+    <div class="svc__detail" id="svc-detail">
+
+      <p class="svc__hint" id="svc-hint">Click any service on the left to read what it is
+      and who can use it.</p>
+
+      <div class="svc__panel" id="svc-pool-table">
+        <h2 class="svc__title">Pool Table</h2>
+        <p>At the back of the room, open to anyone in the building during open hours. The cap
+        drops over it to turn it into another large flat work surface, which is often what it
+        is doing.</p>
+      </div>
+
+      <div class="svc__panel" id="svc-space-rental">
+        <h2 class="svc__title">Space Rental</h2>
+        <p>Book part of the floor for a stretch of work that needs more room than a bench, or
+        that needs to stay set up. Requests go through the Calendar so bookings do not collide
+        with events already scheduled.</p>
+        <p><a href="book-space.html">Request a space</a></p>
+      </div>
+
+      <div class="svc__panel" id="svc-event-rental">
+        <h2 class="svc__title">Event Rental</h2>
+        <p>The whole room, for a talk, a launch, a demo or a class. Garage height and a bay
+        door you can drive through, so what you are showing does not have to fit through a
+        normal doorway.</p>
+        <p><a href="book-space.html">Ask about an event</a></p>
+      </div>
+
+      <div class="svc__panel" id="svc-boards">
+        <h2 class="svc__title">Blackboard &amp; Whiteboard</h2>
+        <p>A full wall of them, opposite the benches. Meant to be used and left up — working
+        through something in front of other people is most of the point of the room.</p>
+      </div>
+
+      <div class="svc__panel" id="svc-work-tables">
+        <h2 class="svc__title">Work Tables</h2>
+        <p>Open tables for layout, assembly and anything that needs to be spread out. First
+        come, cleared at the end of the session unless it is booked as an Assembly Zone.</p>
+      </div>
+
+      <div class="svc__panel" id="svc-work-benches">
+        <h2 class="svc__title">Work Benches</h2>
+        <p>Fixed benches with power and stools, set up for hardware, prototyping and testing.
+        Shop members get priority on these.</p>
+      </div>
+
+      <div class="svc__panel" id="svc-assembly-zones">
+        <h2 class="svc__title">Assembly Zones</h2>
+        <p>A reserved area for a project that has to stay assembled between sessions, rather
+        than being packed down every night. Priority goes to Shop and Keyholder members.</p>
+      </div>
+
+      <div class="svc__panel" id="svc-tool-room">
+        <h2 class="svc__title">Tool Room</h2>
+        <p>Shared hand and power tools kept in one place, signed out and put back. Some tools
+        need a check-out from someone who has been shown how to run them.</p>
+      </div>
+
+      <div class="svc__panel" id="svc-storage-bins">
+        <h2 class="svc__title">Storage Bins</h2>
+        <p>A labelled bin for parts and work in progress, so a project does not have to travel
+        home with you. Keyholder members get extra storage.</p>
+      </div>
+
+      <div class="svc__panel" id="svc-discord">
+        <h2 class="svc__title">Discord</h2>
+        <p>Where the Hall talks between visits — asking for a hand, arranging build nights and
+        posting what people are working on. Members get an invite.</p>
+      </div>
+
+    </div>
+  </aside>
+
+  <script src="assets/js/services.js" defer></script>

@@ -90,9 +90,15 @@
   <div class="cal">
 
     <header class="cal__bar">
-      <h1 class="page-title page-title--cal">Calendar</h1>
-      <div class="cal__actions">
-        <a href="book-space.html">Book Space</a>
+      <!-- Wrapped so both sit in the bar's first grid track, which matches
+           .cal__body's agenda column. Book Space then right-aligns to the
+           edge of the event list it belongs to, rather than to the far edge
+           of the page out over the detail pane. -->
+      <div class="cal__bar-main">
+        <h1 class="page-title page-title--cal">Calendar</h1>
+        <div class="cal__actions">
+          <a href="book-space.html">Book Space</a>
+        </div>
       </div>
     </header>
 
