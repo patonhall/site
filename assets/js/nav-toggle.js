@@ -1,7 +1,8 @@
-/* Toggles the hamburger menu button — currently only visible on the
-   Calendar page at mobile widths (see .page-calendar .nav-toggle in
-   site.css); the button and this listener exist sitewide but stay inert
-   everywhere else since the button itself is hidden there. */
+/* Toggles the hamburger menu button — visible at mobile widths on
+   .page-navmenu pages (the Calendar and individual posts; see
+   .page-navmenu .nav-toggle in site.css). The button and this listener
+   exist sitewide but stay inert elsewhere, since the button itself is
+   hidden there. */
 (function () {
   'use strict';
 

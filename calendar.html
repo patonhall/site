@@ -8,7 +8,7 @@
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body class="page-calendar">
+<body class="page-calendar page-navmenu">
 
 <!-- Mobile-only advisory — hidden by default, shown by the mobile
      breakpoint in site.css. The layout's mobile pass so far covers the
@@ -25,10 +25,10 @@
 <div class="frame" data-sketch="frame" data-sketch-fill="--frame-fill">
 
   <nav class="rail">
-    <!-- Hidden by default everywhere (see .nav-toggle base rule); shown
-         only on .page-calendar at mobile widths, where it replaces the
-         full nav/social lists below with a single menu button that
-         reveals them (assets/js/nav-toggle.js toggles .rail.is-open).
+    <!-- Hidden by default everywhere (see .nav-toggle base rule); shown at
+         mobile widths on .page-navmenu pages, where it replaces the full
+         nav/social lists below with a single menu button that reveals them
+         (assets/js/nav-toggle.js toggles .rail.is-open).
          .rail__page sits beside it: with both lists collapsed nothing else
          on screen names the page, so the label is what the visitor reads
          instead. Filled from the page's `pagename:` front matter at build

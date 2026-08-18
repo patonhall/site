@@ -156,8 +156,9 @@ body {
    widths, including briefly before that later rule loads. */
 .mobile-notice { display: none; }
 
-/* Both shown only on .page-calendar below the mobile breakpoint (near the
-   end of this file) — hidden everywhere else, same reasoning as above. */
+/* .nav-toggle is shown below the mobile breakpoint on .page-navmenu pages
+   (the Calendar and individual posts); .cal__fab only on the Calendar.
+   Hidden everywhere else, same reasoning as above. */
 .nav-toggle { display: none; }
 .cal__fab { display: none; }
 .rail__page { display: none; }
@@ -1423,6 +1424,16 @@ body.is-editor-max .statusbar { display: none; }
     padding: 10px 10px 74px;
   }
 
+  /* .page-thirds sets .frame's tracks with two classes, which beats the
+     single-column rule below on specificity -- without this reset a phone
+     kept the full desktop three-column grid. */
+  .page-thirds .frame { grid-template-columns: 1fr; }
+
+  /* .page-wide spans .main across tracks 2-4. Once the grid is one column
+     those tracks are implicit and the content is placed off the right edge
+     entirely -- the same failure .page-calendar .cal has below. */
+  .page-wide .main { grid-column: 1; }
+
   .frame {
     grid-template-columns: 1fr;
     /* .frame only ever had a column-gap (for the desktop 3-column row) —
@@ -1472,6 +1483,24 @@ body.is-editor-max .statusbar { display: none; }
   .editor { grid-template-columns: 1fr; }
   .editor__pane, .editor__pane.is-split { grid-template-columns: 1fr; height: auto; }
   #post-body { min-height: 300px; }
+
+  /* The desktop title clamp floors at 42px, which is most of a phone's
+     width before the body even starts. */
+  .page-title { font-size: clamp(29px, 8.5vw, 42px); }
+
+  .post-header { gap: 14px; }
+  .back { font-size: 28px; }
+
+  .post-body { font-size: 16px; }
+  .post-body h1 { font-size: 25px; }
+  .post-body h2 { font-size: 21px; }
+  .post-body h3 { font-size: 18px; }
+  .post-body pre { font-size: 13px; }
+
+  /* Stacked under the article, the contents rail is a footer to it rather
+     than a sidebar: rule above instead of beside, and not scroll-capped. */
+  .aside--sticky { padding-top: 0; }
+  .toc { border-left: none; border-top: 1px solid #c9c6bf; padding-left: 0; padding-top: 16px; }
 
   .toc, .svc__detail {
     position: static;
@@ -1558,7 +1587,7 @@ body.is-editor-max .statusbar { display: none; }
      "Book Space" text link is replaced by a fixed circular action so it's
      reachable without scrolling back up. */
 
-  .page-calendar .nav-toggle {
+  .page-navmenu .nav-toggle {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1576,10 +1605,12 @@ body.is-editor-max .statusbar { display: none; }
      only entrance); ships is desktop-only for the beta. */
   .ships-link { display: none; }
 
-  /* The rail is a column everywhere else. Here row one holds the menu
-     button and the page label side by side, and the lists wrap onto their
-     own full-width rows beneath when opened. */
-  .page-calendar .rail {
+  /* The rail is a column everywhere else. On .page-navmenu pages -- the
+     Calendar and individual posts, both of which need the phone's height for
+     content rather than for a nav list -- row one holds the menu button and
+     the page label side by side, and the lists wrap onto their own
+     full-width rows beneath when opened. */
+  .page-navmenu .rail {
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
@@ -1593,7 +1624,7 @@ body.is-editor-max .statusbar { display: none; }
     align-content: flex-start;
   }
 
-  .page-calendar .rail__page {
+  .page-navmenu .rail__page {
     display: block;
     font-family: var(--font-display);
     font-size: 26px;
@@ -1601,13 +1632,13 @@ body.is-editor-max .statusbar { display: none; }
     letter-spacing: 0.01em;
   }
 
-  .page-calendar .nav,
-  .page-calendar .social {
+  .page-navmenu .nav,
+  .page-navmenu .social {
     display: none;
   }
 
-  .page-calendar .rail.is-open .nav,
-  .page-calendar .rail.is-open .social {
+  .page-navmenu .rail.is-open .nav,
+  .page-navmenu .rail.is-open .social {
     display: flex;
     /* Full-width row of their own; the rail's 12px gap replaces the
        margin-top this rule used to carry. */

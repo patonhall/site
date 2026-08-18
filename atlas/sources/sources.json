@@ -1,0 +1,104 @@
+[
+  {
+    "id": "osm-overpass",
+    "name": "OpenStreetMap via Overpass API",
+    "organization": "OpenStreetMap contributors",
+    "url": "https://overpass-api.de/api/interpreter",
+    "catalogue_url": "https://wiki.openstreetmap.org/wiki/Overpass_API",
+    "format": "json",
+    "category": ["place", "building", "land", "rail", "road", "port", "waterway", "utility"],
+    "coverage": "Hamilton, Halton, Niagara, cross-border",
+    "update_frequency": "continuous",
+    "freshness_state": "RECENT",
+    "license": "ODbL 1.0",
+    "license_url": "https://opendatacommons.org/licenses/odbl/1-0/",
+    "attribution": "© OpenStreetMap contributors",
+    "share_alike": true,
+    "last_retrieved": "2026-08-18",
+    "verified": {
+      "date": "2026-08-18",
+      "probe": "way[landuse=industrial] in bbox 43.15,-80.05,43.35,-79.68",
+      "result": "311 ways"
+    },
+    "status": "active",
+    "notes": "Only source covering the whole study area under one schema. Share-alike applies to derived data; keep OSM provenance on every feature so the obligation stays traceable."
+  },
+  {
+    "id": "hamilton-open-data",
+    "name": "City of Hamilton Open Data",
+    "organization": "City of Hamilton",
+    "url": "https://open.hamilton.ca",
+    "catalogue_url": "https://open.hamilton.ca/api/feed/dcat-us/1.1.json",
+    "service_root": "https://services.arcgis.com/rYz782eMbySr2srL/arcgis/rest/services",
+    "format": "geojson",
+    "category": ["land", "building", "rail", "road", "planning"],
+    "coverage": "City of Hamilton",
+    "update_frequency": "varies by layer",
+    "freshness_state": "UPDATED ANNUALLY",
+    "license": "City of Hamilton Open Data Licence",
+    "license_url": "https://www.hamilton.ca/city-initiatives/strategies-actions/open-data-licence-terms-and-conditions",
+    "attribution": "Contains information licensed under the City of Hamilton Open Data Licence",
+    "share_alike": false,
+    "last_retrieved": "2026-08-18",
+    "verified": {
+      "date": "2026-08-18",
+      "catalogue_size": 463,
+      "datasets_under_open_licence": 391,
+      "layers": [
+        { "name": "Employment Lands", "path": "Employment_Lands/FeatureServer/2", "records": 22, "category": "land", "modified": "2026-08-02" },
+        { "name": "Zoning By-law Boundary", "path": "Zoning_By_law_Boundary/FeatureServer/1", "records": 11931, "category": "land" },
+        { "name": "Buildings", "path": "Buildings/FeatureServer/8", "records": 214293, "category": "building" },
+        { "name": "Railways", "path": "Railways/FeatureServer/10", "records": 1692, "category": "rail" },
+        { "name": "Truck Route Network", "path": "Truck_Route_Network/FeatureServer/5", "records": 1250, "category": "road" }
+      ]
+    },
+    "status": "active",
+    "notes": "FeatureServer layer indices are publisher-assigned and not stable. Resolve layers by dataset name through the DCAT feed at build time rather than hard-coding the numeric suffix."
+  },
+  {
+    "id": "niagara-nei",
+    "name": "Consolidated NEI (Niagara Employment Inventory)",
+    "organization": "Niagara Region",
+    "url": "https://open.niagararegion.ca/datasets/NiagaraRegion::consolidated-nei-opendata",
+    "catalogue_url": "https://niagaraopendata.ca/dataset/consolidated-nei-opendata",
+    "service_url": "https://services1.arcgis.com/WxiLK82TWf8W3O3f/arcgis/rest/services/OpenData_Consolidated_NEI_Opendata/FeatureServer/45",
+    "download_url": "https://open.niagararegion.ca/api/download/v1/items/d23f4f781add4584904bc78b94c869b3/geojson?layers=45",
+    "format": "geojson",
+    "category": ["company"],
+    "coverage": "Niagara Region, twelve municipalities",
+    "update_frequency": "annual survey; paused 2020-2021",
+    "freshness_state": "UPDATED ANNUALLY",
+    "license": "Open Government Licence 2.0 (Niagara Region)",
+    "attribution": "Contains information made available under Niagara Region's Open Government Licence",
+    "share_alike": false,
+    "last_retrieved": "2026-08-18",
+    "verified": {
+      "date": "2026-08-18",
+      "records": 98065,
+      "geometry": "point",
+      "fields": [
+        "nei_id", "Year", "municipality", "businessname",
+        "businessstreetnumber", "businessstreetname", "businessunit",
+        "businesspobox", "businesspostalcode", "businesswebsite",
+        "primarynaics", "secondarynaics", "primarysector", "industry",
+        "yearopen", "indoorgfa", "sizerangeemployees"
+      ]
+    },
+    "status": "active",
+    "notes": "Multi-year consolidated inventory since 2016 -- one row per business per survey year, NOT a register of currently trading businesses. Group by nei_id, keep the latest Year, carry that year through as the feature's freshness stamp, and never render a 2016-only record as currently operating."
+  },
+  {
+    "id": "seaway-vessel-transit",
+    "name": "Great Lakes St. Lawrence Seaway vessel transits",
+    "organization": "St. Lawrence Seaway Management Corporation",
+    "url": "https://seaway-greatlakes.com/vessel-transit",
+    "format": "html",
+    "category": ["activity", "port"],
+    "coverage": "Seaway system including Welland Canal",
+    "freshness_state": "RECENT",
+    "license": "unknown",
+    "last_retrieved": "2026-08-18",
+    "status": "excluded",
+    "notes": "Publicly readable and server-rendered, but robots.txt is 'Disallow: /'. Do NOT build an automated collector against it. Link out only."
+  }
+]
