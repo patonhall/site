@@ -37,17 +37,17 @@ function onFormSubmit(e) {
   var kitApiKey = props.getProperty('KIT_API_KEY');
   var githubToken = props.getProperty('GITHUB_TOKEN');
 
-  // { "Name": ["..."], "Email": ["..."] } — keys must exactly match the
-  // Form's question titles. A title mismatch makes firstValue_ silently
-  // return '' below.
+  // { "Name": ["..."], "Email Address": ["..."] } — keys must exactly
+  // match the Form's question titles. A title mismatch makes firstValue_
+  // silently return '' below.
   var values = e.namedValues;
   var name = firstValue_(values, 'Name');
-  var email = firstValue_(values, 'Email');
+  var email = firstValue_(values, 'Email Address');
 
   if (!email) {
     throw new Error('No email captured from this submission — check that the '
-      + 'Form\'s "Email" question title matches exactly (namedValues keys '
-      + 'are case- and text-sensitive).');
+      + 'Form\'s "Email Address" question title matches exactly (namedValues '
+      + 'keys are case- and text-sensitive).');
   }
   Logger.log('onFormSubmit: %s <%s>', name, email);
 

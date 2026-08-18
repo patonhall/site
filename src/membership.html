@@ -43,23 +43,25 @@ desc: Membership tiers at Paton Hall — Bench, Shop, Keyholder, and industry pa
     <!-- Submits to the membership-interest Google Form (see
          google-apps-script/membership-interest.gs) instead of posting to
          Kit directly — Kit still gets updated, via Apps Script's API
-         calls, not a Kit-hosted form. Replace every entry.REPLACE_WITH_*
-         name below, and the form's action URL, once the Google Form
-         exists. -->
+         calls, not a Kit-hosted form. entry.* names below are the real
+         field IDs from https://forms.gle/rFShnKtj2aempxr57 — the Form's
+         own question titles are Name / Email Address (not "Email"),
+         extracted from the live viewform's FB_PUBLIC_LOAD_DATA_, not
+         guessed from a prefill URL. -->
     <section class="signup">
       <p class="eyebrow">Interested?</p>
       <p>Leave your name and email and we'll follow up to talk through which tier fits.</p>
 
       <form id="membership-interest-form" class="signup-form"
-            action="https://docs.google.com/forms/d/e/REPLACE_WITH_FORM_ID/formResponse"
+            action="https://docs.google.com/forms/d/e/1FAIpQLScPbHqIcpris1ikAtFUQQsq9UUt7a8V2rYWk1joWvlHhFZzOQ/formResponse"
             method="POST" target="_blank">
         <div>
           <label for="mi-name">Name</label>
-          <input id="mi-name" type="text" name="entry.REPLACE_WITH_NAME" autocomplete="given-name" required>
+          <input id="mi-name" type="text" name="entry.1581945559" autocomplete="given-name" required>
         </div>
         <div>
           <label for="mi-email">Email</label>
-          <input id="mi-email" type="email" name="entry.REPLACE_WITH_EMAIL" autocomplete="email" required>
+          <input id="mi-email" type="email" name="entry.451052385" autocomplete="email" required>
         </div>
 
         <div class="full">
