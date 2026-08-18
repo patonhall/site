@@ -88,10 +88,22 @@ same write those forms would have made by hand.
 Full design, the exact Google Form field mappings, and Apps Script
 deployment steps: `docs/superpowers/specs/2026-08-18-patonhall-booking-training-requests-design.md`.
 
+The homepage's signup form (`index.html`) follows the same shape for a
+third case — joining the mailing list, or pre-committing as a Member or
+Founder — via `google-apps-script/homepage-signup.gs`. It's simpler than
+the booking/training pipeline: there's no repo data type for members, so
+this one only opens a notification GitHub Issue (tiered labels
+`tier:list`/`tier:member`/`tier:founder`) for an admin to follow up on —
+no embedded data block, no `approved`-label write-back. Design:
+`docs/superpowers/specs/2026-08-18-patonhall-membership-signup-design.md`.
+Email copy for Kit's own automations lives in `main-copy.md`, not this
+README.
+
 Requires the `KIT_API_KEY` and `GITHUB_TOKEN` Script Properties set on each
-Apps Script project (not GitHub secrets — see the spec), and, in Kit, the
+Apps Script project (not GitHub secrets — see the specs), and, in Kit, the
 tags `booking-request`, `booking-approved`, `booking-conflict`,
-`training-requested`, `training-reviewed` already existing.
+`training-requested`, `training-reviewed`, `list-subscriber`,
+`member-precommit`, `founder-interest` already existing.
 
 ## Scope
 
