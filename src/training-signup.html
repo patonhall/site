@@ -1,0 +1,50 @@
+<!--
+title: Training Sign-Up — Paton Hall
+class: page-inner
+desc: Let us know which Paton Hall training you're interested in.
+-->
+  <main class="main">
+    <h1 class="page-title">Training Sign-Up</h1>
+
+    <p>Tell us which training you're interested in. This registers your
+    interest — an admin follows up with real dates and cost once a course
+    is scheduled.</p>
+
+    <hr class="rule">
+
+    <form id="training-signup-form" class="signup-form"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSduJiDW8kLRbnFas0lOAO_QU-GhFScqvw4glNvVXh-6kd011w/formResponse"
+          method="POST" target="_blank">
+      <div class="full">
+        <label for="ts-name">Name</label>
+        <input id="ts-name" type="text" name="entry.2084093042" required>
+      </div>
+
+      <div class="full">
+        <label for="ts-email">Email</label>
+        <input id="ts-email" type="email" name="entry.562281597" required>
+      </div>
+
+      <div class="full">
+        <label for="ts-course">Course</label>
+        <select id="ts-course" name="entry.1570206020" required>
+          <option value="EPTAC">EPTAC</option>
+          <option value="Linux Servers and Systems">Linux Servers and Systems</option>
+          <option value="Microcontrollers">Microcontrollers</option>
+        </select>
+      </div>
+
+      <div class="full">
+        <label for="ts-notes">Note / comments</label>
+        <textarea id="ts-notes" name="entry.1073976410" rows="4"></textarea>
+      </div>
+
+      <div class="full">
+        <button type="submit">Register interest</button>
+      </div>
+    </form>
+
+    <p id="ts-status" class="form-status" role="status"></p>
+  </main>
+
+  <script src="assets/js/training-signup.js" defer></script>

@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=1722">
-<title>Calendar — Paton Hall</title>
-<meta name="description" content="What is on at Paton Hall — courses, build nights, talks and bookings.">
+<title>Training Sign-Up — Paton Hall</title>
+<meta name="description" content="Let us know which Paton Hall training you're interested in.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body class="page-calendar">
+<body class="page-inner">
 
 <div class="frame" data-sketch="frame">
 
@@ -16,7 +16,7 @@
     <ul class="nav">
       <li><a class="nav-btn" href="index.html"       data-nav="home"       data-sketch="box">Paton Hall</a></li>
       <li><a class="nav-btn" href="membership.html"  data-nav="membership" data-sketch="box">Membership</a></li>
-      <li><a class="nav-btn is-active" href="calendar.html"    data-nav="calendar"   data-sketch="box" aria-current="page" data-sketch-fill="--nav-active-fill">Calendar</a></li>
+      <li><a class="nav-btn" href="calendar.html"    data-nav="calendar"   data-sketch="box">Calendar</a></li>
       <li><a class="nav-btn" href="training.html"    data-nav="training"   data-sketch="box">Training</a></li>
       <li><a class="nav-btn" href="services.html"    data-nav="services"   data-sketch="box">Services</a></li>
       <li><a class="nav-btn" href="updates.html"     data-nav="updates"    data-sketch="box">Updates</a></li>
@@ -43,40 +43,51 @@
 
   <a class="garage" href="inc.html" data-sketch="garage" data-sketch-fill="--garage-fill" aria-label="About Paton Hall Inc."></a>
 
-<!-- Agenda view, rendered from assets/data/events.json by calendar.js.
-       Book Space links to the public request form (see book-space.html and
-       docs/superpowers/specs/2026-08-18-patonhall-booking-training-requests-design.md).
-       View switching and sign-in are still separate, unbuilt work. -->
-  <div class="cal">
+<main class="main">
+    <h1 class="page-title">Training Sign-Up</h1>
 
-    <header class="cal__bar">
-      <div class="cal__actions">
-        <a href="book-space.html">Book Space</a>
-        <a href="#" aria-disabled="true">Logout</a><!-- TODO: Calendar app -->
+    <p>Tell us which training you're interested in. This registers your
+    interest — an admin follows up with real dates and cost once a course
+    is scheduled.</p>
+
+    <hr class="rule">
+
+    <form id="training-signup-form" class="signup-form"
+          action="https://docs.google.com/forms/d/e/1FAIpQLSduJiDW8kLRbnFas0lOAO_QU-GhFScqvw4glNvVXh-6kd011w/formResponse"
+          method="POST" target="_blank">
+      <div class="full">
+        <label for="ts-name">Name</label>
+        <input id="ts-name" type="text" name="entry.2084093042" required>
       </div>
-      <div class="cal__views">
-        <a href="#" class="is-current" aria-current="page">Agenda</a>
-        <a href="#" aria-disabled="true">3-Day</a>
-        <a href="#" aria-disabled="true">Week</a>
-        <a href="#" aria-disabled="true">Month</a>
+
+      <div class="full">
+        <label for="ts-email">Email</label>
+        <input id="ts-email" type="email" name="entry.562281597" required>
       </div>
-      <div class="cal__today" id="cal-today"><span aria-hidden="true">☀</span></div>
-    </header>
 
-    <div class="cal__body">
-      <section class="cal__agenda" id="cal-agenda">
-        <p class="cal__empty">Loading&hellip;</p>
-      </section>
+      <div class="full">
+        <label for="ts-course">Course</label>
+        <select id="ts-course" name="entry.1570206020" required>
+          <option value="EPTAC">EPTAC</option>
+          <option value="Linux Servers and Systems">Linux Servers and Systems</option>
+          <option value="Microcontrollers">Microcontrollers</option>
+        </select>
+      </div>
 
-      <section class="cal__detail" id="cal-detail">
-        <p class="cal__empty">Select an event to see its details.</p>
-      </section>
-    </div>
+      <div class="full">
+        <label for="ts-notes">Note / comments</label>
+        <textarea id="ts-notes" name="entry.1073976410" rows="4"></textarea>
+      </div>
 
-  </div>
+      <div class="full">
+        <button type="submit">Register interest</button>
+      </div>
+    </form>
 
-  <script src="assets/js/spaces.js" defer></script>
-  <script src="assets/js/calendar.js" defer></script>
+    <p id="ts-status" class="form-status" role="status"></p>
+  </main>
+
+  <script src="assets/js/training-signup.js" defer></script>
 
 
 </div>

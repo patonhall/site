@@ -4,14 +4,15 @@ nav: calendar
 class: page-calendar
 desc: What is on at Paton Hall — courses, build nights, talks and bookings.
 -->
-  <!-- Agenda view, rendered from assets/data/events.json by calendar.js. View
-       switching, space booking and sign-in are a separate piece of work; those
-       controls stay inert placeholders. -->
+  <!-- Agenda view, rendered from assets/data/events.json by calendar.js.
+       Book Space links to the public request form (see book-space.html and
+       docs/superpowers/specs/2026-08-18-patonhall-booking-training-requests-design.md).
+       View switching and sign-in are still separate, unbuilt work. -->
   <div class="cal">
 
     <header class="cal__bar">
       <div class="cal__actions">
-        <a href="#" aria-disabled="true">Book Space</a><!-- TODO: Calendar app -->
+        <a href="book-space.html">Book Space</a>
         <a href="#" aria-disabled="true">Logout</a><!-- TODO: Calendar app -->
       </div>
       <div class="cal__views">

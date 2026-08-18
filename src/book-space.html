@@ -1,0 +1,66 @@
+<!--
+title: Book Space — Paton Hall
+class: page-inner
+desc: Request a space or zone at Paton Hall for your activity.
+-->
+  <main class="main">
+    <h1 class="page-title">Book Space</h1>
+
+    <p>Tell us what you need and when. This is a request, not a confirmation —
+    an admin checks it against the schedule and follows up by email.</p>
+
+    <hr class="rule">
+
+    <form id="book-space-form" class="signup-form"
+          action="https://docs.google.com/forms/d/e/1FAIpQLScbCJfTWbXL_G6jwuWXaVANMIdmCLCptHboW5DP9JjXJoB1yA/formResponse"
+          method="POST" target="_blank">
+      <div class="full">
+        <label for="bs-name">Name</label>
+        <input id="bs-name" type="text" name="entry.1317811418" required>
+      </div>
+
+      <div class="full">
+        <label for="bs-email">Email</label>
+        <input id="bs-email" type="email" name="entry.823169727" required>
+      </div>
+
+      <div class="full">
+        <label for="bs-space">Space / Zone</label>
+        <select id="bs-space" name="entry.187152365" required></select>
+      </div>
+
+      <div>
+        <label for="bs-start-date">Start date</label>
+        <input id="bs-start-date" type="date" required>
+      </div>
+      <div>
+        <label for="bs-start-time">Start time</label>
+        <input id="bs-start-time" type="time" required>
+      </div>
+
+      <div>
+        <label for="bs-end-date">End date</label>
+        <input id="bs-end-date" type="date" required>
+      </div>
+      <div>
+        <label for="bs-end-time">End time</label>
+        <input id="bs-end-time" type="time" required>
+      </div>
+
+      <div class="full">
+        <label for="bs-purpose">Purpose / nature of activity</label>
+        <textarea id="bs-purpose" name="entry.673408033" rows="4" required></textarea>
+      </div>
+
+      <p id="bs-availability" class="form-status" role="status"></p>
+
+      <div class="full">
+        <button type="submit">Request booking</button>
+      </div>
+    </form>
+
+    <p id="bs-status" class="form-status" role="status"></p>
+  </main>
+
+  <script src="assets/js/spaces.js" defer></script>
+  <script src="assets/js/book-space.js" defer></script>

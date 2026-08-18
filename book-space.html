@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=1722">
-<title>Calendar — Paton Hall</title>
-<meta name="description" content="What is on at Paton Hall — courses, build nights, talks and bookings.">
+<title>Book Space — Paton Hall</title>
+<meta name="description" content="Request a space or zone at Paton Hall for your activity.">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/css/site.css">
 </head>
-<body class="page-calendar">
+<body class="page-inner">
 
 <div class="frame" data-sketch="frame">
 
@@ -16,7 +16,7 @@
     <ul class="nav">
       <li><a class="nav-btn" href="index.html"       data-nav="home"       data-sketch="box">Paton Hall</a></li>
       <li><a class="nav-btn" href="membership.html"  data-nav="membership" data-sketch="box">Membership</a></li>
-      <li><a class="nav-btn is-active" href="calendar.html"    data-nav="calendar"   data-sketch="box" aria-current="page" data-sketch-fill="--nav-active-fill">Calendar</a></li>
+      <li><a class="nav-btn" href="calendar.html"    data-nav="calendar"   data-sketch="box">Calendar</a></li>
       <li><a class="nav-btn" href="training.html"    data-nav="training"   data-sketch="box">Training</a></li>
       <li><a class="nav-btn" href="services.html"    data-nav="services"   data-sketch="box">Services</a></li>
       <li><a class="nav-btn" href="updates.html"     data-nav="updates"    data-sketch="box">Updates</a></li>
@@ -43,40 +43,67 @@
 
   <a class="garage" href="inc.html" data-sketch="garage" data-sketch-fill="--garage-fill" aria-label="About Paton Hall Inc."></a>
 
-<!-- Agenda view, rendered from assets/data/events.json by calendar.js.
-       Book Space links to the public request form (see book-space.html and
-       docs/superpowers/specs/2026-08-18-patonhall-booking-training-requests-design.md).
-       View switching and sign-in are still separate, unbuilt work. -->
-  <div class="cal">
+<main class="main">
+    <h1 class="page-title">Book Space</h1>
 
-    <header class="cal__bar">
-      <div class="cal__actions">
-        <a href="book-space.html">Book Space</a>
-        <a href="#" aria-disabled="true">Logout</a><!-- TODO: Calendar app -->
+    <p>Tell us what you need and when. This is a request, not a confirmation —
+    an admin checks it against the schedule and follows up by email.</p>
+
+    <hr class="rule">
+
+    <form id="book-space-form" class="signup-form"
+          action="https://docs.google.com/forms/d/e/1FAIpQLScbCJfTWbXL_G6jwuWXaVANMIdmCLCptHboW5DP9JjXJoB1yA/formResponse"
+          method="POST" target="_blank">
+      <div class="full">
+        <label for="bs-name">Name</label>
+        <input id="bs-name" type="text" name="entry.1317811418" required>
       </div>
-      <div class="cal__views">
-        <a href="#" class="is-current" aria-current="page">Agenda</a>
-        <a href="#" aria-disabled="true">3-Day</a>
-        <a href="#" aria-disabled="true">Week</a>
-        <a href="#" aria-disabled="true">Month</a>
+
+      <div class="full">
+        <label for="bs-email">Email</label>
+        <input id="bs-email" type="email" name="entry.823169727" required>
       </div>
-      <div class="cal__today" id="cal-today"><span aria-hidden="true">☀</span></div>
-    </header>
 
-    <div class="cal__body">
-      <section class="cal__agenda" id="cal-agenda">
-        <p class="cal__empty">Loading&hellip;</p>
-      </section>
+      <div class="full">
+        <label for="bs-space">Space / Zone</label>
+        <select id="bs-space" name="entry.187152365" required></select>
+      </div>
 
-      <section class="cal__detail" id="cal-detail">
-        <p class="cal__empty">Select an event to see its details.</p>
-      </section>
-    </div>
+      <div>
+        <label for="bs-start-date">Start date</label>
+        <input id="bs-start-date" type="date" required>
+      </div>
+      <div>
+        <label for="bs-start-time">Start time</label>
+        <input id="bs-start-time" type="time" required>
+      </div>
 
-  </div>
+      <div>
+        <label for="bs-end-date">End date</label>
+        <input id="bs-end-date" type="date" required>
+      </div>
+      <div>
+        <label for="bs-end-time">End time</label>
+        <input id="bs-end-time" type="time" required>
+      </div>
+
+      <div class="full">
+        <label for="bs-purpose">Purpose / nature of activity</label>
+        <textarea id="bs-purpose" name="entry.673408033" rows="4" required></textarea>
+      </div>
+
+      <p id="bs-availability" class="form-status" role="status"></p>
+
+      <div class="full">
+        <button type="submit">Request booking</button>
+      </div>
+    </form>
+
+    <p id="bs-status" class="form-status" role="status"></p>
+  </main>
 
   <script src="assets/js/spaces.js" defer></script>
-  <script src="assets/js/calendar.js" defer></script>
+  <script src="assets/js/book-space.js" defer></script>
 
 
 </div>
