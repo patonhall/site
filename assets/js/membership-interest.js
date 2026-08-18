@@ -3,8 +3,8 @@
    has a native `name`, so a visitor with JS disabled can still submit —
    this script only upgrades the experience.
 
-   Also wires the per-tier "LINK"s next to Bench/Shop/Keyholder/Patron/
-   Champion: clicking one sets a hidden Tier field before the native
+   Also wires the per-tier "LINK"s next to Bench/Shop/Keyholder/Founder/
+   Patron/Champion: clicking one sets a hidden Tier field before the native
    #membership-interest anchor jump scrolls the visitor down, and updates
    the subhead so the selection is visible rather than an invisible
    hidden-field write (the homepage signup form had exactly that bug with
