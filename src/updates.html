@@ -11,19 +11,26 @@ desc: Posts about member activities, special events, bookings and general operat
 
     <hr class="rule">
 
-    <!-- TODO: these filters need the posts index before they can do anything. -->
-    <p class="filters">by
+    <!-- TODO: Members and Operators need the posts index before they can do
+         anything. Mailing List is live and is what the page shows by default. -->
+    <p class="filters">
+      <a href="https://patonhall.kit.com/" rel="noopener" target="_blank">Mailing List</a>
       <a href="#" aria-disabled="true">Members</a>
       <a href="#" aria-disabled="true">Operators</a>
     </p>
 
-    <div id="posts-list">
+    <!-- Filled by assets/js/kit-posts.js from patonhall.kit.com at load time.
+         Falls back to a plain archive link if Kit's page state changes shape. -->
+    <div id="kit-posts">
       <p class="cal__empty">Loading&hellip;</p>
     </div>
+
+    <div id="posts-list"></div>
 
     <p class="colophon">Paton Hall Inc. is a Canadian corporation run by and for its local
     membership. Click the garage icon
     for more info.</p>
   </main>
 
+  <script src="assets/js/kit-posts.js" defer></script>
   <script src="assets/js/posts.js" defer></script>

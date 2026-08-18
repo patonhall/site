@@ -741,6 +741,41 @@ body {
 
 .post-list li { border-bottom: 1px solid var(--ink); }
 
+/* --- Mailing list archive (assets/js/kit-posts.js) ------------------------
+   Rendered from patonhall.kit.com's own page state. Thumbnails are remote
+   Kit CDN URLs of unknown dimensions, so the box is fixed and the image is
+   cropped to fit rather than being allowed to dictate row height. */
+
+.kit-posts { list-style: none; margin: 0; padding: 0; }
+
+.kit-post {
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--ink);
+}
+
+.kit-post__thumb {
+  width: 132px;
+  height: 88px;
+  object-fit: cover;
+  border: var(--stroke-w) solid var(--ink);
+  flex: 0 0 auto;
+}
+
+.kit-post__body { flex: 1 1 auto; min-width: 0; }
+
+.kit-post__title { font-size: 20px; margin: 0 0 4px; }
+.kit-post__title a { text-decoration: none; }
+.kit-post__title a:hover { text-decoration: underline; }
+
+.kit-post__summary { margin: 6px 0 0; }
+
+/* The first filter is the live one; the others stay visibly inert. */
+.filters a:first-child { margin-left: 0; }
+
+
 .post-list a {
   display: block;
   padding: 12px 2px;
