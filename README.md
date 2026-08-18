@@ -67,24 +67,31 @@ output is stale.
   other mockups retint them — Calendar is mint, the Paton Hall Inc. sub-site
   is yellow.
 
-## Booking request triage (GitHub Action)
+## Booking & training request pipeline
 
-`.github/workflows/booking-requests.yml` polls Kit every 30 minutes for new
-Book Space submissions, checks each one against `assets/data/events.json` for
-a scheduling conflict, and opens a GitHub Issue with the result — closed
-immediately if clear, left open if it conflicts. It never writes to the repo;
-a real event is still only ever added by a human, via `admin-events.html`.
+`book-space.html` and `training-signup.html` are public request forms that
+submit to Google Forms (`google-apps-script/*.gs` are the processors bound
+to their linked Sheets — pasted into Apps Script's editor, not run from
+this repo). On submit, Apps Script updates the requester in Kit (tag, no
+Kit-hosted form involved), checks the request against the repo's live
+`events.json`/`courses.json`, and opens a GitHub Issue with the result —
+closed immediately if clear. Adding the `approved` label to that issue
+triggers `.github/workflows/approve-request.yml`, which runs
+`scripts/approve_request.py` to parse the issue's hidden data block,
+validate it through the same `admin_server.py` functions the admin forms
+use, write the real event/course, commit, push, and close the issue.
+Nothing here bypasses `admin-events.html`/`admin-courses.html` as the
+source of truth — this pipeline only automates getting a request in front
+of an admin with the checking already done, and turns one label into the
+same write those forms would have made by hand.
 
-Requires the `KIT_API_KEY` secret on this repo (`gh secret set KIT_API_KEY`)
-and, in Kit itself, set up once by hand:
+Full design, the exact Google Form field mappings, and Apps Script
+deployment steps: `docs/superpowers/specs/2026-08-18-patonhall-booking-training-requests-design.md`.
 
-- A booking-request form whose custom fields are keyed exactly `space`
-  (one of A–I), `start_date`, `end_date` (both `YYYY-MM-DDTHH:MM`), and
-  `purpose` (optional), applying the `booking-request` tag on submit.
-- Three tags: `booking-request`, `booking-approved`, `booking-conflict`.
-
-See `scripts/check_booking_requests.py`'s module docstring for the full
-mechanics.
+Requires the `KIT_API_KEY` and `GITHUB_TOKEN` Script Properties set on each
+Apps Script project (not GitHub secrets — see the spec), and, in Kit, the
+tags `booking-request`, `booking-approved`, `booking-conflict`,
+`training-requested`, `training-reviewed` already existing.
 
 ## Scope
 
