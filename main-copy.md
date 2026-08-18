@@ -30,9 +30,9 @@ form, per `docs/superpowers/specs/2026-08-18-patonhall-membership-signup-design.
 > will be sent. If you've indicated interest in Membership of either type,
 > we'll follow up with you manually.
 
-**"What brings you here" options** (List tier only):
-Build nights / Learning days and talks / Certified electronics training /
-Just keeping an eye on it.
+**"Interests" field** (List tier only): free-text, two-line resizable
+textarea — no longer a fixed dropdown. Whatever's typed passes straight
+through into the GitHub signup issue's body.
 
 ## Kit automation emails (paste into Kit by hand — not deployed from this repo)
 

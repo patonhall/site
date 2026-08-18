@@ -443,6 +443,15 @@ body {
   background-repeat: no-repeat;
 }
 
+.signup-form textarea {
+  /* Vertical-only: the field is already full-width, so a horizontal drag
+     handle (the browser default, resize:both) would just let it overflow
+     its own row. */
+  resize: vertical;
+  min-height: 2.6em;
+  font-family: inherit;
+}
+
 /* The input/select/textarea rule above assumed text-shaped fields; the admin
    add-event form's all-day field is a checkbox, which needs its native box
    back rather than a full-width blank rectangle. */
