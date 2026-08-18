@@ -298,6 +298,16 @@ body {
 
 .building { width: 100%; height: auto; margin-bottom: 20px; }
 
+.leasing-note {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--cyan-9);
+  margin: 0 0 12px;
+}
+
 .address { font-size: 19px; margin: 0 0 10px; }
 
 .directions { margin: 0 0 32px; font-size: 19px; }
@@ -376,7 +386,11 @@ body {
   font-family: var(--font-serif);
   font-size: 19px;
   margin: 0 0 10px;
-  max-width: 560px;
+  /* Matches .signup-form's max-width so the subhead has as much room to
+     run as the fields below it — a narrower cap here was wrapping short
+     phrases like "Member or Founder" earlier than the panel's own width
+     allowed. */
+  max-width: 800px;
 }
 
 .signup .signup-sub {
