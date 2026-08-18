@@ -48,13 +48,10 @@ desc: Membership tiers at Paton Hall — Bench, Shop, Keyholder, and industry pa
          google-apps-script/membership-interest.gs) instead of posting to
          Kit directly — Kit still gets updated, via Apps Script's API
          calls, not a Kit-hosted form. entry.* names below are the real
-         field IDs from https://forms.gle/rFShnKtj2aempxr57 — the Form's
-         own question titles are Name / Email Address (not "Email"),
-         extracted from the live viewform's FB_PUBLIC_LOAD_DATA_, not
-         guessed from a prefill URL. entry.REPLACE_WITH_TIER is a new
-         question ("Tier", short answer, not required) that doesn't exist
-         on the Form yet — add it, then send me the updated form so I can
-         pull its real entry ID the same way. -->
+         field IDs from https://forms.gle/gf3hocsHZpQRfP2V8 — the Form's
+         own question titles are Name / Email Address (not "Email") / tier
+         (lowercase — not "Tier"), extracted from the live viewform's
+         FB_PUBLIC_LOAD_DATA_, not guessed from a prefill URL. -->
     <section class="signup" id="membership-interest">
       <p class="eyebrow">Interested?</p>
       <p id="mi-subhead">Leave your name and email and we'll follow up to talk through which tier fits.</p>
@@ -62,7 +59,7 @@ desc: Membership tiers at Paton Hall — Bench, Shop, Keyholder, and industry pa
       <form id="membership-interest-form" class="signup-form"
             action="https://docs.google.com/forms/d/e/1FAIpQLScPbHqIcpris1ikAtFUQQsq9UUt7a8V2rYWk1joWvlHhFZzOQ/formResponse"
             method="POST" target="_blank">
-        <input type="hidden" id="mi-tier" name="entry.REPLACE_WITH_TIER" value="">
+        <input type="hidden" id="mi-tier" name="entry.1572416855" value="">
         <div>
           <label for="mi-name">Name</label>
           <input id="mi-name" type="text" name="entry.1581945559" autocomplete="given-name" required>

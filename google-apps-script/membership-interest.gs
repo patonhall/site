@@ -37,9 +37,10 @@ function onFormSubmit(e) {
   var kitApiKey = props.getProperty('KIT_API_KEY');
   var githubToken = props.getProperty('GITHUB_TOKEN');
 
-  // { "Name": ["..."], "Email Address": ["..."], "Tier": ["..."] } — keys
-  // must exactly match the Form's question titles. A title mismatch makes
-  // firstValue_ silently return '' below. Tier comes from a hidden field
+  // { "Name": ["..."], "Email Address": ["..."], "tier": ["..."] } — keys
+  // must exactly match the Form's question titles. Note lowercase "tier",
+  // not "Tier" — that's the Form's actual title. A title mismatch makes
+  // firstValue_ silently return '' below. tier comes from a hidden field
   // the site sets when a visitor clicks one of the per-tier "LINK"s
   // (Bench/Shop/Keyholder/Patron/Champion) — it's free text here, not a
   // fixed set the way homepage-signup.gs's Reason is, so nothing throws
@@ -47,7 +48,7 @@ function onFormSubmit(e) {
   var values = e.namedValues;
   var name = firstValue_(values, 'Name');
   var email = firstValue_(values, 'Email Address');
-  var tier = firstValue_(values, 'Tier');
+  var tier = firstValue_(values, 'tier');
 
   if (!email) {
     throw new Error('No email captured from this submission — check that the '
