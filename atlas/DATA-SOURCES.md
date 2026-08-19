@@ -182,7 +182,13 @@ Listed so the gap is explicit rather than silently absent:
 - **CN / CPKC / Metrolinx / VIA** — public infrastructure data not yet sought.
   Assume no freight positions; see the note below.
 - **Brownfields** — Hamilton has a brownfield programme; a spatial dataset was
-  not obvious in the DCAT scan and needs a targeted search.
+  not obvious in the DCAT scan and needs a targeted search. OSM currently
+  supplies 263 `landuse=brownfield` polygons region-wide as an interim proxy.
+- **Hamilton "Industrial Sectors A–N"** — the City names its industrial
+  districts on its neighbourhood boundaries map (a PDF, not a dataset:
+  `map.hamilton.ca/Static/PDFs/General Interest maps/Overall City/`). Relevant
+  to §14 corridor detection as the authoritative naming to check discovered
+  clusters against.
 
 ---
 
@@ -198,8 +204,44 @@ Recorded so they are not re-attempted:
 - **Seaway vessel transit data**: public to read, `Disallow: /` to crawl.
 - **Niagara ArcGIS Hub DCAT feed**: 404 at `/api/feed/dcat-us/1.1.json`. Use
   the CKAN catalogue at `niagaraopendata.ca` for discovery instead.
+- **MPAC (Municipal Property Assessment Corporation)** is the obvious place to
+  look for Ontario parcel and property-assessment data, and it is a paid dead
+  end: bulk access is fee-based and income/expense data is withheld. There is
+  no Ontario equivalent of the UK rating-list feed that underpins the standard
+  academic method for detecting industrial underuse. Noted so it is not
+  re-investigated. (Established independently in `babbworks/clark-dot-babb`,
+  Track 2.)
 
 ---
+
+## Constraint on derived "underuse" labels
+
+The atlas can observe that OSM records a building as disused, or that a
+polygon is tagged brownfield. It cannot conclude that a named business is
+underperforming, that a site is vacant today, or that an owner is neglecting
+a property — those are claims about identifiable people and companies, and
+publishing them wrongly is a legal problem, not just a data-quality one.
+
+Rules for anything in this class, including the §11 connectivity score and any
+future vacancy layer:
+
+1. **Publish observations, not judgements.** "OSM records this building as
+   disused, last edited <date>" is an observation. "This site is underutilized"
+   is a judgement.
+2. **Date-stamp everything**, and show the date next to the claim.
+3. **Derive labels only from cited public records**, never from inference over
+   several sources that individually say less.
+4. **Provide an owner correction path** before publishing anything at
+   property level.
+5. **Consider tiered detail.** Precise vacancy information has misuse value —
+   squatting, metal theft, title fraud. A public heatmap with detail reserved
+   for verified partners is the established mitigation, and it also serves
+   brief rule 15.
+
+The `osm-disused` layer is deliberately named **"Brownfield & recorded
+disused"** rather than "underutilized" for exactly this reason, and its
+features carry the category `DISUSED (RECORDED)` — recording what the source
+says, not what we conclude.
 
 ## Gaps and what they imply
 

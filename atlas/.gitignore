@@ -1,0 +1,4 @@
+# Raw API responses. Matches at any depth -- an earlier `scripts/.cache/`
+# pattern missed atlas/us/scripts/.cache/ entirely and would have committed
+# it.
+.cache/

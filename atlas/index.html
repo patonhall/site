@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hamilton–Niagara Industrial Atlas</title>
+<meta name="description" content="A map of the physical industrial economy of Hamilton, Burlington and the Niagara Peninsula — where things are made, moved and stored.">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha384-sHL9NAb7lN7rfvG5lfHpm643Xkcjzp4jFvuavGOndn6pjVqS6ny56CAt3nsEVT4H"
+      crossorigin="anonymous">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="shell">
+
+  <aside class="panel panel--left" id="panel-left">
+    <header class="brand">
+      <h1>Industrial Atlas</h1>
+      <p class="brand__sub">Hamilton &middot; Burlington &middot; Niagara</p>
+    </header>
+
+    <!-- Populated by app.js from the LAYERS table so the toggle list and the
+         thing actually drawn can never disagree. Each row carries its own
+         freshness state, because a rail line from a 2023 GIS export and an
+         OSM edit from this morning are different kinds of claim. -->
+    <div class="layers" id="layers"></div>
+
+    <section class="note">
+      <h2>What this is</h2>
+      <p>The physical industrial economy — where things are made, repaired,
+      stored and moved, and how land, rail, road and water connect. Not a
+      business directory.</p>
+      <p class="note__warn"><strong>Coverage is uneven and that is data, not
+      geography.</strong> Sparse areas may mean nobody published, not that
+      nothing is there.</p>
+      <!-- Rewritten per region by app.js: the two countries publish such
+           different things that one generic caveat understates both. -->
+      <p class="note__region" id="region-note"></p>
+    </section>
+
+    <footer class="credits" id="credits"></footer>
+  </aside>
+
+  <main class="map-wrap">
+    <div id="map"></div>
+    <div class="loading" id="loading" hidden>Loading&hellip;</div>
+  </main>
+
+  <aside class="panel panel--right" id="panel-right">
+    <div class="detail" id="detail">
+      <p class="detail__empty">Select anything on the map to see what it is
+      and where the information came from.</p>
+    </div>
+  </aside>
+
+  <!-- Spans all three columns as the shell grid's second row, so it sits
+       under the panels and the map rather than floating over either. -->
+  <footer class="footbar">
+    <span class="footbar__tool">Industrial Atlas (ONT/WNY)</span>
+    <span class="footbar__sep" aria-hidden="true">|</span>
+    <span class="footbar__line">Helping to locate innovation.</span>
+    <span class="footbar__brand">Paton</span>
+  </footer>
+
+</div>
+
+<!-- Pinned and integrity-checked: hashes computed from the actual 1.9.4
+     files, so a compromised or swapped CDN artefact fails closed. -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha384-cxOPjt7s7Iz04uaHJceBmS+qpjv2JkIHNVcuOrM+YHwZOmJGBXI00mdUXEq65HTH"
+        crossorigin="anonymous"></script>
+<script src="map.js" defer></script>
+<script src="app.js" defer></script>
+</body>
+</html>

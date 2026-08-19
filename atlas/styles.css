@@ -1,0 +1,361 @@
+/* Hamilton–Niagara Industrial Atlas.
+
+   Visual language is deliberately not a consumer map (brief section 22):
+   dark ground, restrained hues, monospace throughout, and a palette that
+   reads as drawings and infrastructure rather than places to visit. The
+   basemap is dark so that land, rail and buildings can each hold a distinct
+   value without competing with roads and shop labels.
+
+   Layer colour is doing real work, not decoration -- it is the only way to
+   tell an authoritative municipal polygon from a community-contributed one
+   at a glance, so the two families are kept visually separate:
+     amber  = City / regional government data
+     cyan   = OpenStreetMap
+   Rail is deliberately the brightest thing on the map. */
+
+:root {
+  --bg:        #12141a;
+  --panel:     #171a21;
+  --panel-2:   #1e222b;
+  --line:      #2b3140;
+  --ink:       #e6e9ef;
+  --ink-dim:   #8d94a5;
+  --ink-faint: #5f6675;
+
+  --gov:       #e8a33d;   /* municipal / authoritative */
+  --osm:       #4fc3d9;   /* OpenStreetMap */
+  --rail:      #f05e5e;
+  --road:      #7d86a0;
+  --accent:    #9ae66e;
+
+  --mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 13px;
+  -webkit-font-smoothing: antialiased;
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: 268px minmax(0, 1fr) 330px;
+  /* minmax(0, 1fr) on the first row, not plain 1fr: the map column contains
+     an absolutely-positioned child and would otherwise refuse to shrink,
+     pushing the footer off the bottom of the viewport. */
+  grid-template-rows: minmax(0, 1fr) auto;
+  height: 100vh;
+}
+
+/* --- panels --------------------------------------------------------------- */
+
+.panel {
+  background: var(--panel);
+  overflow-y: auto;
+  border-right: 1px solid var(--line);
+}
+
+.panel--right { border-right: none; border-left: 1px solid var(--line); }
+
+.brand { padding: 18px 18px 14px; border-bottom: 1px solid var(--line); }
+
+.brand h1 {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+
+.brand__sub { margin: 5px 0 0; color: var(--ink-faint); font-size: 11px; letter-spacing: 0.06em; }
+
+/* --- region tabs ---------------------------------------------------------- */
+
+/* Ontario and Western New York have separate source families, separate
+   licences and separate coverage, so their controls are separated too. OSM
+   layers appear under both, marked "both sides", because one dataset really
+   does span the border. */
+.regions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-bottom: 1px solid var(--line);
+}
+
+.regions__tab {
+  padding: 11px 8px;
+  font-family: inherit;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--ink-faint);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.regions__tab:hover { color: var(--ink-dim); background: var(--panel-2); }
+
+.regions__tab.is-current {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.regions__tab:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.layer__both {
+  color: var(--ink-faint);
+  font-style: italic;
+  letter-spacing: 0;
+}
+
+/* --- layer switches ------------------------------------------------------- */
+
+.layers { padding: 6px 0 10px; }
+
+.layers__group {
+  padding: 14px 18px 6px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.layer {
+  display: grid;
+  grid-template-columns: 14px 1fr;
+  gap: 10px;
+  align-items: start;
+  padding: 7px 18px;
+  cursor: pointer;
+}
+
+.layer:hover { background: var(--panel-2); }
+
+.layer input { margin: 2px 0 0; accent-color: var(--accent); }
+
+.layer__name { display: block; line-height: 1.3; }
+
+/* The swatch is the map key. Without it the toggle list says nothing about
+   which colour on the map it governs. */
+.layer__name::before {
+  content: '';
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 7px;
+  border-radius: 2px;
+  background: var(--swatch, var(--ink-dim));
+  vertical-align: baseline;
+}
+
+.layer__meta {
+  display: block;
+  margin-top: 3px;
+  font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: 0.04em;
+}
+
+/* Freshness is a first-class label, never implied (brief section 16). */
+.fresh {
+  display: inline-block;
+  padding: 1px 5px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  font-size: 9px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.fresh--recent  { color: var(--accent); }
+.fresh--annual  { color: var(--gov); }
+.fresh--static  { color: var(--ink-faint); }
+
+.layer.is-loading .layer__meta::after { content: ' — loading…'; color: var(--accent); }
+.layer.is-failed  .layer__meta::after { content: ' — unavailable'; color: var(--rail); }
+
+/* --- notes and credits ---------------------------------------------------- */
+
+.note {
+  padding: 16px 18px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-dim);
+  line-height: 1.5;
+}
+
+.note h2 {
+  margin: 0 0 8px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.note p { margin: 0 0 10px; }
+.note__warn { color: var(--ink); border-left: 2px solid var(--gov); padding-left: 10px; }
+.note__region { border-left: 2px solid var(--accent); padding-left: 10px; }
+
+.credits {
+  padding: 14px 18px 22px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-faint);
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.credits a { color: var(--ink-dim); }
+
+/* --- map ------------------------------------------------------------------ */
+
+.map-wrap { position: relative; }
+#map { position: absolute; inset: 0; background: var(--bg); }
+
+.loading {
+  position: absolute;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 500;
+  padding: 6px 14px;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.leaflet-container { background: var(--bg); font-family: var(--mono); }
+
+.leaflet-control-attribution {
+  background: rgba(18, 20, 26, 0.85) !important;
+  color: var(--ink-faint) !important;
+  font-size: 10px !important;
+}
+
+.leaflet-control-attribution a { color: var(--ink-dim) !important; }
+
+.leaflet-bar a {
+  background: var(--panel) !important;
+  color: var(--ink) !important;
+  border-bottom-color: var(--line) !important;
+}
+
+/* --- footer bar ----------------------------------------------------------- */
+
+/* Light, against everything else here being dark -- it reads as the edge of
+   the instrument rather than another panel of it. Deliberately thin: it
+   carries identity, not information, and every pixel it takes is a pixel off
+   the map. */
+.footbar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 26px;
+  padding-left: 18px;
+  background: #e8e6e1;
+  color: #3a3f4b;
+  border-top: 1px solid var(--line);
+  font-size: 11px;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.footbar__tool { font-weight: 700; }
+.footbar__sep { color: #a9a59d; }
+.footbar__line { color: #5d626c; }
+
+/* margin-left:auto pins it right; the padding is the gap between the word and
+   the window edge. */
+.footbar__brand {
+  margin-left: auto;
+  padding-right: 18px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #2b3140;
+}
+
+/* --- detail panel --------------------------------------------------------- */
+
+.detail { padding: 18px; line-height: 1.5; }
+
+.detail__empty { color: var(--ink-faint); margin: 0; }
+
+.detail__title {
+  margin: 0 0 4px;
+  font-size: 15px;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+
+.detail__kind {
+  margin: 0 0 16px;
+  color: var(--ink-faint);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.detail h3 {
+  margin: 18px 0 7px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 5px;
+}
+
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 0 0 4px; }
+
+.tag {
+  padding: 2px 7px;
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  font-size: 10px;
+  letter-spacing: 0.07em;
+}
+
+/* Attribute tables come straight from the source and can be long and ugly.
+   Fixed layout with wrapping keeps a 90-character zoning by-law URL from
+   forcing the whole panel to scroll sideways. */
+.kv { width: 100%; table-layout: fixed; border-collapse: collapse; }
+
+.kv th, .kv td {
+  padding: 4px 0;
+  text-align: left;
+  vertical-align: top;
+  font-weight: 400;
+  word-break: break-word;
+  border-bottom: 1px solid var(--line);
+}
+
+.kv th { width: 44%; color: var(--ink-faint); font-size: 10px; letter-spacing: 0.06em; }
+.kv td { color: var(--ink); font-size: 11px; }
+
+.detail a { color: var(--osm); }
+
+.provenance { color: var(--ink-dim); font-size: 11px; }
+.provenance p { margin: 0 0 6px; }
+
+/* --- narrow screens ------------------------------------------------------- */
+
+@media (max-width: 900px) {
+  /* Four rows now: left panel, map, right panel, footer. */
+  .shell { grid-template-columns: 1fr; grid-template-rows: auto 62vh auto auto; height: auto; }
+
+  /* The tagline is the first thing to go when there is no room for it. */
+  .footbar__line, .footbar__sep { display: none; }
+  .panel { border-right: none; border-bottom: 1px solid var(--line); max-height: none; }
+  .panel--right { border-left: none; }
+  #map { position: relative; height: 62vh; }
+}
