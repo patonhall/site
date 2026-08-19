@@ -1,52 +1,7 @@
 {
-  "updated": "2026-08-19 05:41",
+  "updated": "2026-08-19 07:01",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
-  "vessels": [
-    {
-      "mmsi": 316002063,
-      "name": "SEA EAGLE II",
-      "type": "",
-      "lat": 43.27861,
-      "lon": -79.79142,
-      "km": 4.9,
-      "seen": "2026-08-19 05:40",
-      "sog": 0,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 316009671,
-      "name": "OCEAN COTE-NORD",
-      "type": "",
-      "lat": 43.26622,
-      "lon": -79.78789,
-      "km": 5.7,
-      "seen": "2026-08-19 05:40",
-      "sog": 0,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 316050404,
-      "name": "DAVID HORNELL",
-      "type": "",
-      "lat": 43.63374,
-      "lon": -79.39759,
-      "km": 52.9,
-      "seen": "2026-08-19 05:40",
-      "sog": 0,
-      "status": "Undefined"
-    },
-    {
-      "mmsi": 316041965,
-      "name": "TAMARACK",
-      "type": "",
-      "lat": 43.13242,
-      "lon": -79.19233,
-      "km": 56.1,
-      "seen": "2026-08-19 05:39",
-      "sog": 1.4,
-      "status": "Under way"
-    }
-  ]
+  "vessels": []
 }
