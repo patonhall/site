@@ -1,5 +1,5 @@
 {
-  "updated": "2026-08-25 11:38",
+  "updated": "2026-08-25 12:02",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
@@ -11,65 +11,88 @@
       "lat": 43.28311,
       "lon": -79.81872,
       "km": 2.6,
-      "seen": "2026-08-25 11:38",
+      "seen": "2026-08-25 12:00",
       "sog": 0,
       "status": "Under way"
     },
     {
-      "mmsi": 316002873,
-      "name": "OCEAN GOLF",
+      "mmsi": 316014050,
+      "name": "ALGOMA MARINER",
       "type": "",
-      "lat": 43.26619,
-      "lon": -79.78804,
-      "km": 5.7,
-      "seen": "2026-08-25 11:37",
+      "lat": 43.22631,
+      "lon": -79.21718,
+      "km": 51.7,
+      "seen": "2026-08-25 12:01",
       "sog": 0,
-      "status": "Under way"
+      "status": "Moored"
     },
     {
-      "mmsi": 316024041,
-      "name": "STERLING ENERGY",
+      "mmsi": 316225000,
+      "name": "EMPIRE SANDY",
       "type": "",
-      "lat": 43.3098,
-      "lon": -79.63375,
-      "km": 17.6,
-      "seen": "2026-08-25 11:38",
-      "sog": 9.4,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 316050853,
-      "name": "MARILYN BELL I",
-      "type": "",
-      "lat": 43.63325,
-      "lon": -79.39436,
-      "km": 53.0,
-      "seen": "2026-08-25 11:37",
+      "lat": 43.63655,
+      "lon": -79.39155,
+      "km": 53.4,
+      "seen": "2026-08-25 12:01",
       "sog": 0,
-      "status": "Not under command"
+      "status": "Restricted manoeuvrability"
     },
     {
       "mmsi": 316049426,
       "name": "YANKEE LADY 3",
       "type": "Passenger",
-      "destination": "TORONTO HARBOUR",
       "lat": 43.63741,
-      "lon": -79.38581,
+      "lon": -79.38582,
       "km": 53.8,
-      "seen": "2026-08-25 11:38",
+      "seen": "2026-08-25 12:00",
+      "sog": 0,
+      "status": "Under way",
+      "destination": "TORONTO HARBOUR"
+    },
+    {
+      "mmsi": 316048477,
+      "name": "ODYSSEY TORONTO",
+      "type": "",
+      "lat": 43.63848,
+      "lon": -79.37969,
+      "km": 54.2,
+      "seen": "2026-08-25 12:00",
+      "sog": 0,
+      "status": "Moored"
+    },
+    {
+      "mmsi": 316046951,
+      "name": "TORONTO ELITE",
+      "type": "Passenger",
+      "destination": "TORONTO@ON",
+      "lat": 43.63892,
+      "lon": -79.37991,
+      "km": 54.3,
+      "seen": "2026-08-25 12:01",
+      "sog": 0,
+      "status": "Moored"
+    },
+    {
+      "mmsi": 316045081,
+      "name": "WM INGLIS",
+      "type": "",
+      "lat": 43.6399,
+      "lon": -79.37521,
+      "km": 54.6,
+      "seen": "2026-08-25 12:01",
       "sog": 0,
       "status": "Under way"
     },
     {
-      "mmsi": 316045066,
-      "name": "MV ONGIARA",
+      "mmsi": 538010701,
+      "name": "CINNAMON",
       "type": "",
-      "lat": 43.6352,
-      "lon": -79.37814,
-      "km": 54.1,
-      "seen": "2026-08-25 11:37",
-      "sog": 8.1,
-      "status": "Undefined"
+      "lat": 43.13686,
+      "lon": -79.19248,
+      "km": 55.9,
+      "seen": "2026-08-25 12:00",
+      "sog": 0,
+      "status": "Under way"
     }
   ]
 }
