@@ -1,96 +1,30 @@
 {
-  "updated": "2026-10-27 20:02",
+  "updated": "2026-10-27 23:44",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316007861,
-      "name": "DIDACE-GUEVREMONT",
-      "type": "",
-      "lat": 43.27313,
-      "lon": -79.83785,
-      "km": 2.1,
-      "seen": "2026-10-27 20:01",
-      "sog": 0,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 316002873,
-      "name": "OCEAN GOLF",
-      "type": "",
-      "lat": 43.26678,
-      "lon": -79.78773,
-      "km": 5.7,
-      "seen": "2026-10-27 20:00",
-      "sog": 0,
-      "status": "Moored"
-    },
-    {
       "mmsi": 316225000,
       "name": "EMPIRE SANDY",
       "type": "",
       "lat": 43.63683,
-      "lon": -79.39163,
+      "lon": -79.39165,
       "km": 53.4,
-      "seen": "2026-10-27 20:01",
+      "seen": "2026-10-27 23:43",
       "sog": 0,
       "status": "Restricted manoeuvrability"
-    },
-    {
-      "mmsi": 316044324,
-      "name": "ORIOLE",
-      "type": "",
-      "lat": 43.63022,
-      "lon": -79.38299,
-      "km": 53.4,
-      "seen": "2026-10-27 20:02",
-      "sog": 5.3,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 311050400,
-      "name": "VICTORY I",
-      "type": "",
-      "lat": 43.19308,
-      "lon": -79.20242,
-      "km": 53.6,
-      "seen": "2026-10-27 20:01",
-      "sog": 0,
-      "status": "Under way"
     },
     {
       "mmsi": 316045066,
       "name": "MV ONGIARA",
       "type": "",
-      "lat": 43.64018,
-      "lon": -79.37444,
-      "km": 54.7,
-      "seen": "2026-10-27 20:02",
-      "sog": 2.5,
-      "status": "Undefined"
-    },
-    {
-      "mmsi": 316048672,
-      "name": "KWASIND",
-      "type": "",
-      "lat": 43.64022,
-      "lon": -79.35008,
-      "km": 56.1,
-      "seen": "2026-10-27 20:00",
-      "sog": 4.3,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 538011159,
-      "name": "FEDERAL NEW YORK",
-      "type": "",
-      "lat": 43.11277,
-      "lon": -79.19165,
-      "km": 56.9,
-      "seen": "2026-10-27 20:00",
+      "lat": 43.63148,
+      "lon": -79.35795,
+      "km": 54.9,
+      "seen": "2026-10-27 23:44",
       "sog": 0,
-      "status": "Moored"
+      "status": "Undefined"
     }
   ]
 }
