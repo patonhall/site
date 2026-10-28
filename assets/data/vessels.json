@@ -1,29 +1,96 @@
 {
-  "updated": "2026-10-28 05:28",
+  "updated": "2026-10-28 11:35",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316045085,
-      "name": "NORTHERN SPIRIT1",
+      "mmsi": 316005239,
+      "name": "LAPRAIRIE",
       "type": "",
-      "lat": 43.63799,
-      "lon": -79.38,
-      "km": 54.2,
-      "seen": "2026-10-28 05:27",
-      "sog": 0.1,
-      "status": "Moored"
+      "lat": 43.45073,
+      "lon": -79.61352,
+      "km": 26.2,
+      "seen": "2026-10-28 11:34",
+      "sog": 9,
+      "status": "Under way"
+    },
+    {
+      "mmsi": 255804340,
+      "name": "HARBOUR PIONEER",
+      "type": "Tanker",
+      "destination": "CAMTR>CACSN",
+      "lat": 43.47561,
+      "lon": -79.57702,
+      "km": 30.2,
+      "seen": "2026-10-28 11:35",
+      "sog": 6.4,
+      "status": "Under way"
+    },
+    {
+      "mmsi": 316225000,
+      "name": "EMPIRE SANDY",
+      "type": "",
+      "lat": 43.63685,
+      "lon": -79.39163,
+      "km": 53.4,
+      "seen": "2026-10-28 11:34",
+      "sog": 0,
+      "status": "Restricted manoeuvrability"
+    },
+    {
+      "mmsi": 316045066,
+      "name": "MV ONGIARA",
+      "type": "",
+      "lat": 43.63605,
+      "lon": -79.36979,
+      "km": 54.6,
+      "seen": "2026-10-28 11:34",
+      "sog": 8,
+      "status": "Undefined"
     },
     {
       "mmsi": 316045081,
       "name": "WM INGLIS",
       "type": "",
-      "lat": 43.64053,
-      "lon": -79.37441,
+      "lat": 43.64052,
+      "lon": -79.37446,
       "km": 54.7,
-      "seen": "2026-10-28 05:27",
+      "seen": "2026-10-28 11:35",
       "sog": 0,
+      "status": "Under way"
+    },
+    {
+      "mmsi": 316032594,
+      "name": "IRON GUPPY",
+      "type": "",
+      "lat": 43.62387,
+      "lon": -79.32815,
+      "km": 56.1,
+      "seen": "2026-10-28 11:34",
+      "sog": 2.2,
+      "status": "Under way"
+    },
+    {
+      "mmsi": 538006783,
+      "name": "FEDERAL OSHIMA",
+      "type": "",
+      "lat": 43.12224,
+      "lon": -79.19401,
+      "km": 56.3,
+      "seen": "2026-10-28 11:35",
+      "sog": 0,
+      "status": "Under way"
+    },
+    {
+      "mmsi": 316001701,
+      "name": "JOHN D LEITCH",
+      "type": "",
+      "lat": 43.101,
+      "lon": -79.20386,
+      "km": 56.4,
+      "seen": "2026-10-28 11:35",
+      "sog": 3.4,
       "status": "Under way"
     }
   ]
