@@ -1,30 +1,30 @@
 {
-  "updated": "2026-10-27 23:44",
+  "updated": "2026-10-28 05:28",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316225000,
-      "name": "EMPIRE SANDY",
+      "mmsi": 316045085,
+      "name": "NORTHERN SPIRIT1",
       "type": "",
-      "lat": 43.63683,
-      "lon": -79.39165,
-      "km": 53.4,
-      "seen": "2026-10-27 23:43",
-      "sog": 0,
-      "status": "Restricted manoeuvrability"
+      "lat": 43.63799,
+      "lon": -79.38,
+      "km": 54.2,
+      "seen": "2026-10-28 05:27",
+      "sog": 0.1,
+      "status": "Moored"
     },
     {
-      "mmsi": 316045066,
-      "name": "MV ONGIARA",
+      "mmsi": 316045081,
+      "name": "WM INGLIS",
       "type": "",
-      "lat": 43.63148,
-      "lon": -79.35795,
-      "km": 54.9,
-      "seen": "2026-10-27 23:44",
+      "lat": 43.64053,
+      "lon": -79.37441,
+      "km": 54.7,
+      "seen": "2026-10-28 05:27",
       "sog": 0,
-      "status": "Undefined"
+      "status": "Under way"
     }
   ]
 }
