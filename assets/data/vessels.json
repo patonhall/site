@@ -1,63 +1,107 @@
 {
-  "updated": "2026-10-29 15:31",
+  "updated": "2026-10-29 20:32",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316001701,
-      "name": "JOHN D LEITCH",
+      "mmsi": 316004579,
+      "name": "WYATT M",
       "type": "",
-      "lat": 43.28032,
-      "lon": -79.80305,
-      "km": 3.9,
-      "seen": "2026-10-29 15:30",
+      "lat": 43.27554,
+      "lon": -79.85266,
+      "km": 1.6,
+      "seen": "2026-10-29 20:30",
       "sog": 0,
-      "status": "Under way"
+      "status": "Moored"
     },
     {
-      "mmsi": 316225000,
-      "name": "EMPIRE SANDY",
+      "mmsi": 316003125,
+      "name": "CHI-CHEEMAUN",
       "type": "",
-      "lat": 43.63683,
-      "lon": -79.39165,
-      "km": 53.4,
-      "seen": "2026-10-29 15:31",
+      "lat": 43.27174,
+      "lon": -79.83553,
+      "km": 2.3,
+      "seen": "2026-10-29 20:30",
       "sog": 0,
-      "status": "Restricted manoeuvrability"
+      "status": "Moored"
     },
     {
-      "mmsi": 316025881,
-      "name": "WM. LYON MACKENZIE",
+      "mmsi": 316002873,
+      "name": "OCEAN GOLF",
       "type": "",
-      "lat": 43.63735,
-      "lon": -79.38897,
-      "km": 53.6,
-      "seen": "2026-10-29 15:30",
+      "lat": 43.26672,
+      "lon": -79.78778,
+      "km": 5.7,
+      "seen": "2026-10-29 20:30",
       "sog": 0,
-      "status": "Under way"
+      "status": "Moored"
     },
     {
-      "mmsi": 316023266,
-      "name": "MU03",
+      "mmsi": 316029092,
+      "name": "MARINE 1",
       "type": "",
-      "lat": 43.63804,
-      "lon": -79.38589,
-      "km": 53.9,
-      "seen": "2026-10-29 15:30",
+      "lat": 43.39471,
+      "lon": -79.70209,
+      "km": 16.7,
+      "seen": "2026-10-29 20:30",
       "sog": 0.1,
-      "status": "Undefined"
+      "status": "Under way"
+    },
+    {
+      "mmsi": 316048672,
+      "name": "KWASIND",
+      "type": "",
+      "lat": 43.62342,
+      "lon": -79.37129,
+      "km": 53.5,
+      "seen": "2026-10-29 20:31",
+      "sog": 3.1,
+      "status": "Under way"
     },
     {
       "mmsi": 316045066,
       "name": "MV ONGIARA",
       "type": "",
-      "lat": 43.64025,
-      "lon": -79.37443,
+      "lat": 43.64029,
+      "lon": -79.37448,
       "km": 54.7,
-      "seen": "2026-10-29 15:30",
+      "seen": "2026-10-29 20:31",
       "sog": 0,
       "status": "Undefined"
+    },
+    {
+      "mmsi": 316045081,
+      "name": "WM INGLIS",
+      "type": "",
+      "lat": 43.64052,
+      "lon": -79.37444,
+      "km": 54.7,
+      "seen": "2026-10-29 20:30",
+      "sog": 0.1,
+      "status": "Under way"
+    },
+    {
+      "mmsi": 538009245,
+      "name": "FEDERAL FRASER",
+      "type": "",
+      "lat": 43.64216,
+      "lon": -79.36812,
+      "km": 55.2,
+      "seen": "2026-10-29 20:31",
+      "sog": 0,
+      "status": "Moored"
+    },
+    {
+      "mmsi": 316031354,
+      "name": "CAPT. HENRY JACKMAN",
+      "type": "",
+      "lat": 43.12221,
+      "lon": -79.19418,
+      "km": 56.3,
+      "seen": "2026-10-29 20:31",
+      "sog": 0,
+      "status": "Under way"
     }
   ]
 }
