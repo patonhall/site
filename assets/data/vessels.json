@@ -1,28 +1,17 @@
 {
-  "updated": "2026-10-29 08:23",
+  "updated": "2026-10-29 15:31",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316041032,
-      "name": "WICKY SPIRIT",
+      "mmsi": 316001701,
+      "name": "JOHN D LEITCH",
       "type": "",
-      "lat": 43.25215,
-      "lon": -79.21905,
-      "km": 51.3,
-      "seen": "2026-10-29 08:22",
-      "sog": 6.3,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 316050404,
-      "name": "DAVID HORNELL",
-      "type": "",
-      "lat": 43.63261,
-      "lon": -79.39649,
-      "km": 52.8,
-      "seen": "2026-10-29 08:23",
+      "lat": 43.28032,
+      "lon": -79.80305,
+      "km": 3.9,
+      "seen": "2026-10-29 15:30",
       "sog": 0,
       "status": "Under way"
     },
@@ -30,11 +19,11 @@
       "mmsi": 316225000,
       "name": "EMPIRE SANDY",
       "type": "",
-      "lat": 43.63685,
-      "lon": -79.39163,
+      "lat": 43.63683,
+      "lon": -79.39165,
       "km": 53.4,
-      "seen": "2026-10-29 08:23",
-      "sog": 0.1,
+      "seen": "2026-10-29 15:31",
+      "sog": 0,
       "status": "Restricted manoeuvrability"
     },
     {
@@ -42,44 +31,33 @@
       "name": "WM. LYON MACKENZIE",
       "type": "",
       "lat": 43.63735,
-      "lon": -79.38903,
+      "lon": -79.38897,
       "km": 53.6,
-      "seen": "2026-10-29 08:23",
+      "seen": "2026-10-29 15:30",
       "sog": 0,
       "status": "Under way"
     },
     {
-      "mmsi": 316045065,
-      "name": "SHOWBOAT",
+      "mmsi": 316023266,
+      "name": "MU03",
       "type": "",
-      "lat": 43.6379,
-      "lon": -79.38036,
-      "km": 54.2,
-      "seen": "2026-10-29 08:22",
-      "sog": 0,
-      "status": "Moored"
+      "lat": 43.63804,
+      "lon": -79.38589,
+      "km": 53.9,
+      "seen": "2026-10-29 15:30",
+      "sog": 0.1,
+      "status": "Undefined"
     },
     {
-      "mmsi": 316014170,
-      "name": "EVANS SPIRIT",
+      "mmsi": 316045066,
+      "name": "MV ONGIARA",
       "type": "",
-      "lat": 43.13683,
-      "lon": -79.19259,
-      "km": 55.9,
-      "seen": "2026-10-29 08:23",
+      "lat": 43.64025,
+      "lon": -79.37443,
+      "km": 54.7,
+      "seen": "2026-10-29 15:30",
       "sog": 0,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 316002063,
-      "name": "SEA EAGLE II",
-      "type": "",
-      "lat": 43.49179,
-      "lon": -79.17555,
-      "km": 58.9,
-      "seen": "2026-10-29 08:23",
-      "sog": 6.5,
-      "status": "Under way"
+      "status": "Undefined"
     }
   ]
 }
