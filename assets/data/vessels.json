@@ -1,20 +1,9 @@
 {
-  "updated": "2026-10-29 20:32",
+  "updated": "2026-10-30 00:16",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
-    {
-      "mmsi": 316004579,
-      "name": "WYATT M",
-      "type": "",
-      "lat": 43.27554,
-      "lon": -79.85266,
-      "km": 1.6,
-      "seen": "2026-10-29 20:30",
-      "sog": 0,
-      "status": "Moored"
-    },
     {
       "mmsi": 316003125,
       "name": "CHI-CHEEMAUN",
@@ -22,86 +11,66 @@
       "lat": 43.27174,
       "lon": -79.83553,
       "km": 2.3,
-      "seen": "2026-10-29 20:30",
+      "seen": "2026-10-30 00:15",
       "sog": 0,
       "status": "Moored"
     },
     {
-      "mmsi": 316002873,
-      "name": "OCEAN GOLF",
+      "mmsi": 538011159,
+      "name": "FEDERAL NEW YORK",
       "type": "",
-      "lat": 43.26672,
-      "lon": -79.78778,
-      "km": 5.7,
-      "seen": "2026-10-29 20:30",
+      "lat": 43.30089,
+      "lon": -79.81836,
+      "km": 2.8,
+      "seen": "2026-10-30 00:15",
       "sog": 0,
-      "status": "Moored"
+      "status": "At anchor"
     },
     {
-      "mmsi": 316029092,
-      "name": "MARINE 1",
+      "mmsi": 316001701,
+      "name": "JOHN D LEITCH",
+      "type": "Cargo",
+      "lat": 43.2803,
+      "lon": -79.80297,
+      "km": 4.0,
+      "seen": "2026-10-30 00:16",
+      "sog": 0,
+      "status": "Under way",
+      "destination": "SUPERIOR WI"
+    },
+    {
+      "mmsi": 316048477,
+      "name": "ODYSSEY TORONTO",
       "type": "",
-      "lat": 43.39471,
-      "lon": -79.70209,
-      "km": 16.7,
-      "seen": "2026-10-29 20:30",
-      "sog": 0.1,
+      "lat": 43.63469,
+      "lon": -79.38444,
+      "km": 53.7,
+      "seen": "2026-10-30 00:14",
+      "sog": 5,
       "status": "Under way"
     },
     {
-      "mmsi": 316048672,
-      "name": "KWASIND",
-      "type": "",
-      "lat": 43.62342,
-      "lon": -79.37129,
-      "km": 53.5,
-      "seen": "2026-10-29 20:31",
-      "sog": 3.1,
-      "status": "Under way"
+      "mmsi": 316046951,
+      "name": "TORONTO ELITE",
+      "type": "Passenger",
+      "lat": 43.6388,
+      "lon": -79.38,
+      "km": 54.2,
+      "seen": "2026-10-30 00:15",
+      "sog": 0,
+      "status": "Moored",
+      "destination": "TORONTO@ON"
     },
     {
       "mmsi": 316045066,
       "name": "MV ONGIARA",
       "type": "",
-      "lat": 43.64029,
-      "lon": -79.37448,
+      "lat": 43.6403,
+      "lon": -79.3745,
       "km": 54.7,
-      "seen": "2026-10-29 20:31",
+      "seen": "2026-10-30 00:14",
       "sog": 0,
       "status": "Undefined"
-    },
-    {
-      "mmsi": 316045081,
-      "name": "WM INGLIS",
-      "type": "",
-      "lat": 43.64052,
-      "lon": -79.37444,
-      "km": 54.7,
-      "seen": "2026-10-29 20:30",
-      "sog": 0.1,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 538009245,
-      "name": "FEDERAL FRASER",
-      "type": "",
-      "lat": 43.64216,
-      "lon": -79.36812,
-      "km": 55.2,
-      "seen": "2026-10-29 20:31",
-      "sog": 0,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 316031354,
-      "name": "CAPT. HENRY JACKMAN",
-      "type": "",
-      "lat": 43.12221,
-      "lon": -79.19418,
-      "km": 56.3,
-      "seen": "2026-10-29 20:31",
-      "sog": 0,
-      "status": "Under way"
     }
   ]
 }
