@@ -1,75 +1,74 @@
 {
-  "updated": "2026-11-06 23:49",
+  "updated": "2026-11-07 05:49",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316029092,
-      "name": "MARINE 1",
+      "mmsi": 316004579,
+      "name": "WYATT M",
       "type": "",
-      "lat": 43.39471,
-      "lon": -79.70207,
-      "km": 16.7,
-      "seen": "2026-11-06 23:48",
+      "lat": 43.27553,
+      "lon": -79.85269,
+      "km": 1.6,
+      "seen": "2026-11-07 05:49",
       "sog": 0,
-      "status": "Under way"
+      "status": "Moored"
     },
     {
-      "mmsi": 316225000,
-      "name": "EMPIRE SANDY",
+      "mmsi": 316003125,
+      "name": "CHI-CHEEMAUN",
       "type": "",
-      "lat": 43.63683,
-      "lon": -79.39163,
-      "km": 53.4,
-      "seen": "2026-11-06 23:47",
+      "lat": 43.27173,
+      "lon": -79.83554,
+      "km": 2.3,
+      "seen": "2026-11-07 05:49",
       "sog": 0,
+      "status": "Moored"
+    },
+    {
+      "mmsi": 316018031,
+      "name": "ALGOMA GUARDIAN",
+      "type": "",
+      "lat": 43.27816,
+      "lon": -79.79092,
+      "km": 5.0,
+      "seen": "2026-11-07 05:49",
+      "sog": 0,
+      "status": "Moored"
+    },
+    {
+      "mmsi": 316009316,
+      "name": "M.R. KANE",
+      "type": "",
+      "lat": 43.63105,
+      "lon": -79.3861,
+      "km": 53.3,
+      "seen": "2026-11-07 05:49",
+      "sog": 0.1,
       "status": "Restricted manoeuvrability"
+    },
+    {
+      "mmsi": 316045081,
+      "name": "WM INGLIS",
+      "type": "",
+      "lat": 43.64058,
+      "lon": -79.37441,
+      "km": 54.7,
+      "seen": "2026-11-07 05:48",
+      "sog": 0,
+      "status": "Under way"
     },
     {
       "mmsi": 316045066,
       "name": "MV ONGIARA",
       "type": "",
-      "lat": 43.63376,
-      "lon": -79.36467,
+      "lat": 43.64026,
+      "lon": -79.37449,
       "km": 54.7,
-      "seen": "2026-11-06 23:49",
-      "sog": 8.2,
-      "status": "Undefined"
-    },
-    {
-      "mmsi": 316023267,
-      "name": "MU04",
-      "type": "",
-      "lat": 43.64285,
-      "lon": -79.36628,
-      "km": 55.3,
-      "seen": "2026-11-06 23:49",
-      "sog": 5.6,
-      "status": "Undefined"
-    },
-    {
-      "mmsi": 316032594,
-      "name": "IRON GUPPY",
-      "type": "",
-      "lat": 43.6391,
-      "lon": -79.35173,
-      "km": 55.9,
-      "seen": "2026-11-06 23:48",
+      "seen": "2026-11-07 05:48",
       "sog": 0,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 316014170,
-      "name": "EVANS SPIRIT",
-      "type": "Cargo",
-      "destination": "CABCO",
-      "lat": 43.32655,
-      "lon": -79.10104,
-      "km": 60.7,
-      "seen": "2026-11-06 23:49",
-      "sog": 13,
-      "status": "Under way"
+      "status": "Undefined"
     }
   ]
 }
