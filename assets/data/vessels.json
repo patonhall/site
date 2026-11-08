@@ -1,29 +1,40 @@
 {
-  "updated": "2026-11-08 19:32",
+  "updated": "2026-11-08 23:07",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 538009425,
-      "name": "FEDERAL FRONTIER",
+      "mmsi": 316001096,
+      "name": "MOLLY M 1",
       "type": "",
-      "lat": 43.30015,
-      "lon": -79.81711,
-      "km": 2.9,
-      "seen": "2026-11-08 19:32",
-      "sog": 0.3,
-      "status": "At anchor"
+      "lat": 43.27528,
+      "lon": -79.85282,
+      "km": 1.7,
+      "seen": "2026-11-08 23:06",
+      "sog": 0,
+      "status": "Moored"
+    },
+    {
+      "mmsi": 316001701,
+      "name": "JOHN D LEITCH",
+      "type": "",
+      "lat": 43.27399,
+      "lon": -79.79824,
+      "km": 4.6,
+      "seen": "2026-11-08 23:05",
+      "sog": 0,
+      "status": "Moored"
     },
     {
       "mmsi": 316050404,
       "name": "DAVID HORNELL",
       "type": "",
-      "lat": 43.63365,
-      "lon": -79.39749,
-      "km": 52.9,
-      "seen": "2026-11-08 19:32",
-      "sog": 2,
+      "lat": 43.63261,
+      "lon": -79.39648,
+      "km": 52.8,
+      "seen": "2026-11-08 23:06",
+      "sog": 0,
       "status": "Under way"
     },
     {
@@ -31,9 +42,9 @@
       "name": "EMPIRE SANDY",
       "type": "",
       "lat": 43.63683,
-      "lon": -79.39162,
+      "lon": -79.39163,
       "km": 53.4,
-      "seen": "2026-11-08 19:32",
+      "seen": "2026-11-08 23:06",
       "sog": 0,
       "status": "Restricted manoeuvrability"
     },
@@ -41,45 +52,23 @@
       "mmsi": 316025881,
       "name": "WM. LYON MACKENZIE",
       "type": "",
-      "lat": 43.6373,
-      "lon": -79.38905,
+      "lat": 43.63733,
+      "lon": -79.389,
       "km": 53.6,
-      "seen": "2026-11-08 19:31",
+      "seen": "2026-11-08 23:05",
       "sog": 0,
       "status": "Under way"
     },
     {
-      "mmsi": 316045081,
-      "name": "WM INGLIS",
+      "mmsi": 316032594,
+      "name": "IRON GUPPY",
       "type": "",
-      "lat": 43.6405,
-      "lon": -79.37436,
-      "km": 54.7,
-      "seen": "2026-11-08 19:31",
-      "sog": 0,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 316016060,
-      "name": "AMY LYNN D",
-      "type": "",
-      "lat": 43.6385,
-      "lon": -79.35334,
-      "km": 55.8,
-      "seen": "2026-11-08 19:31",
+      "lat": 43.6391,
+      "lon": -79.35171,
+      "km": 55.9,
+      "seen": "2026-11-08 23:05",
       "sog": 0.1,
-      "status": ""
-    },
-    {
-      "mmsi": 249152000,
-      "name": "MURGASH",
-      "type": "",
-      "lat": 43.13607,
-      "lon": -79.19214,
-      "km": 56.0,
-      "seen": "2026-11-08 19:31",
-      "sog": 0.6,
-      "status": "Under way"
+      "status": "Moored"
     }
   ]
 }
