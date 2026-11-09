@@ -1,41 +1,41 @@
 {
-  "updated": "2026-11-08 23:07",
+  "updated": "2026-11-09 02:38",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316001096,
-      "name": "MOLLY M 1",
+      "mmsi": 316007861,
+      "name": "DIDACE-GUEVREMONT",
       "type": "",
-      "lat": 43.27528,
-      "lon": -79.85282,
-      "km": 1.7,
-      "seen": "2026-11-08 23:06",
+      "lat": 43.27314,
+      "lon": -79.83785,
+      "km": 2.1,
+      "seen": "2026-11-09 02:37",
       "sog": 0,
       "status": "Moored"
     },
     {
-      "mmsi": 316001701,
-      "name": "JOHN D LEITCH",
+      "mmsi": 316003125,
+      "name": "CHI-CHEEMAUN",
       "type": "",
-      "lat": 43.27399,
-      "lon": -79.79824,
-      "km": 4.6,
-      "seen": "2026-11-08 23:05",
+      "lat": 43.27173,
+      "lon": -79.83555,
+      "km": 2.3,
+      "seen": "2026-11-09 02:37",
       "sog": 0,
       "status": "Moored"
     },
     {
-      "mmsi": 316050404,
-      "name": "DAVID HORNELL",
+      "mmsi": 316011905,
+      "name": "ROBERT S. PIERSON",
       "type": "",
-      "lat": 43.63261,
-      "lon": -79.39648,
-      "km": 52.8,
-      "seen": "2026-11-08 23:06",
+      "lat": 43.27928,
+      "lon": -79.7919,
+      "km": 4.9,
+      "seen": "2026-11-09 02:37",
       "sog": 0,
-      "status": "Under way"
+      "status": "Moored"
     },
     {
       "mmsi": 316225000,
@@ -44,7 +44,7 @@
       "lat": 43.63683,
       "lon": -79.39163,
       "km": 53.4,
-      "seen": "2026-11-08 23:06",
+      "seen": "2026-11-09 02:36",
       "sog": 0,
       "status": "Restricted manoeuvrability"
     },
@@ -52,23 +52,23 @@
       "mmsi": 316025881,
       "name": "WM. LYON MACKENZIE",
       "type": "",
-      "lat": 43.63733,
-      "lon": -79.389,
+      "lat": 43.63735,
+      "lon": -79.38901,
       "km": 53.6,
-      "seen": "2026-11-08 23:05",
+      "seen": "2026-11-09 02:37",
       "sog": 0,
       "status": "Under way"
     },
     {
-      "mmsi": 316032594,
-      "name": "IRON GUPPY",
+      "mmsi": 316045081,
+      "name": "WM INGLIS",
       "type": "",
-      "lat": 43.6391,
-      "lon": -79.35171,
-      "km": 55.9,
-      "seen": "2026-11-08 23:05",
-      "sog": 0.1,
-      "status": "Moored"
+      "lat": 43.64051,
+      "lon": -79.37442,
+      "km": 54.7,
+      "seen": "2026-11-09 02:37",
+      "sog": 0,
+      "status": "Under way"
     }
   ]
 }
