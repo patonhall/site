@@ -1,119 +1,30 @@
 {
-  "updated": "2026-11-10 11:42",
+  "updated": "2026-11-10 19:39",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316036089,
-      "name": "ALGOMA SAULT",
+      "mmsi": 316002280,
+      "name": "ALGOMA CONVEYOR",
       "type": "",
-      "lat": 43.27612,
-      "lon": -79.85158,
-      "km": 1.5,
-      "seen": "2026-11-10 11:40",
-      "sog": 0,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 316001434,
-      "name": "LIMNOS",
-      "type": "",
-      "lat": 43.29875,
-      "lon": -79.80304,
-      "km": 3.9,
-      "seen": "2026-11-10 11:40",
-      "sog": 0,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 316033213,
-      "name": "MV GRANDE BAIE",
-      "type": "",
-      "lat": 43.26619,
-      "lon": -79.78797,
-      "km": 5.7,
-      "seen": "2026-11-10 11:41",
+      "lat": 43.21809,
+      "lon": -79.21378,
+      "km": 52.1,
+      "seen": "2026-11-10 19:39",
       "sog": 0,
       "status": "Under way"
     },
     {
-      "mmsi": 316018477,
-      "name": "ALGOMA DISCOVERY",
+      "mmsi": 316225000,
+      "name": "EMPIRE SANDY",
       "type": "",
-      "lat": 43.28684,
-      "lon": -79.25997,
-      "km": 47.8,
-      "seen": "2026-11-10 11:41",
-      "sog": 12.4,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 538008469,
-      "name": "FEDERAL MONTREAL",
-      "type": "Cargo",
-      "lat": 43.2454,
-      "lon": -79.21646,
-      "km": 51.5,
-      "seen": "2026-11-10 11:40",
-      "sog": 5.4,
-      "status": "Under way",
-      "destination": "CA PCO"
-    },
-    {
-      "mmsi": 316025881,
-      "name": "WM. LYON MACKENZIE",
-      "type": "",
-      "lat": 43.63737,
-      "lon": -79.38908,
-      "km": 53.6,
-      "seen": "2026-11-10 11:42",
+      "lat": 43.63682,
+      "lon": -79.39163,
+      "km": 53.4,
+      "seen": "2026-11-10 19:38",
       "sog": 0,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 255915812,
-      "name": "POLSTEAM WELTYN",
-      "type": "",
-      "lat": 43.18786,
-      "lon": -79.19957,
-      "km": 53.9,
-      "seen": "2026-11-10 11:40",
-      "sog": 2.5,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 316044324,
-      "name": "ORIOLE",
-      "type": "",
-      "lat": 43.63784,
-      "lon": -79.38049,
-      "km": 54.1,
-      "seen": "2026-11-10 11:41",
-      "sog": 0.1,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 316048477,
-      "name": "ODYSSEY TORONTO",
-      "type": "",
-      "lat": 43.63847,
-      "lon": -79.3797,
-      "km": 54.2,
-      "seen": "2026-11-10 11:41",
-      "sog": 0,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 316032594,
-      "name": "IRON GUPPY",
-      "type": "",
-      "lat": 43.64197,
-      "lon": -79.36024,
-      "km": 55.6,
-      "seen": "2026-11-10 11:42",
-      "sog": 0.6,
-      "status": "Under way"
+      "status": "Restricted manoeuvrability"
     }
   ]
 }
