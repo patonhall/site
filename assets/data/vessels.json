@@ -1,98 +1,41 @@
 {
-  "updated": "2026-11-12 02:53",
+  "updated": "2026-11-12 10:55",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 636018939,
-      "name": "CHESTNUT",
+      "mmsi": 316045081,
+      "name": "WM INGLIS",
       "type": "",
-      "lat": 43.27426,
-      "lon": -79.84458,
-      "km": 1.8,
-      "seen": "2026-11-12 02:52",
-      "sog": 0,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 538009425,
-      "name": "FEDERAL FRONTIER",
-      "type": "",
-      "lat": 43.2703,
-      "lon": -79.78351,
-      "km": 5.8,
-      "seen": "2026-11-12 02:52",
-      "sog": 0,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 257037140,
-      "name": "EK RIVER",
-      "type": "Tanker",
-      "destination": "CACSN>CAMTR",
-      "lat": 43.49438,
-      "lon": -79.60321,
-      "km": 30.2,
-      "seen": "2026-11-12 02:53",
-      "sog": 0,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 255915987,
-      "name": "STENHEIM",
-      "type": "",
-      "lat": 43.29398,
-      "lon": -79.33796,
-      "km": 41.4,
-      "seen": "2026-11-12 02:52",
-      "sog": 12.4,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 316050404,
-      "name": "DAVID HORNELL",
-      "type": "",
-      "lat": 43.63262,
-      "lon": -79.39648,
-      "km": 52.8,
-      "seen": "2026-11-12 02:52",
+      "lat": 43.64056,
+      "lon": -79.37443,
+      "km": 54.7,
+      "seen": "2026-11-12 10:55",
       "sog": 0,
       "status": "Under way"
     },
     {
-      "mmsi": 316225000,
-      "name": "EMPIRE SANDY",
+      "mmsi": 316009090,
+      "name": "ALGOMA EQUINOX",
       "type": "",
-      "lat": 43.63683,
-      "lon": -79.39163,
-      "km": 53.4,
-      "seen": "2026-11-12 02:52",
-      "sog": 0,
-      "status": "Restricted manoeuvrability"
-    },
-    {
-      "mmsi": 316001940,
-      "name": "FLORENCE SPIRIT",
-      "type": "",
-      "lat": 43.17926,
-      "lon": -79.19651,
-      "km": 54.4,
-      "seen": "2026-11-12 02:51",
-      "sog": 3.9,
-      "status": "Moored"
-    },
-    {
-      "mmsi": 316004370,
-      "name": "G3 MARQUIS",
-      "type": "Cargo",
-      "destination": "QUEBEC CITY",
-      "lat": 43.15436,
-      "lon": -79.19341,
-      "km": 55.3,
-      "seen": "2026-11-12 02:51",
-      "sog": 0.5,
+      "lat": 43.13726,
+      "lon": -79.19192,
+      "km": 56.0,
+      "seen": "2026-11-12 10:54",
+      "sog": 0.3,
       "status": "Under way"
+    },
+    {
+      "mmsi": 316049114,
+      "name": "M.V. RIVER GAMBLER",
+      "type": "",
+      "lat": 43.64071,
+      "lon": -79.35106,
+      "km": 56.1,
+      "seen": "2026-11-12 10:54",
+      "sog": 0,
+      "status": "Moored"
     }
   ]
 }
