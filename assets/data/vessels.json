@@ -1,76 +1,42 @@
 {
-  "updated": "2026-11-13 00:10",
+  "updated": "2026-11-13 07:11",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316007861,
-      "name": "DIDACE-GUEVREMONT",
-      "type": "Passenger",
-      "destination": "HAMILTON",
-      "lat": 43.27314,
-      "lon": -79.83789,
-      "km": 2.1,
-      "seen": "2026-11-13 00:10",
-      "sog": 0,
-      "status": "Moored"
+      "mmsi": 316016060,
+      "name": "AMY LYNN D",
+      "type": "",
+      "lat": 43.62628,
+      "lon": -79.40609,
+      "km": 51.8,
+      "seen": "2026-11-13 07:11",
+      "sog": 0.1,
+      "status": ""
     },
     {
-      "mmsi": 316023267,
-      "name": "MU04",
-      "type": "",
-      "lat": 43.61927,
-      "lon": -79.46372,
-      "km": 48.1,
-      "seen": "2026-11-13 00:10",
-      "sog": 12.8,
-      "status": "Undefined"
-    },
-    {
-      "mmsi": 316050404,
-      "name": "DAVID HORNELL",
-      "type": "",
-      "lat": 43.63354,
-      "lon": -79.39742,
-      "km": 52.9,
-      "seen": "2026-11-13 00:09",
-      "sog": 4.6,
+      "mmsi": 538006433,
+      "name": "FEDERAL BRISTOL",
+      "type": "Cargo",
+      "destination": "CAQUE",
+      "lat": 43.21613,
+      "lon": -79.21306,
+      "km": 52.2,
+      "seen": "2026-11-13 07:10",
+      "sog": 0.9,
       "status": "Under way"
     },
     {
-      "mmsi": 316041032,
-      "name": "WICKY SPIRIT",
-      "type": "Tanker",
-      "lat": 43.18784,
-      "lon": -79.19952,
-      "km": 53.9,
-      "seen": "2026-11-13 00:09",
-      "sog": 0,
-      "status": "Under way",
-      "destination": "CAMTR"
-    },
-    {
-      "mmsi": 316045081,
-      "name": "WM INGLIS",
+      "mmsi": 316225000,
+      "name": "EMPIRE SANDY",
       "type": "",
-      "lat": 43.64055,
-      "lon": -79.37443,
-      "km": 54.7,
-      "seen": "2026-11-13 00:10",
+      "lat": 43.63682,
+      "lon": -79.39165,
+      "km": 53.4,
+      "seen": "2026-11-13 07:10",
       "sog": 0,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 316001844,
-      "name": "SPRUCEGLEN",
-      "type": "",
-      "lat": 43.15604,
-      "lon": -79.19374,
-      "km": 55.2,
-      "seen": "2026-11-13 00:10",
-      "sog": 0,
-      "status": "Under way"
+      "status": "Restricted manoeuvrability"
     }
   ]
 }
