@@ -1,42 +1,108 @@
 {
-  "updated": "2026-11-13 07:11",
+  "updated": "2026-11-13 15:40",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316016060,
-      "name": "AMY LYNN D",
-      "type": "",
-      "lat": 43.62628,
-      "lon": -79.40609,
-      "km": 51.8,
-      "seen": "2026-11-13 07:11",
+      "mmsi": 316001637,
+      "name": "CSL LAURENTIEN",
+      "type": "Cargo",
+      "lat": 43.28055,
+      "lon": -79.82848,
+      "km": 2.0,
+      "seen": "2026-11-13 15:39",
       "sog": 0.1,
-      "status": ""
+      "status": "Under way",
+      "destination": "HAMILTON"
     },
     {
-      "mmsi": 538006433,
-      "name": "FEDERAL BRISTOL",
-      "type": "Cargo",
-      "destination": "CAQUE",
-      "lat": 43.21613,
-      "lon": -79.21306,
-      "km": 52.2,
-      "seen": "2026-11-13 07:10",
-      "sog": 0.9,
+      "mmsi": 316007861,
+      "name": "DIDACE-GUEVREMONT",
+      "type": "",
+      "lat": 43.27312,
+      "lon": -79.83788,
+      "km": 2.1,
+      "seen": "2026-11-13 15:40",
+      "sog": 0,
+      "status": "Moored"
+    },
+    {
+      "mmsi": 316001882,
+      "name": "ECOSSE",
+      "type": "",
+      "lat": 43.27076,
+      "lon": -79.84231,
+      "km": 2.2,
+      "seen": "2026-11-13 15:40",
+      "sog": 0,
       "status": "Under way"
     },
     {
-      "mmsi": 316225000,
-      "name": "EMPIRE SANDY",
+      "mmsi": 316029092,
+      "name": "MARINE 1",
       "type": "",
-      "lat": 43.63682,
-      "lon": -79.39165,
-      "km": 53.4,
-      "seen": "2026-11-13 07:10",
+      "lat": 43.39471,
+      "lon": -79.70209,
+      "km": 16.7,
+      "seen": "2026-11-13 15:40",
+      "sog": 0.1,
+      "status": "Under way"
+    },
+    {
+      "mmsi": 316002105,
+      "name": "OAKVILLE RESCUE",
+      "type": "",
+      "lat": 43.44126,
+      "lon": -79.66677,
+      "km": 22.4,
+      "seen": "2026-11-13 15:39",
+      "sog": 0.1,
+      "status": "Under way"
+    },
+    {
+      "mmsi": 316025881,
+      "name": "WM. LYON MACKENZIE",
+      "type": "",
+      "lat": 43.63734,
+      "lon": -79.38897,
+      "km": 53.6,
+      "seen": "2026-11-13 15:40",
       "sog": 0,
-      "status": "Restricted manoeuvrability"
+      "status": "Under way"
+    },
+    {
+      "mmsi": 316045081,
+      "name": "WM INGLIS",
+      "type": "",
+      "lat": 43.64057,
+      "lon": -79.37447,
+      "km": 54.7,
+      "seen": "2026-11-13 15:39",
+      "sog": 0,
+      "status": "Under way"
+    },
+    {
+      "mmsi": 316045066,
+      "name": "MV ONGIARA",
+      "type": "",
+      "lat": 43.63182,
+      "lon": -79.35948,
+      "km": 54.9,
+      "seen": "2026-11-13 15:39",
+      "sog": 4.4,
+      "status": "Undefined"
+    },
+    {
+      "mmsi": 316049114,
+      "name": "M.V. RIVER GAMBLER",
+      "type": "",
+      "lat": 43.64072,
+      "lon": -79.35109,
+      "km": 56.1,
+      "seen": "2026-11-13 15:39",
+      "sog": 0,
+      "status": "Moored"
     }
   ]
 }
