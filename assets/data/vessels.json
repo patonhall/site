@@ -1,19 +1,20 @@
 {
-  "updated": "2026-11-13 21:57",
+  "updated": "2026-11-14 02:17",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 636018939,
-      "name": "CHESTNUT",
-      "type": "",
-      "lat": 43.27411,
-      "lon": -79.84464,
-      "km": 1.8,
-      "seen": "2026-11-13 21:56",
+      "mmsi": 316001637,
+      "name": "CSL LAURENTIEN",
+      "type": "Cargo",
+      "lat": 43.28304,
+      "lon": -79.81876,
+      "km": 2.6,
+      "seen": "2026-11-14 02:16",
       "sog": 0,
-      "status": "Moored"
+      "status": "Under way",
+      "destination": "HAMILTON"
     },
     {
       "mmsi": 316005377,
@@ -22,7 +23,51 @@
       "lat": 43.30025,
       "lon": -79.803,
       "km": 4.0,
-      "seen": "2026-11-13 21:56",
+      "seen": "2026-11-14 02:17",
+      "sog": 0,
+      "status": "Moored"
+    },
+    {
+      "mmsi": 316002873,
+      "name": "OCEAN GOLF",
+      "type": "",
+      "lat": 43.26679,
+      "lon": -79.78776,
+      "km": 5.7,
+      "seen": "2026-11-14 02:17",
+      "sog": 0,
+      "status": "Moored"
+    },
+    {
+      "mmsi": 316029092,
+      "name": "MARINE 1",
+      "type": "",
+      "lat": 43.39472,
+      "lon": -79.70209,
+      "km": 16.7,
+      "seen": "2026-11-14 02:17",
+      "sog": 0,
+      "status": "Under way"
+    },
+    {
+      "mmsi": 305578000,
+      "name": "BBC GENEVA",
+      "type": "",
+      "lat": 43.23552,
+      "lon": -79.25692,
+      "km": 48.4,
+      "seen": "2026-11-14 02:16",
+      "sog": 0.1,
+      "status": "At anchor"
+    },
+    {
+      "mmsi": 316009090,
+      "name": "ALGOMA EQUINOX",
+      "type": "",
+      "lat": 43.22662,
+      "lon": -79.21717,
+      "km": 51.7,
+      "seen": "2026-11-14 02:16",
       "sog": 0,
       "status": "Moored"
     },
@@ -30,34 +75,12 @@
       "mmsi": 316046951,
       "name": "TORONTO ELITE",
       "type": "",
-      "lat": 43.63869,
+      "lat": 43.63871,
       "lon": -79.37977,
       "km": 54.3,
-      "seen": "2026-11-13 21:56",
+      "seen": "2026-11-14 02:16",
       "sog": 0,
       "status": "Moored"
-    },
-    {
-      "mmsi": 316045081,
-      "name": "WM INGLIS",
-      "type": "",
-      "lat": 43.64053,
-      "lon": -79.37446,
-      "km": 54.7,
-      "seen": "2026-11-13 21:56",
-      "sog": 0,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 304604000,
-      "name": "LAKE ERIE",
-      "type": "",
-      "lat": 43.31737,
-      "lon": -79.13119,
-      "km": 58.2,
-      "seen": "2026-11-13 21:56",
-      "sog": 12.2,
-      "status": "Under way"
     }
   ]
 }
