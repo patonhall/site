@@ -1,63 +1,87 @@
 {
-  "updated": "2026-11-15 20:34",
+  "updated": "2026-11-16 00:21",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 255915809,
-      "name": "POLSTEAM OKRA",
+      "mmsi": 255915608,
+      "name": "ALICIA G",
       "type": "",
-      "lat": 43.21799,
-      "lon": -79.2136,
-      "km": 52.2,
-      "seen": "2026-11-15 20:32",
+      "lat": 43.27605,
+      "lon": -79.85172,
+      "km": 1.6,
+      "seen": "2026-11-16 00:19",
       "sog": 0,
-      "status": "Under way"
+      "status": "Moored"
     },
     {
-      "mmsi": 316225000,
-      "name": "EMPIRE SANDY",
+      "mmsi": 316007861,
+      "name": "DIDACE-GUEVREMONT",
       "type": "",
-      "lat": 43.63683,
-      "lon": -79.39165,
-      "km": 53.4,
-      "seen": "2026-11-15 20:33",
+      "lat": 43.2731,
+      "lon": -79.83781,
+      "km": 2.1,
+      "seen": "2026-11-16 00:20",
       "sog": 0,
-      "status": "Restricted manoeuvrability"
+      "status": "Moored"
+    },
+    {
+      "mmsi": 244040000,
+      "name": "HUMBERGRACHT",
+      "type": "Cargo",
+      "destination": "USTOL",
+      "lat": 43.27825,
+      "lon": -79.33545,
+      "km": 41.7,
+      "seen": "2026-11-16 00:21",
+      "sog": 13.7,
+      "status": "Under way"
     },
     {
       "mmsi": 316025881,
       "name": "WM. LYON MACKENZIE",
-      "type": "",
-      "lat": 43.63735,
-      "lon": -79.38897,
+      "type": "Service",
+      "lat": 43.63736,
+      "lon": -79.38902,
       "km": 53.6,
-      "seen": "2026-11-15 20:32",
+      "seen": "2026-11-16 00:19",
       "sog": 0,
+      "status": "Under way",
+      "destination": "TORONTO"
+    },
+    {
+      "mmsi": 316044324,
+      "name": "ORIOLE",
+      "type": "",
+      "lat": 43.63785,
+      "lon": -79.38048,
+      "km": 54.1,
+      "seen": "2026-11-16 00:20",
+      "sog": 0,
+      "status": "Moored"
+    },
+    {
+      "mmsi": 316002063,
+      "name": "SEA EAGLE II",
+      "type": "",
+      "lat": 43.17474,
+      "lon": -79.19598,
+      "km": 54.5,
+      "seen": "2026-11-16 00:20",
+      "sog": 3.6,
       "status": "Under way"
     },
     {
-      "mmsi": 316045081,
-      "name": "WM INGLIS",
+      "mmsi": 316045066,
+      "name": "MV ONGIARA",
       "type": "",
-      "lat": 43.64057,
-      "lon": -79.37443,
+      "lat": 43.64027,
+      "lon": -79.37447,
       "km": 54.7,
-      "seen": "2026-11-15 20:32",
+      "seen": "2026-11-16 00:20",
       "sog": 0,
-      "status": "Under way"
-    },
-    {
-      "mmsi": 316001434,
-      "name": "LIMNOS",
-      "type": "",
-      "lat": 43.1307,
-      "lon": -79.19288,
-      "km": 56.1,
-      "seen": "2026-11-15 20:32",
-      "sog": 0,
-      "status": "Under way"
+      "status": "Undefined"
     }
   ]
 }
