@@ -1,63 +1,31 @@
 {
-  "updated": "2026-11-21 03:28",
+  "updated": "2026-11-21 11:42",
   "sourceName": "aisstream.io (terrestrial AIS)",
   "sourceUrl": "https://aisstream.io/",
   "windowSeconds": 110,
   "vessels": [
     {
-      "mmsi": 316050404,
-      "name": "DAVID HORNELL",
+      "mmsi": 316002873,
+      "name": "OCEAN GOLF",
       "type": "",
-      "lat": 43.63376,
-      "lon": -79.39759,
-      "km": 52.9,
-      "seen": "2026-11-21 03:28",
+      "lat": 43.27225,
+      "lon": -79.83702,
+      "km": 2.2,
+      "seen": "2026-11-21 11:42",
       "sog": 0,
-      "status": "Under way"
+      "status": "Moored"
     },
     {
-      "mmsi": 316023266,
-      "name": "MU03",
-      "type": "",
-      "lat": 43.63798,
-      "lon": -79.38572,
-      "km": 53.9,
-      "seen": "2026-11-21 03:28",
-      "sog": 0.4,
-      "status": "Undefined"
-    },
-    {
-      "mmsi": 316045066,
-      "name": "MV ONGIARA",
-      "type": "",
-      "lat": 43.64052,
-      "lon": -79.37433,
-      "km": 54.7,
-      "seen": "2026-11-21 03:26",
-      "sog": 0,
-      "status": "Undefined"
-    },
-    {
-      "mmsi": 316016060,
-      "name": "AMY LYNN D",
-      "type": "",
-      "lat": 43.63828,
-      "lon": -79.36228,
-      "km": 55.2,
-      "seen": "2026-11-21 03:28",
-      "sog": 3.7,
-      "status": ""
-    },
-    {
-      "mmsi": 316001701,
-      "name": "JOHN D LEITCH",
-      "type": "",
-      "lat": 43.13056,
-      "lon": -79.19305,
-      "km": 56.1,
-      "seen": "2026-11-21 03:26",
-      "sog": 0,
-      "status": "Under way"
+      "mmsi": 316055401,
+      "name": "ALGOSOLIS",
+      "type": "Tanker",
+      "lat": 43.12578,
+      "lon": -79.19326,
+      "km": 56.3,
+      "seen": "2026-11-21 11:40",
+      "sog": 2.9,
+      "status": "Under way",
+      "destination": "CA MTR"
     }
   ]
 }
